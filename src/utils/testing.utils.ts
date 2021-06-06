@@ -54,7 +54,7 @@ export function generateTypeOrmArray<ModelClass extends Models>(
   model: { new (): ModelClass },
   count: number
 ): ModelClass[] {
-  const data = []
+  const data: ModelClass[] = []
 
   for (let i = 0; i < count; i++) {
     const newObject = generateTypeOrm<ModelClass>(model)

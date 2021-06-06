@@ -8,6 +8,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
+    "strictNullChecks": true,
     "esModuleInterop": true,
     "typeRoots": ["@types", "./node_modules/@types"]
   }
