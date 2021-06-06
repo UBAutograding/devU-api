@@ -12,14 +12,15 @@ let next
 let expectedErrorMessage = 'Expected Message'
 
 describe('Global Error Handler', () => {
-  describe('Missing error', () => {
-    beforeEach(() => {
-      req = Testing.fakeRequest()
-      res = Testing.fakeResponse()
-      next = Testing.fakeNext()
+  beforeEach(() => {
+    req = Testing.fakeRequest()
+    res = Testing.fakeResponse()
+    next = Testing.fakeNext()
+  })
 
-      globalErrorHandler(null, req, res, next)
-    })
+  describe('Missing error', () => {
+    //@ts-ignore - if someone throws a non error 😬
+    beforeEach(() => globalErrorHandler(null, req, res, next))
 
     test('Responds with 400', () => expect(res.status).toBeCalledWith(400))
     test('Responds with unknown without error', () => expect(res.json).toBeCalledWith(Unknown))

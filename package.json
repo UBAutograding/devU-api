@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Tyepscript Express/ TypeORM Example",
   "scripts": {
-    "start": "ts-node-dev src/index.ts",
+    "start": "BYPASS_SCHOOL_AUTH=1 ts-node-dev src/index.ts",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js  --config src/database.ts",
     "test": "jest --passWithNoTests",
     "clean": "rimraf build/*",
@@ -43,6 +43,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.11.1",
     "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "pg": "^8.4.0",
     "reflect-metadata": "^0.1.10",

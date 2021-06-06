@@ -17,7 +17,7 @@ export default class User {
   @Column({ length: 128 })
   email: string
 
-  @Column({ length: 128, nullable: true })
+  @Column({ length: 128, unique: true, nullable: false })
   schoolId: string
 
   @Column({ length: 128, nullable: true })
