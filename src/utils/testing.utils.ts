@@ -31,7 +31,6 @@ export function fakeNext(): NextFunction {
  * Creates typeorm object and sets dates & id
  *
  * @param model - Models
- * @param overrides - Overrides for creation
  * @returns
  */
 export function generateTypeOrm<ModelClass extends Models>(model: { new (): ModelClass }): ModelClass {
@@ -40,8 +39,6 @@ export function generateTypeOrm<ModelClass extends Models>(model: { new (): Mode
   newModel.id = 1
   newModel.createdAt = new Date()
   newModel.updatedAt = new Date()
-
-  // appendFile(newModel, overrides)
 
   return newModel
 }
@@ -52,7 +49,6 @@ export function generateTypeOrm<ModelClass extends Models>(model: { new (): Mode
  *
  * @param model - Any model from model/index.ts
  * @param count - how many you want
- * @param overrides - If you want to set data
  * @returns Array of newly created models
  */
 export function generateTypeOrmArray<ModelClass extends Models>(
