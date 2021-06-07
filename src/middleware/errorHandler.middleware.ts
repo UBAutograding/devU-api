@@ -11,11 +11,12 @@ import { GenericResponse, Unknown, Unimplemented } from '../utils/apiResponse.ut
  * TODO - might want to add some kind of network error logging.
  */
 function globalErrorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
-  if (!(err instanceof Error) || !err.message) return res.status(400).json(Unknown)
+  if (!(err instanceof Error)) return res.status(400).json(Unknown)
 
+  if (!err.message) return res.status(400).json(Unknown)
   if (err.message === 'Unimplemented') return res.status(501).json(Unimplemented)
 
-  res.status(400).json(new GenericResponse(err.message))
+  return res.status(400).json(new GenericResponse(err.message))
 }
 
 export default globalErrorHandler

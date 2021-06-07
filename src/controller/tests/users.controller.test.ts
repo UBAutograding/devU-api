@@ -1,4 +1,3 @@
-import { Request, Response, NextFunction } from 'express'
 import { UpdateResult } from 'typeorm'
 
 import controller from '../users.controller'
@@ -11,9 +10,9 @@ import Testing from '../../utils/testing.utils'
 import { GenericResponse, NotFound, Updated } from '../../utils/apiResponse.utils'
 
 // Testing Globals
-let req: Request
-let res: Response
-let next: NextFunction
+let req
+let res
+let next
 
 let expectedResults: User[]
 let expectedResult: User
