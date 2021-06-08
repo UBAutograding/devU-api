@@ -1,3 +1,5 @@
+import passport from 'passport'
+
 import { Request, Response, NextFunction } from 'express'
 
 import environment from '../environment'
@@ -42,3 +44,5 @@ export async function isUser(req: Request, res: Response, next: NextFunction) {
 
   next()
 }
+
+export const saml = passport.authenticate('saml', { session: false })
