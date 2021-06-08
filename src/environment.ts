@@ -1,4 +1,10 @@
+const apiUrl = process.env.API_URL || `http://localhost:${process.env.PORT}`
+
 export default {
+  // API & Client Callback URL
+  apiUrl,
+  clientUrl: process.env.CLIENT_URL || 'http://localhost:9000/',
+
   // Database settings
   port: process.env.PORT || 3001,
   dbHost: process.env.DB_HOST || 'localhost',
@@ -13,4 +19,9 @@ export default {
   bypassSchoolAuth: process.env.BYPASS_SCHOOL_AUTH !== undefined, // skips school auth, works automatically on npm start
   tokenSecret: process.env.TOKEN_SECRET || 'oh_WOW_great_token_secret',
   tokenExpiration: process.env.TOKEN_EXPIRATION || '1', // expiration time in seconds
+
+  // Auth Provider Settings
+  callbackUrl: process.env.CALLBACK_URL || `${apiUrl}/login/callback`,
+  entryPoint: process.env.ENTRY_POINT || 'https://samltest.id/idp/profile/SAML2/Redirect/SSO',
+  issuer: process.env.ISSUER || `${apiUrl}/shibboleth`,
 }

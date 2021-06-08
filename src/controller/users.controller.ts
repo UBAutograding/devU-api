@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
 
 import UserService from '../services/user.service'
-import AuthService from '../services/auth.service'
 
-import { GenericResponse, NotFound, Updated, Unknown } from '../utils/apiResponse.utils'
+import { GenericResponse, NotFound, Updated } from '../utils/apiResponse.utils'
 
 export async function get(req: Request, res: Response, next: NextFunction) {
   try {
@@ -69,22 +68,4 @@ export async function _delete(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export async function login(req: Request, res: Response, next: NextFunction) {
-  try {
-    if (req.userInfo === undefined) return res.status(200).json(Unknown)
-
-    const { user, isNewUser } = await UserService.ensure(req.userInfo)
-    const auth = await AuthService.get({ email: user.email })
-
-    req.user = user
-    req.auth = auth
-
-    req.statusCode = isNewUser ? 201 : 200
-
-    next()
-  } catch (err) {
-    next(err)
-  }
-}
-
-export default { get, detail, post, put, _delete, login }
+export default { get, detail, post, put, _delete }

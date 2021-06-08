@@ -13,7 +13,8 @@
 
       "args": ["src/index.ts"],
       "env": {
-        "BYPASS_SCHOOL_AUTH": "1"
+        "BYPASS_SCHOOL_AUTH": "1",
+        "PORT": "4006"
       },
 
       "cwd": "${workspaceRoot}",
