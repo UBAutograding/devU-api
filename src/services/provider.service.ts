@@ -1,6 +1,11 @@
+import { Provider } from '../shared/types/auth.types'
+
+import providerConfig from '../../config/providers.config.json'
+
 export function get() {
-  // TODO - make this configurable via some json
-  return [{ name: 'MyUB', route: '/login/saml' }]
+  const { providers }: { providers: Provider[] } = providerConfig
+
+  return providers
 }
 
 export function validate(providerRoute: string) {

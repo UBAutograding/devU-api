@@ -12,3 +12,8 @@ export type DeserializedToken = {
   exp?: number
   email: string
 }
+
+export type Provider = {
+  name: string
+  route: string
+}
