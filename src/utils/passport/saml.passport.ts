@@ -3,7 +3,7 @@ import { Strategy as SamlStrategy } from 'passport-saml'
 
 import environment from '../../environment'
 
-import { renameKeys } from '../../shared/utils/object.utils'
+import { renameKeys } from 'devu-shared-modules'
 
 // This will break without the json, gotta figure out a better way to do this
 import configuration from '../../../config/saml.config.json'

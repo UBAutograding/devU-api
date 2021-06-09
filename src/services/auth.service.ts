@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 
 import environment from '../environment'
 
-import { DeserializedToken, DeserializedRefreshToken } from '../shared/types/auth.types'
+import { DeserializedToken, DeserializedRefreshToken } from 'devu-shared-modules'
 
 const accessOptions = { expiresIn: `${environment.tokenExpiration}s` }
 const refreshOptions = { expiresIn: '10d' }
