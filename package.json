@@ -40,7 +40,7 @@
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "devu-shared-modules": "github:UBAutograding/devu-shared",
+    "devu-shared-modules": "github:UBAutograding/devu-shared#auth",
     "express": "^4.17.1",
     "express-validator": "^6.11.1",
     "helmet": "^4.6.0",

@@ -6,7 +6,7 @@ import environment from '../../environment'
 import { renameKeys } from 'devu-shared-modules'
 
 // This will break without the json, gotta figure out a better way to do this
-import configuration from '../../../config/saml.config.json'
+import configuration from '../../../env/config/saml.config.json'
 
 const pathToEnv = `${__dirname}/../../../env/`
 
