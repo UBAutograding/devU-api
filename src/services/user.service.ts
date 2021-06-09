@@ -2,8 +2,7 @@ import { getRepository, IsNull } from 'typeorm'
 
 import User from '../model/users.model'
 
-import UserType from '../shared/types/user.type'
-import { SchoolAuth } from '../shared/types/auth.types'
+import { User as UserType, SchoolAuth } from 'devu-shared-modules'
 
 const connect = () => getRepository(User)
 

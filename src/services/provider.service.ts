@@ -1,6 +1,6 @@
 import environment from '../environment'
 
-import { Provider } from '../shared/types/auth.types'
+import { Provider } from 'devu-shared-modules'
 
 import providerConfig from '../../config/providers.config.json'
 
