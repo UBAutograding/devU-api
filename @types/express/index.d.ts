@@ -1,6 +1,6 @@
 import User from '../../src/model/users.model'
 
-import { SchoolAuth, ApiAuth, DeserializedToken } from '../../src/shared/types/auth.types'
+import { SchoolAuth, ApiAuth, DeserializedToken, DeserializedRefreshToken } from '../../src/shared/types/auth.types'
 declare global {
   namespace Express {
     interface Request {
@@ -12,6 +12,7 @@ declare global {
       userInfo?: SchoolAuth
       auth?: ApiAuth
       currentUser?: DeserializedToken
+      refreshUser?: DeserializedRefreshToken
     }
   }
 }

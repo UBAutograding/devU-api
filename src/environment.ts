@@ -3,7 +3,7 @@ const apiUrl = process.env.API_URL || `http://localhost:${process.env.PORT}`
 export default {
   // API & Client Callback URL
   apiUrl,
-  clientUrl: process.env.CLIENT_URL || 'http://localhost:9000/',
+  clientUrl: process.env.CLIENT_URL || 'http://localhost:9000',
 
   // Database settings
   port: process.env.PORT || 3001,
@@ -16,9 +16,10 @@ export default {
   logDB: process.env.LOG_DB !== undefined, // logs all sql commands for gut/fact checking endpoints
 
   // Auth Settings
-  bypassSchoolAuth: process.env.BYPASS_SCHOOL_AUTH !== undefined, // skips school auth, works automatically on npm start
-  tokenSecret: process.env.TOKEN_SECRET || 'oh_WOW_great_token_secret',
-  tokenExpiration: process.env.TOKEN_EXPIRATION || '1', // expiration time in seconds
+  bypassAuth: process.env.BYPASS_AUTH !== undefined, // skips school auth, works automatically on npm start
+  jwtPrivateKey: process.env.JWT_PRIVATE_KEY || 'private_key',
+  jwtPublicKey: process.env.JWT_PUBLIC_KEY || 'public_key',
+  tokenExpiration: process.env.TOKEN_EXPIRATION || '600', // expiration time in seconds (10 minutes)
 
   // Auth Provider Settings
   callbackUrl: process.env.CALLBACK_URL || `${apiUrl}/login/callback`,

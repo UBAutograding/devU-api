@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Tyepscript Express/ TypeORM Example",
   "scripts": {
-    "start": "BYPASS_SCHOOL_AUTH=1 ts-node-dev src/index.ts",
+    "start": "BYPASS_AUTH=1 ts-node-dev src/index.ts",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js  --config src/database.ts",
     "test": "jest --passWithNoTests",
     "clean": "rimraf build/*",
@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "devu-shared-modules": "github:UBAutograding/devu-shared#master",
     "express": "^4.17.1",
