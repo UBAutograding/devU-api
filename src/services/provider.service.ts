@@ -2,7 +2,7 @@ import environment from '../environment'
 
 import { Provider } from 'devu-shared-modules'
 
-import providerConfig from '../../config/providers.config.json'
+import providerConfig from '../../env/config/providers.config.json'
 
 const DEV_AUTH_SKIP_PROVIDER = {
   name: 'Developer Auth',
