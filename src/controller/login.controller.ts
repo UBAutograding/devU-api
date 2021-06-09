@@ -6,9 +6,37 @@ import UserService from '../services/user.service'
 import AuthService from '../services/auth.service'
 import ProviderService from '../services/provider.service'
 
-import { Unknown } from '../utils/apiResponse.utils'
+import { Unauthorized, Unknown } from '../utils/apiResponse.utils'
 
-export function get(req: Request, res: Response, next: NextFunction) {
+// 10 days - largely irrellivant because the JWT will expire before the cookie does
+const refreshCookieOptions = { maxAge: 864000000, httpOnly: true, secure: true, sameSite: true }
+
+export async function login(req: Request, res: Response, next: NextFunction) {
+  try {
+    if (req.refreshUser === undefined) return res.status(401).json(Unknown)
+
+    const { id } = req.refreshUser
+
+    if (!id) return res.status(401).json(Unauthorized)
+
+    const user = await UserService.retrieve(id)
+
+    if (!user) return res.status(401).json(Unauthorized)
+
+    const token = AuthService.get({ email: user.email })
+
+    req.user = user
+    req.auth = { token }
+
+    req.statusCode = 200
+
+    next()
+  } catch (err) {
+    next(err)
+  }
+}
+
+export function getProviders(req: Request, res: Response, next: NextFunction) {
   try {
     const providers = ProviderService.get()
 
@@ -18,35 +46,26 @@ export function get(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export async function login(req: Request, res: Response, next: NextFunction) {
-  try {
-    if (req.userInfo === undefined) return res.status(200).json(Unknown)
+export async function samlCallback(req: Request, res: Response, next: NextFunction) {
+  const samlUser = req.user as any
+  const { user } = await UserService.ensure({ email: samlUser.email, schoolId: samlUser.externalId })
 
-    const { user, isNewUser } = await UserService.ensure(req.userInfo)
-    const auth = await AuthService.get({ email: user.email })
+  const refreshToken = AuthService.createRefresh(user.id)
 
-    req.user = user
-    req.auth = auth
-
-    req.statusCode = isNewUser ? 201 : 200
-
-    next()
-  } catch (err) {
-    next(err)
-  }
+  res.cookie('refreshToken', refreshToken, refreshCookieOptions)
+  res.redirect(environment.clientUrl)
 }
 
-export async function callback(req: Request, res: Response, next: NextFunction) {
-  const samlUser = req.user as any
-  const { token: jwt } = AuthService.get({ email: samlUser.email })
+export async function developerCallback(req: Request, res: Response, next: NextFunction) {
+  const refreshToken = AuthService.createRefresh(1)
 
-  res.cookie('jwt', jwt)
-
+  res.cookie('refreshToken', refreshToken, refreshCookieOptions)
   res.redirect(environment.clientUrl)
 }
 
 export default {
-  get,
   login,
-  callback,
+  getProviders,
+  samlCallback,
+  developerCallback,
 }

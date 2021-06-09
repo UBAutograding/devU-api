@@ -4,7 +4,7 @@ import express from 'express'
 import controller from '../controller/login.controller'
 
 // Middleware
-import { schoolAuthentication, saml } from '../middleware/auth.middleware'
+import { hasRefreshToken, saml } from '../middleware/auth.middleware'
 import { checkEnabledProviders } from '../middleware/validator/login.validator'
 import { loginSerializer } from '../middleware/serializer/users.serializer'
 
@@ -13,22 +13,16 @@ const Router = express.Router()
 /**
  * @swagger
  * /login:
- *   post:
- *     summary: Gets API auth via passing school auth
+ *   get:
+ *     summary: Gets API auth via passing refresh token as a cookie
  */
-Router.get('/', controller.get)
+Router.get('/', hasRefreshToken, controller.login, loginSerializer)
+Router.get('/providers', controller.getProviders)
 
 Router.get('/saml', checkEnabledProviders, saml)
+Router.get('/developer', checkEnabledProviders, controller.developerCallback)
 
 // TODO - should be changed to /saml/callback
-Router.post('/callback', saml, controller.callback)
-
-/**
- * @swagger
- * /login:
- *   post:
- *     summary: Gets API auth via passing school auth
- */
-Router.post('/', schoolAuthentication, controller.login, loginSerializer)
+Router.post('/callback', saml, controller.samlCallback)
 
 export default Router

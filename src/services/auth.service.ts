@@ -2,26 +2,35 @@ import jwt from 'jsonwebtoken'
 
 import environment from '../environment'
 
-import { SchoolAuth, DeserializedToken } from '../shared/types/auth.types'
+import { DeserializedToken, DeserializedRefreshToken } from '../shared/types/auth.types'
 
-export function verifySchoolAuth(token: string): SchoolAuth {
-  // TODO - check schools auth && return schoolId (externalId)
-  return {
-    schoolId: '',
-    email: '',
-  }
-}
+const accessOptions = { expiresIn: `${environment.tokenExpiration}s` }
+const refreshOptions = { expiresIn: '10d' }
 
 export function get(user: DeserializedToken) {
-  const tokenOptions = { expiresIn: `${environment.tokenExpiration}s` }
-  const token = jwt.sign(user, environment.tokenSecret, tokenOptions)
+  const token = jwt.sign(user, environment.jwtPrivateKey, accessOptions)
 
-  return { token }
+  return token
 }
 
 export function authenticate(token: string): DeserializedToken | null {
   try {
-    return jwt.verify(token, environment.tokenSecret)
+    return jwt.verify(token, environment.jwtPrivateKey)
+  } catch (_err) {
+    console.error(_err)
+    return null
+  }
+}
+
+export function createRefresh(id: number) {
+  const token = jwt.sign({ id }, environment.jwtPrivateKey, refreshOptions)
+
+  return token
+}
+
+export function authenticateRefresh(token: string): DeserializedRefreshToken | null {
+  try {
+    return jwt.verify(token, environment.jwtPrivateKey)
   } catch (_err) {
     console.error(_err)
     return null
@@ -29,6 +38,8 @@ export function authenticate(token: string): DeserializedToken | null {
 }
 
 export default {
-  verifySchoolAuth,
   get,
+  authenticate,
+  createRefresh,
+  authenticateRefresh,
 }
