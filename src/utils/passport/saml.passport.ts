@@ -1,14 +1,10 @@
-import fs from 'fs'
 import { Strategy as SamlStrategy } from 'passport-saml'
-
-import environment from '../../environment'
 
 import { renameKeys } from 'devu-shared-modules'
 
-// This will break without the json, gotta figure out a better way to do this
-import configuration from '../../../env/config/saml.config.json'
+import samlConfig from '../../config/saml.config'
 
-const pathToEnv = `${__dirname}/../../../env/`
+import environment from '../../environment'
 
 const samlStrategy = new SamlStrategy(
   {
@@ -19,11 +15,11 @@ const samlStrategy = new SamlStrategy(
     // Usually specified as `/shibboleth` from site root
     issuer: environment.issuer,
     // Service Provider private key
-    decryptionPvk: fs.readFileSync(pathToEnv + configuration.decryptionPvkPath, 'utf8'),
+    decryptionPvk: samlConfig.decryptionPvk,
     // Service Provider Certificate
-    privateKey: fs.readFileSync(pathToEnv + configuration.privateKey, 'utf8'),
+    privateKey: samlConfig.privateKey,
     // Identity Provider's public key
-    cert: configuration.cert.map(certPath => fs.readFileSync(pathToEnv + certPath, 'utf8')),
+    cert: samlConfig.certs,
     identifierFormat: null,
     validateInResponseTo: true,
     disableRequestedAuthnContext: true,
@@ -33,7 +29,7 @@ const samlStrategy = new SamlStrategy(
     digestAlgorithm: 'sha256',
   },
   function (profile: any, done: any) {
-    renameKeys(configuration.attributeMap, profile)
+    renameKeys(samlConfig.attributeMap, profile)
 
     return done(null, profile)
   }
