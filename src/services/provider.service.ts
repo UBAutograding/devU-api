@@ -1,20 +1,7 @@
-import environment from '../environment'
-
-import { Provider } from 'devu-shared-modules'
-
-import providerConfig from '../../env/config/providers.config.json'
-
-const DEV_AUTH_SKIP_PROVIDER = {
-  name: 'Developer Auth',
-  route: '/login/developer',
-  method: 'post',
-  body: ['name', 'id'],
-}
-
-if (environment.bypassAuth) providerConfig.providers.push(DEV_AUTH_SKIP_PROVIDER)
+import providerConfig from '../config/providers.config'
 
 export function get() {
-  const { providers }: { providers: Provider[] } = providerConfig
+  const { providers } = providerConfig
 
   return providers
 }
