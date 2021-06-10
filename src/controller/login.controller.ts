@@ -6,7 +6,7 @@ import UserService from '../services/user.service'
 import AuthService from '../services/auth.service'
 import ProviderService from '../services/provider.service'
 
-import { Unauthorized, Unknown } from '../utils/apiResponse.utils'
+import { GenericResponse, Unauthorized, Unknown } from '../utils/apiResponse.utils'
 
 // 10 days - largely irrellivant because the JWT will expire before the cookie does
 const refreshCookieOptions = { maxAge: 864000000, httpOnly: true, secure: true, sameSite: true }
@@ -63,7 +63,7 @@ export async function developerCallback(req: Request, res: Response, next: NextF
   const refreshToken = AuthService.createRefresh(user.id)
 
   res.cookie('refreshToken', refreshToken, refreshCookieOptions)
-  res.send(200).json()
+  res.status(200).json(new GenericResponse('Login successful'))
 }
 
 export default {
