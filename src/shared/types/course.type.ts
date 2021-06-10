@@ -7,7 +7,6 @@ type Course = {
   end_date?: string
   createdAt?: string
   updatedAt?: string
-  deletedAt?: string
 }
 
 export default Course
