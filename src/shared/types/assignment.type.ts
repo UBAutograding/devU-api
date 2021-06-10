@@ -1,5 +1,5 @@
 type Assignment = {
-  assignment_id?: number
+  id?: number
   course_id?: number
   name?: string
   start_date?: string
