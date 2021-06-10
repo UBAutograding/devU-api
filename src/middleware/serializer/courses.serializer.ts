@@ -5,7 +5,7 @@ import CourseType from '../../shared/types/course.type'
 
 import { Unknown } from '../../utils/apiResponse.utils'
 
-export default function (req: Request, res: Response, next: NextFunction) {
+export default function(req: Request, res: Response, next: NextFunction) {
   // No data applied at the controller level
   if (!req.course && !req.courses) return res.status(400).json(Unknown)
 
@@ -16,8 +16,14 @@ export default function (req: Request, res: Response, next: NextFunction) {
 
 function serialize(course: Course): CourseType {
   return {
-// TODO
+    id: course.id,
+    name: course.name,
+    semester: course.semester,
+    number: course.number,
+    start_date: course.start_date.toISOString(),
+    end_date: course.end_date.toISOString(),
+    createdAt: course.createdAt.toISOString(),
+    updatedAt: course.updatedAt.toISOString(),
+    deletedAt: course.deletedAt.toISOString(),
   }
 }
-
-// TODO

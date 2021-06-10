@@ -10,8 +10,14 @@ export async function create(assignment: AssignmentType) {
 }
 
 export async function update(assignment: AssignmentType) {
-  const { id, /*TODO*/ } = assignment
-  return await connect().update(id, { /*TODO*/ })
+  const {
+    id, course_id, name, start_date, due_date, end_date, grading_type, category_name, description, max_file_size,
+    max_submissions, disable_handins,
+  } = assignment
+  return await connect().update(id, {
+    course_id, name, start_date, due_date, end_date, grading_type,
+    category_name, description, max_file_size, max_submissions, disable_handins,
+  })
 }
 
 export async function _delete(id: number) {
