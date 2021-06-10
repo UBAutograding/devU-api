@@ -19,7 +19,7 @@ export async function get(req: Request, res: Response, next: NextFunction) {
 export async function detail(req: Request, res: Response, next: NextFunction) {
   try {
     const id = parseInt(req.params.id)
-    const assignment = await Assignment.retrieve(id)
+    const assignment = await AssignmentService.retrieve(id)
 
     if (!assignment) return res.status(404).json(NotFound)
 

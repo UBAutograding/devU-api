@@ -13,7 +13,6 @@ type Assignment = {
   disable_handins?: boolean
   createdAt?: string
   updatedAt?: string
-  deletedAt?: string
 }
 
 export default Assignment
