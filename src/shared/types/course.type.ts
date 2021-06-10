@@ -1,5 +1,5 @@
 type Course = {
-  course_id?: number
+  id?: number
   name?: string
   semester?: string
   number?: string
