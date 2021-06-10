@@ -18,21 +18,32 @@ function getVerificationKey(kid: string) {
   return authConfig.jwt.keys[kid].public_key
 }
 
-const commonOptions = { issuer: "devU-auth", audience: ["devU-api", "devU-client"], keyid: authConfig.jwt.active_key_id }
+const commonOptions = {
+  issuer: 'devU-auth',
+  audience: ['devU-api', 'devU-client'],
+  keyid: authConfig.jwt.active_key_id,
+}
 const accessOptions = { ...commonOptions, expiresIn: `${environment.tokenExpiration}s` }
 // TODO: Add jwtid to refresh tokens for revocation ability in the future
 // or add rev_sig (hashed value of some fields that revoke tokens if any change)
 const refreshOptions = { ...commonOptions, expiresIn: '10d' }
 
 export function get(user: DeserializedToken) {
-  const token = jwt.sign({scope: ["profile", "cse250.read"]}, signingKey, {...accessOptions, subject: user.email, algorithm: "RS256" })
+  const token = jwt.sign({ scope: ['profile', 'cse250.read'] }, signingKey, {
+    ...accessOptions,
+    subject: user.email,
+    algorithm: 'RS256',
+  })
 
   return token
 }
 
 export function authenticate(token: string): DeserializedToken | null {
   try {
-    return jwt.verify(token, getVerificationKey(jws.decode(token).header.kid), {...accessOptions, algorithms: ["RS256"]})
+    return jwt.verify(token, getVerificationKey(jws.decode(token).header.kid), {
+      ...accessOptions,
+      algorithms: ['RS256'],
+    })
   } catch (_err) {
     console.error(_err)
     return null
@@ -40,14 +51,17 @@ export function authenticate(token: string): DeserializedToken | null {
 }
 
 export function createRefresh(id: number) {
-  const token = jwt.sign({ id }, signingKey, {...refreshOptions, algorithm: "RS256"})
+  const token = jwt.sign({ id }, signingKey, { ...refreshOptions, algorithm: 'RS256' })
 
   return token
 }
 
 export function authenticateRefresh(token: string): DeserializedRefreshToken | null {
   try {
-    return jwt.verify(token, getVerificationKey(jws.decode(token).header.kid), {...refreshOptions, algorithms: ["RS256"]})
+    return jwt.verify(token, getVerificationKey(jws.decode(token).header.kid), {
+      ...refreshOptions,
+      algorithms: ['RS256'],
+    })
   } catch (_err) {
     console.error(_err)
     return null
