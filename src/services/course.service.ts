@@ -10,8 +10,8 @@ export async function create(course: CourseType) {
 }
 
 export async function update(course: CourseType) {
-  const { id, /*TODO*/ } = course
-  return await connect().update(id, { /*TODO*/ })
+  const { id, name, semester, number, start_date, end_date } = course
+  return await connect().update(id, { name, semester, number, start_date, end_date })
 }
 
 export async function _delete(id: number) {
