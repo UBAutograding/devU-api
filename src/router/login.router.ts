@@ -5,7 +5,7 @@ import controller from '../controller/login.controller'
 
 // Middleware
 import { hasRefreshToken, saml } from '../middleware/auth.middleware'
-import { checkEnabledProviders } from '../middleware/validator/login.validator'
+import { checkEnabledProviders, validateDeveloper } from '../middleware/validator/login.validator'
 import { loginSerializer } from '../middleware/serializer/users.serializer'
 
 const Router = express.Router()
@@ -20,7 +20,7 @@ Router.get('/', hasRefreshToken, controller.login, loginSerializer)
 Router.get('/providers', controller.getProviders)
 
 Router.get('/saml', checkEnabledProviders, saml)
-Router.get('/developer', checkEnabledProviders, controller.developerCallback)
+Router.post('/developer', checkEnabledProviders, validateDeveloper, controller.developerCallback)
 
 // TODO - should be changed to /saml/callback
 Router.post('/callback', saml, controller.samlCallback)

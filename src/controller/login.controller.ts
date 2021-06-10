@@ -57,10 +57,13 @@ export async function samlCallback(req: Request, res: Response, next: NextFuncti
 }
 
 export async function developerCallback(req: Request, res: Response, next: NextFunction) {
-  const refreshToken = AuthService.createRefresh(1)
+  const { email = '', schoolId = '' } = req.body
+
+  const { user } = await UserService.ensure({ email, schoolId })
+  const refreshToken = AuthService.createRefresh(user.id)
 
   res.cookie('refreshToken', refreshToken, refreshCookieOptions)
-  res.redirect(environment.clientUrl)
+  res.send(200).json()
 }
 
 export default {
