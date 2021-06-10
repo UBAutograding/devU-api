@@ -30,7 +30,7 @@ describe('User Serializer', () => {
   })
 
   describe('Missing user and users', () => {
-    // by default fakeReq has no user || users so we're good to test with the defualts
+    // by default fakeReq has no user || users so we're good to test with the defaults
     beforeEach(() => serializer(req, res, next))
 
     test('400 without user or users', () => expect(res.status).toBeCalledWith(400))
