@@ -1,4 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
+import { check } from 'express-validator'
+
+import validate from './generic.validator'
 
 import ProviderService from '../../services/provider.service'
 
@@ -11,3 +14,8 @@ export function checkEnabledProviders(req: Request, res: Response, next: NextFun
 
   next()
 }
+
+const email = check('email').isString().trim().isEmail()
+const schoolId = check('schoolId').isString().trim()
+
+export const validateDeveloper = [email, schoolId, validate]

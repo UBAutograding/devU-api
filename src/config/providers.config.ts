@@ -13,8 +13,9 @@ const defaultConfig: ProvidersConfig = { providers: [] }
 const DEV_AUTH_SKIP_PROVIDER: Provider = {
   name: 'Developer Auth',
   route: '/login/developer',
+  description: 'A user will be created for you with your provided credentials, or sign you in the user already exists.',
   method: 'post',
-  body: ['name', 'id'],
+  body: ['email', 'schoolId'],
 }
 
 function generateProvidersConfig(): ProvidersConfig {
