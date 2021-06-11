@@ -1,13 +1,9 @@
-// Libraries
 import express from 'express'
 
-// Middleware
 import validator from '../middleware/validator/users.validator'
 import { idAsInt } from '../middleware/validator/generic.validator'
-
 import serializer from '../middleware/serializer/users.serializer'
 
-// Controller
 import UserController from '../controller/users.controller'
 
 const Router = express.Router()
