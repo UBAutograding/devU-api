@@ -21,6 +21,6 @@ Router.post('/callback', saml, controller.callback)
  *   post:
  *     summary: Handles successful SAML authentication
  */
-Router.get('/metadata', controller.meta)
+Router.get('/metadata', controller.generateMetadata)
 
 export default Router
