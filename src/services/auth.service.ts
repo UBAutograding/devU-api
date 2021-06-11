@@ -1,76 +1,82 @@
-import jwt from 'jsonwebtoken'
-import jws from 'jws'
 import fs from 'fs'
+import jws from 'jws'
+import jwt, { SignOptions, VerifyOptions } from 'jsonwebtoken'
+
+import { AccessToken, RefreshToken } from 'devu-shared-modules'
 
 import environment from '../environment'
 
-import { DeserializedToken, DeserializedRefreshToken } from 'devu-shared-modules'
+import User from '../model/users.model'
 
 // TODO: Replace with proper app level configs
 const pathToEnv = `${__dirname}/../env/`
 const authConfig = JSON.parse(fs.readFileSync(pathToEnv + 'config/auth.config.json', 'utf8'))
 const signingKey = authConfig.jwt.keys[authConfig.jwt.active_key_id].private_key
 
-function getVerificationKey(kid: string) {
-  if (!authConfig.jwt.keys[kid]) {
-    return null
-  }
+function getVerificationKey(kid?: string) {
+  if (!kid) return null
+  if (!authConfig.jwt.keys[kid]) return null
+
   return authConfig.jwt.keys[kid].public_key
 }
 
-const commonOptions = {
+// TODO - Add jwtid to refresh tokens for revocation ability in the future
+// or add rev_sig (hashed value of some fields that revoke tokens if any change)
+const jwtOptions: SignOptions & VerifyOptions = {
   issuer: 'devU-auth',
   audience: ['devU-api', 'devU-client'],
   keyid: authConfig.jwt.active_key_id,
 }
-const accessOptions = { ...commonOptions, expiresIn: `${environment.tokenExpiration}s` }
-// TODO: Add jwtid to refresh tokens for revocation ability in the future
-// or add rev_sig (hashed value of some fields that revoke tokens if any change)
-const refreshOptions = { ...commonOptions, expiresIn: '10d' }
 
-export function get(user: DeserializedToken) {
-  const token = jwt.sign({ scope: ['profile', 'cse250.read'] }, signingKey, {
-    ...accessOptions,
-    subject: user.email,
+function createToken(payload: AccessToken | RefreshToken, expiresIn: string) {
+  const token = jwt.sign(payload, signingKey, {
+    ...jwtOptions,
+    expiresIn,
     algorithm: 'RS256',
+    subject: `${payload.userId}`,
   })
 
   return token
 }
 
-export function authenticate(token: string): DeserializedToken | null {
+export function createAccessToken(user: User): string {
+  const payload: AccessToken = { userId: user.id, email: user.email }
+  return createToken(payload, `${environment.accessTokenValiditySeconds}s`)
+}
+
+export function createRefreshToken(user: User): string {
+  const payload = { userId: user.id }
+  return createToken(payload, `${environment.refreshTokenValiditySeconds}s`)
+}
+
+function validateJwt(token: string): object | null {
   try {
-    return jwt.verify(token, getVerificationKey(jws.decode(token).header.kid), {
-      ...accessOptions,
-      algorithms: ['RS256'],
-    })
+    const verificationKey = getVerificationKey(jws.decode(token).header.kid)
+    const payload = jwt.verify(token, verificationKey, { ...jwtOptions, algorithms: ['RS256'] })
+
+    return payload as object
   } catch (_err) {
-    console.error(_err)
     return null
   }
 }
 
-export function createRefresh(id: number) {
-  const token = jwt.sign({ id }, signingKey, { ...refreshOptions, algorithm: 'RS256' })
+export function verifyAccessToken(token: string): AccessToken | null {
+  const deserializedToken = validateJwt(token)
 
-  return token
+  if (deserializedToken) return deserializedToken as AccessToken
+  return null
 }
 
-export function authenticateRefresh(token: string): DeserializedRefreshToken | null {
-  try {
-    return jwt.verify(token, getVerificationKey(jws.decode(token).header.kid), {
-      ...refreshOptions,
-      algorithms: ['RS256'],
-    })
-  } catch (_err) {
-    console.error(_err)
-    return null
-  }
+export function validateRefreshToken(token: string): RefreshToken | null {
+  const deserializedToken = validateJwt(token)
+
+  if (deserializedToken) return deserializedToken as RefreshToken
+  return null
 }
 
 export default {
-  get,
-  authenticate,
-  createRefresh,
-  authenticateRefresh,
+  createAccessToken,
+  createRefreshToken,
+  verifyAccessToken,
+  validateRefreshToken,
 }

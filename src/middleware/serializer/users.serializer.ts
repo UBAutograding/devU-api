@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
 
-import User from '../../model/users.model'
-import { User as UserType, LoginUser } from 'devu-shared-modules'
+import { User } from 'devu-shared-modules'
+
+import UserModel from '../../model/users.model'
 
 import { GenericResponse, Unknown } from '../../utils/apiResponse.utils'
 
@@ -18,22 +19,10 @@ export default function (req: Request, res: Response, next: NextFunction) {
   res.status(req.statusCode).json(response)
 }
 
-export function loginSerializer(req: Request, res: Response, Next: NextFunction) {
-  if (!req.user || !req.auth) return res.status(400).json(Unknown)
-  if (!req.statusCode) throw res.status(400).json(new GenericResponse('Developer error - missing status code'))
-
-  const response: LoginUser = {
-    user: serialize(req.user),
-    auth: req.auth,
-  }
-
-  res.status(req.statusCode).json(response)
-}
-
-function serialize(user: User): UserType {
+function serialize(user: UserModel): User {
   return {
     id: user.id,
-    schoolId: user.schoolId,
+    externalId: user.externalId,
     email: user.email,
     createdAt: user.createdAt.toISOString(),
     updatedAt: user.updatedAt.toISOString(),

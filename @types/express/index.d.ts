@@ -1,18 +1,17 @@
 import User from '../../src/model/users.model'
 
-import { SchoolAuth, ApiAuth, DeserializedToken, DeserializedRefreshToken } from 'devu-shared-modules'
+import { Token, AccessToken, RefreshToken } from 'devu-shared-modules'
 declare global {
   namespace Express {
     interface Request {
-      // Models
+      // Response Types
       user?: User
       users?: User[]
+      authResponse?: Token
 
       // Auth Data
-      userInfo?: SchoolAuth
-      auth?: ApiAuth
-      currentUser?: DeserializedToken
-      refreshUser?: DeserializedRefreshToken
+      currentUser?: AccessToken
+      refreshUser?: RefreshToken
     }
   }
 }

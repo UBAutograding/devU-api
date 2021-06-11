@@ -1,18 +1,21 @@
 import { getRepository, IsNull } from 'typeorm'
 
-import User from '../model/users.model'
+import UserModel from '../model/users.model'
 
-import { User as UserType, SchoolAuth } from 'devu-shared-modules'
+import { User, DeveloperAuth } from 'devu-shared-modules'
 
-const connect = () => getRepository(User)
+const connect = () => getRepository(UserModel)
 
-export async function create(user: UserType) {
+export async function create(user: User) {
   return await connect().save(user)
 }
 
-export async function update(user: UserType) {
-  const { id = '', email, schoolId, preferredName } = user
-  return await connect().update(id, { email, schoolId, preferredName })
+export async function update(user: User) {
+  const { id, email, externalId, preferredName } = user
+
+  if (!id) throw new Error('Missing Id')
+
+  return await connect().update(id, { email, externalId, preferredName })
 }
 
 export async function _delete(id: number) {
@@ -27,14 +30,14 @@ export async function list() {
   return await connect().find({ deletedAt: IsNull() })
 }
 
-export async function ensure(userInfo: SchoolAuth) {
-  const { schoolId, email } = userInfo
+export async function ensure(userInfo: DeveloperAuth) {
+  const { externalId, email } = userInfo
 
-  const user = await connect().findOne({ schoolId })
+  const user = await connect().findOne({ externalId })
 
   if (user) return { user, isNewUser: false }
 
-  const newUser = await create({ email, schoolId })
+  const newUser = await create({ email, externalId })
 
   return { user: newUser, isNewUser: true }
 }

@@ -19,7 +19,8 @@ export default {
   bypassAuth: process.env.BYPASS_AUTH !== undefined, // skips school auth, works automatically on npm start
   jwtPrivateKey: process.env.JWT_PRIVATE_KEY || 'private_key',
   jwtPublicKey: process.env.JWT_PUBLIC_KEY || 'public_key',
-  tokenExpiration: process.env.TOKEN_EXPIRATION || '600', // expiration time in seconds (10 minutes)
+  accessTokenValiditySeconds: parseInt(`${process.env.ACCESS_TOKEN_VALIDITY_SECONDS}`) || 600, // expiration time in seconds (10 minutes)
+  refreshTokenValiditySeconds: parseInt(`${process.env.REFRESH_TOKEN_VALIDITY_SECONDS}`) || 864000, // expiration in 10 days (s)
 
   // Auth Provider Settings
   callbackUrl: process.env.CALLBACK_URL || `${apiUrl}/login/callback`,

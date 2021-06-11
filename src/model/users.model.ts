@@ -14,11 +14,11 @@ export default class User {
   @DeleteDateColumn()
   deletedAt?: Date
 
-  @Column({ length: 128 })
+  @Column({ length: 320, unique: true, nullable: false })
   email: string
 
-  @Column({ length: 128, unique: true, nullable: false })
-  schoolId: string
+  @Column({ length: 320, unique: true, nullable: false })
+  externalId: string
 
   @Column({ length: 128, nullable: true })
   preferredName: string

@@ -16,6 +16,6 @@ export function checkEnabledProviders(req: Request, res: Response, next: NextFun
 }
 
 const email = check('email').isString().trim().isEmail()
-const schoolId = check('schoolId').isString().trim()
+const externalId = check('externalId').isString().trim()
 
-export const validateDeveloper = [email, schoolId, validate]
+export const validateDeveloper = [email, externalId, validate]

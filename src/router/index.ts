@@ -7,14 +7,14 @@ import login from './login.router'
 import users from './users.router'
 import status from './status.router'
 
-import { isUser } from '../middleware/auth.middleware'
+import { isAuthorized } from '../middleware/auth.middleware'
 
 import { NotFound } from '../utils/apiResponse.utils'
 
 const Router = express.Router()
 
 Router.use('/login', login)
-Router.use('/users', isUser, users)
+Router.use('/users', isAuthorized, users)
 Router.use('/status', status)
 Router.use('/docs', swaggerUi.serve, swaggerUi.setup(swagger))
 

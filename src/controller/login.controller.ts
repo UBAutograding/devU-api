@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction, CookieOptions } from 'express'
 
 import environment from '../environment'
 
@@ -8,29 +8,28 @@ import ProviderService from '../services/provider.service'
 
 import { GenericResponse, Unauthorized, Unknown } from '../utils/apiResponse.utils'
 
-// 10 days - largely irrellivant because the JWT will expire before the cookie does
-const refreshCookieOptions = { maxAge: 864000000, httpOnly: true, secure: true, sameSite: true }
+const refreshCookieOptions: CookieOptions = {
+  maxAge: environment.refreshTokenValiditySeconds * 1000,
+  httpOnly: true,
+  secure: true,
+  sameSite: true,
+}
 
 export async function login(req: Request, res: Response, next: NextFunction) {
   try {
     if (req.refreshUser === undefined) return res.status(401).json(Unknown)
 
-    const { id } = req.refreshUser
+    const { userId } = req.refreshUser
 
-    if (!id) return res.status(401).json(Unauthorized)
+    if (!userId) return res.status(401).json(Unauthorized)
 
-    const user = await UserService.retrieve(id)
+    const user = await UserService.retrieve(userId)
 
     if (!user) return res.status(401).json(Unauthorized)
 
-    const token = AuthService.get({ email: user.email })
+    const accessToken = AuthService.createAccessToken(user)
 
-    req.user = user
-    req.auth = { token }
-
-    req.statusCode = 200
-
-    next()
+    res.status(200).json({ accessToken })
   } catch (err) {
     next(err)
   }
@@ -48,19 +47,19 @@ export function getProviders(req: Request, res: Response, next: NextFunction) {
 
 export async function samlCallback(req: Request, res: Response, next: NextFunction) {
   const samlUser = req.user as any
-  const { user } = await UserService.ensure({ email: samlUser.email, schoolId: samlUser.externalId })
+  const { user } = await UserService.ensure({ email: samlUser.email, externalId: samlUser.externalId })
 
-  const refreshToken = AuthService.createRefresh(user.id)
+  const refreshToken = AuthService.createRefreshToken(user)
 
   res.cookie('refreshToken', refreshToken, refreshCookieOptions)
   res.redirect(environment.clientUrl)
 }
 
 export async function developerCallback(req: Request, res: Response, next: NextFunction) {
-  const { email = '', schoolId = '' } = req.body
+  const { email = '', externalId = '' } = req.body
 
-  const { user } = await UserService.ensure({ email, schoolId })
-  const refreshToken = AuthService.createRefresh(user.id)
+  const { user } = await UserService.ensure({ email, externalId })
+  const refreshToken = AuthService.createRefreshToken(user)
 
   res.cookie('refreshToken', refreshToken, refreshCookieOptions)
   res.status(200).json(new GenericResponse('Login successful'))
