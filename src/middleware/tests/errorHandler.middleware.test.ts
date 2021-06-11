@@ -5,9 +5,9 @@ import globalErrorHandler from '../errorHandler.middleware'
 import { GenericResponse, Unknown, Unimplemented } from '../../utils/apiResponse.utils'
 
 // Testing Globals
-let req
-let res
-let next
+let req: any
+let res: any
+let next: any
 
 let expectedErrorMessage = 'Expected Message'
 

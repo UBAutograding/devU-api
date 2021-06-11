@@ -10,9 +10,9 @@ import Testing from '../../utils/testing.utils'
 import { GenericResponse, NotFound, Updated } from '../../utils/apiResponse.utils'
 
 // Testing Globals
-let req
-let res
-let next
+let req: any
+let res: any
+let next: any
 
 let expectedResults: User[]
 let expectedResult: User

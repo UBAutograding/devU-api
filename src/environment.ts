@@ -1,29 +1,72 @@
-const apiUrl = process.env.API_URL || `http://localhost:${process.env.PORT}`
+import config from 'config'
 
-export default {
-  // API & Client Callback URL
+type Keys = {
+  privateKey: string
+  publicKey: string
+}
+
+type Certificate = {
+  certificate: string
+  privateKey: string
+}
+
+type Saml = {
+  name: string
+  enabled: boolean
+  attributeMap: Record<string, string>
+  entryPoint: string
+  idpCerts: string
+  encryption: Certificate
+  signing: Certificate
+}
+
+type DevAuth = {
+  enabled: boolean
+}
+
+type Providers = {
+  saml: Saml
+  devAuth: DevAuth
+}
+
+function load(path: string): any {
+  if (!config.has(path)) return false
+
+  return config.get(path)
+}
+
+const scheme = (process.env.SCHEME || load('api.scheme') || 'http') as string
+const host = (process.env.HOST || load('api.host') || 'localhost') as string
+const port = (process.env.PORT || load('api.port') || 3001) as number
+
+const apiUrl = `${scheme}://${host}:${port}`
+
+// prettier-ignore
+const refreshTokenExp = process.env.REFRESH_TOKEN_VALIDITY_SECONDS || load('auth.jwt.refreshTokenValiditySeconds') || 864000
+const accessTokenExp = process.env.ACCESS_TOKEN_VALIDITY_SECONDS || load('auth.jwt.accessTokenValiditySeconds') || 600
+
+const environment = {
+  port,
   apiUrl,
-  clientUrl: process.env.CLIENT_URL || 'http://localhost:9000',
+  clientUrl: (process.env.CLIENT_URL || load('api.clientUrl') || 'http://localhost:9000') as string,
 
   // Database settings
-  port: process.env.PORT || 3001,
-  dbHost: process.env.DB_HOST || 'localhost',
-  dbUsername: process.env.DB_USERNAME || 'typescript_user',
-  dbPassword: process.env.DB_PASSWORD || 'password',
-  database: process.env.DATABASE || 'typescript_api',
+  dbHost: (process.env.DB_HOST || load('database.host') || 'localhost') as string,
+  dbUsername: (process.env.DB_USERNAME || load('database.username') || 'typescript_user') as string,
+  dbPassword: (process.env.DB_PASSWORD || load('database.password') || 'password') as string,
+  database: (process.env.DATABASE || load('database.database') || 'typescript_api') as string,
 
   // Logging
   logDB: process.env.LOG_DB !== undefined, // logs all sql commands for gut/fact checking endpoints
 
   // Auth Settings
-  bypassAuth: process.env.BYPASS_AUTH !== undefined, // skips school auth, works automatically on npm start
-  jwtPrivateKey: process.env.JWT_PRIVATE_KEY || 'private_key',
-  jwtPublicKey: process.env.JWT_PUBLIC_KEY || 'public_key',
-  accessTokenValiditySeconds: parseInt(`${process.env.ACCESS_TOKEN_VALIDITY_SECONDS}`) || 600, // expiration time in seconds (10 minutes)
-  refreshTokenValiditySeconds: parseInt(`${process.env.REFRESH_TOKEN_VALIDITY_SECONDS}`) || 864000, // expiration in 10 days (s)
+  activeKeyId: process.env.ACTIVE_KEY_ID || (config.get('auth.jwt.activeKeyId') as string),
+  keys: config.get('auth.jwt.keys') as Record<string, Keys>,
+  accessTokenValiditySeconds: parseInt(accessTokenExp),
+  refreshTokenValiditySeconds: parseInt(refreshTokenExp),
 
-  // Auth Provider Settings
-  callbackUrl: process.env.CALLBACK_URL || `${apiUrl}/login/callback`,
-  entryPoint: process.env.ENTRY_POINT || 'https://samltest.id/idp/profile/SAML2/Redirect/SSO',
-  issuer: process.env.ISSUER || `${apiUrl}/shibboleth`,
+  // BE CAREFUL WITH PROVIDERS - THEY'RE NOT TOTALLY TYPE SAFE UNLESS PROPERLY CONFIGURED
+  providers: config.get('auth.providers') as Providers,
 }
+
+export default environment
