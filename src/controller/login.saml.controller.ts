@@ -4,6 +4,7 @@ import environment from '../environment'
 
 import UserService from '../services/user.service'
 import AuthService from '../services/auth.service'
+import {samlStrategy} from "../utils/passport/saml.passport"
 
 const refreshCookieOptions: CookieOptions = {
   maxAge: environment.refreshTokenValiditySeconds * 1000,
@@ -22,15 +23,17 @@ export async function callback(req: Request, res: Response, next: NextFunction) 
   res.redirect(environment.clientUrl)
 }
 
-export async function meta(req: Request, res: Response, next: NextFunction) {
-  res.status(200).json()
-
-  // samlStrategy.generateServiceProviderMetadata(
-  //   environment.providers.saml.encryption.certificate,
-  //   environment.providers.saml.signing.certificate)
+export async function generateMetadata(req: Request, res: Response, next: NextFunction) {
+  res.type('application/xml');
+  res.status(200).send(
+    samlStrategy.generateServiceProviderMetadata(
+      environment.providers.saml.encryption.certificate,
+      environment.providers.saml.signing.certificate
+    )
+  )
 }
 
 export default {
   callback,
-  meta,
+  generateMetadata,
 }

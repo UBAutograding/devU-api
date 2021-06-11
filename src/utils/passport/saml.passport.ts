@@ -4,8 +4,10 @@ import { renameKeys } from 'devu-shared-modules'
 
 import environment from '../../environment'
 
+export var samlStrategy: SamlStrategy
+
 function generateSamlStrategy() {
-  const samlStrategy = new SamlStrategy(
+  samlStrategy = new SamlStrategy(
     {
       // URL that goes from the Identity Provider -> Service Provider
       callbackUrl: `${environment.apiUrl}/login/saml/callback`,
