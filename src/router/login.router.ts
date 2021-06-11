@@ -16,12 +16,37 @@ const Router = express.Router()
  *     summary: Gets API auth via passing refresh token as a cookie
  */
 Router.get('/', isValidRefreshToken, controller.login)
+
+/**
+ * @swagger
+ * /login/providers:
+ *   get:
+ *     summary: Gets a list of availible authentication providers
+ */
 Router.get('/providers', controller.getProviders)
 
+/**
+ * @swagger
+ * /login/saml:
+ *   get:
+ *     summary: Redirection endpoint for saml provider
+ */
 Router.get('/saml', checkEnabledProviders, saml)
-Router.post('/developer', checkEnabledProviders, validateDeveloper, controller.developerCallback)
 
-// TODO - should be changed to /saml/callback
-Router.post('/callback', saml, controller.samlCallback)
+/**
+ * @swagger
+ * /login/saml/callback:
+ *   post:
+ *     summary: Handles successful SAML authentication
+ */
+Router.post('/saml/callback', saml, controller.samlCallback)
+
+/**
+ * @swagger
+ * /login/developer:
+ *   post:
+ *     summary: NOT IN PRODUCTION. Gives a way for developers to log in while developing locally
+ */
+Router.post('/developer', checkEnabledProviders, validateDeveloper, controller.developerCallback)
 
 export default Router
