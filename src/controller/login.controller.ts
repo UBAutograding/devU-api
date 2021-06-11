@@ -1,19 +1,10 @@
-import { Request, Response, NextFunction, CookieOptions } from 'express'
-
-import environment from '../environment'
+import { Request, Response, NextFunction } from 'express'
 
 import UserService from '../services/user.service'
 import AuthService from '../services/auth.service'
 import ProviderService from '../services/provider.service'
 
-import { GenericResponse, Unauthorized, Unknown } from '../utils/apiResponse.utils'
-
-const refreshCookieOptions: CookieOptions = {
-  maxAge: environment.refreshTokenValiditySeconds * 1000,
-  httpOnly: true,
-  secure: true,
-  sameSite: true,
-}
+import { Unauthorized, Unknown } from '../utils/apiResponse.utils'
 
 export async function login(req: Request, res: Response, next: NextFunction) {
   try {
@@ -45,38 +36,7 @@ export function getProviders(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export async function samlCallback(req: Request, res: Response, next: NextFunction) {
-  const samlUser = req.user as any
-  const { user } = await UserService.ensure({ email: samlUser.email, externalId: samlUser.externalId })
-
-  const refreshToken = AuthService.createRefreshToken(user)
-
-  res.cookie('refreshToken', refreshToken, refreshCookieOptions)
-  res.redirect(environment.clientUrl)
-}
-
-export async function samlMeta(req: Request, res: Response, next: NextFunction) {
-  res.status(200).json()
-
-  // samlStrategy.generateServiceProviderMetadata(
-  //   environment.providers.saml.encryption.certificate,
-  //   environment.providers.saml.signing.certificate)
-}
-
-export async function developerCallback(req: Request, res: Response, next: NextFunction) {
-  const { email = '', externalId = '' } = req.body
-
-  const { user } = await UserService.ensure({ email, externalId })
-  const refreshToken = AuthService.createRefreshToken(user)
-
-  res.cookie('refreshToken', refreshToken, refreshCookieOptions)
-  res.status(200).json(new GenericResponse('Login successful'))
-}
-
 export default {
   login,
   getProviders,
-  samlCallback,
-  samlMeta,
-  developerCallback,
 }

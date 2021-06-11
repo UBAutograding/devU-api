@@ -4,9 +4,11 @@ import { Request, Response, NextFunction } from 'express'
 
 import { AccessToken } from 'devu-shared-modules'
 
+import environment from '../environment'
+
 import { verifyAccessToken, validateRefreshToken } from '../services/auth.service'
 
-import { GenericResponse, Unauthorized } from '../utils/apiResponse.utils'
+import { GenericResponse, NotFound, Unauthorized } from '../utils/apiResponse.utils'
 
 function checkAuth(req: Request): [AccessToken | null, GenericResponse | null] {
   const authorization = req.headers.authorization
@@ -45,6 +47,18 @@ export async function isValidRefreshToken(req: Request, res: Response, next: Nex
   if (!deserializedToken) return res.status(401).json(Unauthorized)
 
   req.refreshUser = deserializedToken
+
+  next()
+}
+
+export async function isSamlEnabled(req: Request, res: Response, next: NextFunction) {
+  if (!environment.providers.saml.enabled) return res.status(404).json(NotFound)
+
+  next()
+}
+
+export async function isDeveloperEnabled(req: Request, res: Response, next: NextFunction) {
+  if (!environment.providers.devAuth.enabled) return res.status(404).json(NotFound)
 
   next()
 }
