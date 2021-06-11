@@ -1,3 +1,4 @@
+//@ts-expect-error
 import passport from 'passport'
 
 import saml from './passport/saml.passport'

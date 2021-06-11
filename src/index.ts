@@ -7,8 +7,11 @@ import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import { createConnection } from 'typeorm'
-import passport from 'passport'
 import cookieParser from 'cookie-parser'
+
+//@ts-expect-error - passport is extending the express.request type in the global namespace that conflicts with our
+// express.request overrides. We're explicitly not installing their types to prevent the conflict
+import passport from 'passport'
 
 import environment from './environment'
 import connectionInfo from './database'
@@ -23,7 +26,7 @@ import './utils/passport.utils'
 const app = express()
 
 createConnection(connectionInfo)
-  .then(connection => {
+  .then(_connection => {
     app.use(helmet())
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(bodyParser.json())
