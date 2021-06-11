@@ -1,13 +1,12 @@
-import User from '../../src/model/users.model'
+import UserModel from '../../src/model/users.model'
 
-import { Token, AccessToken, RefreshToken } from 'devu-shared-modules'
+import { AccessToken, RefreshToken } from 'devu-shared-modules'
 declare global {
   namespace Express {
     interface Request {
       // Response Types
-      user?: User
-      users?: User[]
-      authResponse?: Token
+      user?: UserModel
+      users?: UserModel[]
 
       // Auth Data
       currentUser?: AccessToken
