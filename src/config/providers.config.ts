@@ -1,21 +1,21 @@
 import fs from 'fs'
 
-import { Provider } from 'devu-shared-modules'
+import { AuthProvider } from 'devu-shared-modules'
 
 import environment from '../environment'
 
 // Returned Config Shape
-type ProvidersConfig = { providers: Provider[] }
+type ProvidersConfig = { providers: AuthProvider[] }
 
 const pathToEnv = `${__dirname}/../../env/`
 const defaultConfig: ProvidersConfig = { providers: [] }
 
-const DEV_AUTH_SKIP_PROVIDER: Provider = {
+const DEV_AUTH_SKIP_PROVIDER: AuthProvider = {
   name: 'Developer Auth',
   route: '/login/developer',
   description: 'A user will be created for you with your provided credentials, or sign you in the user already exists.',
   method: 'post',
-  body: ['email', 'schoolId'],
+  body: ['email', 'externalId'],
 }
 
 function generateProvidersConfig(): ProvidersConfig {

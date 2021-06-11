@@ -1,36 +1,45 @@
 import passport from 'passport'
-
 import { Request, Response, NextFunction } from 'express'
+
+import { AccessToken } from 'devu-shared-modules'
+
+import { verifyAccessToken, validateRefreshToken } from '../services/auth.service'
 
 import { GenericResponse, Unauthorized } from '../utils/apiResponse.utils'
 
-import { authenticate, authenticateRefresh } from '../services/auth.service'
-
-export async function isUser(req: Request, res: Response, next: NextFunction) {
+function checkAuth(req: Request): [AccessToken | null, GenericResponse | null] {
   const authorization = req.headers.authorization
 
-  if (!authorization) return res.status(401).json(new GenericResponse('Missing authentication headers'))
+  if (!authorization) return [null, new GenericResponse('Missing authentication headers')]
 
   const [type, token] = authorization.split(' ')
 
-  if (type !== 'Bearer') return res.status(401).json(new GenericResponse('Expected Bearer token'))
-  if (!token) return res.status(401).json(Unauthorized)
+  if (type !== 'Bearer') return [null, new GenericResponse('Missing Bearer in authentication header')]
+  if (!token) return [null, Unauthorized]
 
-  const deserializedToken = authenticate(token)
+  const deserializedToken = verifyAccessToken(token)
 
-  if (!deserializedToken) return res.status(401).json(Unauthorized)
+  if (!deserializedToken) return [null, Unauthorized]
 
-  req.currentUser = deserializedToken
+  return [deserializedToken, null]
+}
+
+export async function isAuthorized(req: Request, res: Response, next: NextFunction) {
+  const [currentUser, error] = checkAuth(req)
+
+  if (!currentUser) return res.status(401).json(error)
+
+  req.currentUser = currentUser
 
   next()
 }
 
-export async function hasRefreshToken(req: Request, res: Response, next: NextFunction) {
+export async function isValidRefreshToken(req: Request, res: Response, next: NextFunction) {
   const { refreshToken = '' } = req.cookies
 
   if (!refreshToken) return res.status(401).json(Unauthorized)
 
-  const deserializedToken = authenticateRefresh(refreshToken)
+  const deserializedToken = validateRefreshToken(refreshToken)
 
   if (!deserializedToken) return res.status(401).json(Unauthorized)
 

@@ -4,9 +4,8 @@ import express from 'express'
 import controller from '../controller/login.controller'
 
 // Middleware
-import { hasRefreshToken, saml } from '../middleware/auth.middleware'
+import { isValidRefreshToken, saml } from '../middleware/auth.middleware'
 import { checkEnabledProviders, validateDeveloper } from '../middleware/validator/login.validator'
-import { loginSerializer } from '../middleware/serializer/users.serializer'
 
 const Router = express.Router()
 
@@ -16,7 +15,7 @@ const Router = express.Router()
  *   get:
  *     summary: Gets API auth via passing refresh token as a cookie
  */
-Router.get('/', hasRefreshToken, controller.login, loginSerializer)
+Router.get('/', isValidRefreshToken, controller.login)
 Router.get('/providers', controller.getProviders)
 
 Router.get('/saml', checkEnabledProviders, saml)

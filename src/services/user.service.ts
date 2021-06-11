@@ -1,17 +1,20 @@
 import { getRepository, IsNull } from 'typeorm'
 
-import { User as UserType, DeveloperAuth } from 'devu-shared-modules'
+import UserModel from '../model/users.model'
 
-import User from '../model/users.model'
+import { User, DeveloperAuth } from 'devu-shared-modules'
 
-const connect = () => getRepository(User)
+const connect = () => getRepository(UserModel)
 
-export async function create(user: UserType) {
+export async function create(user: User) {
   return await connect().save(user)
 }
 
-export async function update(user: UserType) {
-  const { id = '', email, externalId, preferredName } = user
+export async function update(user: User) {
+  const { id, email, externalId, preferredName } = user
+
+  if (!id) throw new Error('Missing Id')
+
   return await connect().update(id, { email, externalId, preferredName })
 }
 
