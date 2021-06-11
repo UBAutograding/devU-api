@@ -1,4 +1,3 @@
-import fs from 'fs'
 import jws from 'jws'
 import jwt, { SignOptions, VerifyOptions } from 'jsonwebtoken'
 
@@ -8,16 +7,12 @@ import environment from '../environment'
 
 import User from '../model/users.model'
 
-// TODO: Replace with proper app level configs
-const pathToEnv = `${__dirname}/../env/`
-const authConfig = JSON.parse(fs.readFileSync(pathToEnv + 'config/auth.config.json', 'utf8'))
-const signingKey = authConfig.jwt.keys[authConfig.jwt.active_key_id].private_key
+const signingKey = environment.keys[environment.activeKeyId].privateKey
 
 function getVerificationKey(kid?: string) {
-  if (!kid) return null
-  if (!authConfig.jwt.keys[kid]) return null
+  if (!kid || !environment.keys[kid]) throw new Error('Invalid key id')
 
-  return authConfig.jwt.keys[kid].public_key
+  return environment.keys[kid].publicKey
 }
 
 // TODO - Add jwtid to refresh tokens for revocation ability in the future
@@ -25,7 +20,7 @@ function getVerificationKey(kid?: string) {
 const jwtOptions: SignOptions & VerifyOptions = {
   issuer: 'devU-auth',
   audience: ['devU-api', 'devU-client'],
-  keyid: authConfig.jwt.active_key_id,
+  keyid: environment.activeKeyId,
 }
 
 function createToken(payload: AccessToken | RefreshToken, expiresIn: string) {
