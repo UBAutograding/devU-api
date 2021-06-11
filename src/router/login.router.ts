@@ -1,10 +1,12 @@
 // Libraries
 import express from 'express'
 
+import environment from '../environment'
+
 import controller from '../controller/login.controller'
 
 // Middleware
-import { isValidRefreshToken, isDeveloperEnabled, isSamlEnabled } from '../middleware/auth.middleware'
+import { isValidRefreshToken } from '../middleware/auth.middleware'
 
 import SamlRouter from './login.saml.router'
 import DeveloperRouter from './login.developer.router'
@@ -28,7 +30,7 @@ Router.get('/', isValidRefreshToken, controller.login)
 Router.get('/providers', controller.getProviders)
 
 // Provider Routers
-Router.use('/saml', isSamlEnabled, SamlRouter)
-Router.use('/developer', isDeveloperEnabled, DeveloperRouter)
+if (environment.providers.saml.enabled) Router.use('/saml', SamlRouter)
+if (environment.providers.devAuth.enabled) Router.use('/developer', DeveloperRouter)
 
 export default Router
