@@ -55,6 +55,14 @@ export async function samlCallback(req: Request, res: Response, next: NextFuncti
   res.redirect(environment.clientUrl)
 }
 
+export async function samlMeta(req: Request, res: Response, next: NextFunction) {
+  res.status(200).json()
+
+  // samlStrategy.generateServiceProviderMetadata(
+  //   environment.providers.saml.encryption.certificate,
+  //   environment.providers.saml.signing.certificate)
+}
+
 export async function developerCallback(req: Request, res: Response, next: NextFunction) {
   const { email = '', externalId = '' } = req.body
 
@@ -69,5 +77,6 @@ export default {
   login,
   getProviders,
   samlCallback,
+  samlMeta,
   developerCallback,
 }

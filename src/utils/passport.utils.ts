@@ -1,6 +1,8 @@
 //@ts-expect-error
 import passport from 'passport'
 
+import environment from '../environment'
+
 import saml from './passport/saml.passport'
 
-passport.use(saml)
+if (environment.providers.saml.enabled) passport.use(saml())

@@ -6,9 +6,9 @@ import Testing from '../../../utils/testing.utils'
 import { Unknown } from '../../../utils/apiResponse.utils'
 
 // Testing Globals
-let req
-let res
-let next
+let req: any
+let res: any
+let next: any
 
 let expectedResults: User[]
 let expectedResult: User
@@ -53,7 +53,7 @@ describe('User Serializer', () => {
 
       expect(Array.isArray(response)).toBe(true)
 
-      for (const index in response) {
+      for (let index = 0; index < response.length; index++) {
         const expectedUser = expectedResults[index]
         const serializedUser = response[index]
 
