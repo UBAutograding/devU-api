@@ -30,6 +30,5 @@ function serialize(assignment: Assignment): AssignmentType {
     disable_handins: assignment.disable_handins,
     createdAt: assignment.createdAt.toISOString(),
     updatedAt: assignment.updatedAt.toISOString(),
-    deletedAt: assignment.deletedAt.toISOString(),
   }
 }

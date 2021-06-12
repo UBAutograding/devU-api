@@ -24,6 +24,5 @@ function serialize(course: Course): CourseType {
     end_date: course.end_date.toISOString(),
     createdAt: course.createdAt.toISOString(),
     updatedAt: course.updatedAt.toISOString(),
-    deletedAt: course.deletedAt.toISOString(),
   }
 }
