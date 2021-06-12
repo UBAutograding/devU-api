@@ -11,7 +11,8 @@
     "lint": "tsc",
     "build": "npm-run-all clean lint",
     "format": "prettier --write \"./**/*.{js,ts,json,md}\"",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "generate-config": "docker run --pull always -v $(pwd)/config:/config --rm ubautograding/devtools /generateConfig.sh config/default.yml"
   },
   "lint-staged": {
     "./**/*.{js,ts,json,md}": [
