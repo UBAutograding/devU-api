@@ -1,4 +1,3 @@
-//@ts-expect-error
 import passport from 'passport'
 import { Request, Response, NextFunction } from 'express'
 

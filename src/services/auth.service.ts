@@ -5,7 +5,7 @@ import { AccessToken, RefreshToken } from 'devu-shared-modules'
 
 import environment from '../environment'
 
-import User from '../model/users.model'
+import UserModel from '../model/users.model'
 
 const signingKey = environment.keys[environment.activeKeyId].privateKey
 
@@ -34,12 +34,12 @@ function createToken(payload: AccessToken | RefreshToken, expiresIn: string) {
   return token
 }
 
-export function createAccessToken(user: User): string {
+export function createAccessToken(user: UserModel): string {
   const payload: AccessToken = { userId: user.id, email: user.email }
   return createToken(payload, `${environment.accessTokenValiditySeconds}s`)
 }
 
-export function createRefreshToken(user: User): string {
+export function createRefreshToken(user: UserModel): string {
   const payload = { userId: user.id }
   return createToken(payload, `${environment.refreshTokenValiditySeconds}s`)
 }

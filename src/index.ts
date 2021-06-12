@@ -9,8 +9,6 @@ import morgan from 'morgan'
 import { createConnection } from 'typeorm'
 import cookieParser from 'cookie-parser'
 
-// @ts-expect-error - passport is extending the express.request type in the global namespace that conflicts with our
-// express.request overrides. We're explicitly not installing their types to prevent the conflict
 import passport from 'passport'
 
 import environment from './environment'
