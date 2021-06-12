@@ -90,7 +90,7 @@ describe('UserController', () => {
       test('Next not called on missing user', () => expect(next).toBeCalledTimes(0))
     })
 
-    describe('400 - Bad Reqeust', () => {
+    describe('400 - Bad Request', () => {
       test('Next called with expected error', async () => {
         UserService.retrieve = jest.fn().mockImplementation(() => Promise.reject(expectedError))
 
@@ -116,7 +116,7 @@ describe('UserController', () => {
       test('Status code is 201', () => expect(res.status).toBeCalledWith(201))
     })
 
-    describe('400 - Bad Reqeust', () => {
+    describe('400 - Bad Request', () => {
       beforeEach(async () => {
         UserService.create = jest.fn().mockImplementation(() => Promise.reject(expectedError))
 
