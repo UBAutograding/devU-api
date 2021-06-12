@@ -19,8 +19,8 @@ yq -Yi --arg jwt_private_key "$(cat ${tmp_dir}/jwt_private_key.pem)" \
   --arg saml_signing_cert "$(cat ${tmp_dir}/saml_signing_cert.pem)" \
   --arg saml_encryption_key "$(cat ${tmp_dir}/saml_encryption_key.pem)" \
   --arg saml_encryption_cert "$(cat ${tmp_dir}/saml_encryption_cert.pem)" \
-  '.auth.jwt.keys."key-1".privateKey=$jwt_private_key |
-  .auth.jwt.keys."key-1".publicKey=$jwt_public_key |
+  '.auth.jwt.keys.sk07112021.privateKey=$jwt_private_key |
+  .auth.jwt.keys.sk07112021.publicKey=$jwt_public_key |
   .auth.providers.saml.signing.privateKey=$saml_signing_key |
   .auth.providers.saml.signing.certificate=$saml_signing_cert |
   .auth.providers.saml.encryption.privateKey=$saml_encryption_key |

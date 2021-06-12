@@ -15,7 +15,7 @@ type Saml = {
   enabled: boolean
   attributeMap: Record<string, string>
   entryPoint: string
-  idpCerts: string
+  idpCerts: string[]
   encryption: Certificate
   signing: Certificate
 }

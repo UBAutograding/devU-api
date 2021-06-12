@@ -9,6 +9,14 @@ const Router = express.Router()
 
 /**
  * @swagger
+ * /login/saml:
+ *   get:
+ *     summary: Redirection endpoint for saml provider
+ */
+Router.get('/', saml)
+
+/**
+ * @swagger
  * /login/saml/callback:
  *   post:
  *     summary: Handles successful SAML authentication
