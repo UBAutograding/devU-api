@@ -1,5 +1,3 @@
-//@ts-expect-error
-import passport from 'passport'
 import { Request, Response, NextFunction } from 'express'
 
 import { AccessToken } from 'devu-shared-modules'
@@ -48,5 +46,3 @@ export async function isValidRefreshToken(req: Request, res: Response, next: Nex
 
   next()
 }
-
-export const saml = passport.authenticate('saml', { session: false })

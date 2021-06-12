@@ -9,10 +9,6 @@ import morgan from 'morgan'
 import { createConnection } from 'typeorm'
 import cookieParser from 'cookie-parser'
 
-// @ts-expect-error - passport is extending the express.request type in the global namespace that conflicts with our
-// express.request overrides. We're explicitly not installing their types to prevent the conflict
-import passport from 'passport'
-
 import environment from './environment'
 import connectionInfo from './database'
 
@@ -20,8 +16,9 @@ import connectionInfo from './database'
 import router from './router'
 import errorHandler from './middleware/errorHandler.middleware'
 
-// Authentication Handlersn
-import './utils/passport.utils'
+// Authentication Handler
+// TODO: I hate the implicit initialization that happens at import time.
+import './utils/auth/saml'
 
 const app = express()
 
@@ -33,7 +30,6 @@ createConnection(connectionInfo)
     app.use(cookieParser())
     app.use(cors({ origin: environment.clientUrl, credentials: true }))
     app.use(morgan('combined'))
-    app.use(passport.initialize())
 
     // Middleware;
     app.use('/', router)

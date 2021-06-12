@@ -3,8 +3,6 @@ import express from 'express'
 
 import controller from '../controller/login.saml.controller'
 
-import { saml } from '../middleware/auth.middleware'
-
 const Router = express.Router()
 
 /**
@@ -13,7 +11,7 @@ const Router = express.Router()
  *   get:
  *     summary: Redirection endpoint for saml provider
  */
-Router.get('/', saml)
+Router.get('/', controller.authorize)
 
 /**
  * @swagger
@@ -21,7 +19,7 @@ Router.get('/', saml)
  *   post:
  *     summary: Handles successful SAML authentication
  */
-Router.post('/callback', saml, controller.callback)
+Router.post('/callback', controller.callback)
 
 /**
  * @swagger
