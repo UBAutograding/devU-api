@@ -4,12 +4,9 @@
 # GenerateConfig can be used as follows:
 #docker run -v $(pwd)/config:/config --rm ubautograding/devtools /generateConfig.sh config/default.yml
 
-FROM ubuntu
+FROM docker.io/python:alpine
 
-RUN apt update && apt install -y \
-  jq \
-  python3 python3-pip \
-  && rm -rf /var/lib/apt/lists/*
-RUN pip3 install yq
+RUN apk add --no-cache bash jq openssl \
+  && pip install yq
 
 COPY ./generateConfig.sh /generateConfig.sh
