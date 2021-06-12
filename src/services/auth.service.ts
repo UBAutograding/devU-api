@@ -40,38 +40,23 @@ export function createAccessToken(user: UserModel): string {
 }
 
 export function createRefreshToken(user: UserModel): string {
-  const payload = { userId: user.id }
+  const payload: RefreshToken = { userId: user.id, isRefreshToken: true }
   return createToken(payload, `${environment.refreshTokenValiditySeconds}s`)
 }
 
-function validateJwt(token: string): object | null {
+export function validateJwt<TokenType>(token: string): TokenType | null {
   try {
     const verificationKey = getVerificationKey(jws.decode(token).header.kid)
-    const payload = jwt.verify(token, verificationKey, { ...jwtOptions, algorithms: ['RS256'] })
+    const payload: unknown = jwt.verify(token, verificationKey, { ...jwtOptions, algorithms: ['RS256'] })
 
-    return payload as object
+    return payload as TokenType
   } catch (_err) {
     return null
   }
 }
 
-export function verifyAccessToken(token: string): AccessToken | null {
-  const deserializedToken = validateJwt(token)
-
-  if (deserializedToken) return deserializedToken as AccessToken
-  return null
-}
-
-export function validateRefreshToken(token: string): RefreshToken | null {
-  const deserializedToken = validateJwt(token)
-
-  if (deserializedToken) return deserializedToken as RefreshToken
-  return null
-}
-
 export default {
   createAccessToken,
   createRefreshToken,
-  verifyAccessToken,
-  validateRefreshToken,
+  validateJwt,
 }

@@ -1,13 +1,13 @@
 import passport from 'passport'
 import { Request, Response, NextFunction } from 'express'
 
-import { AccessToken } from 'devu-shared-modules'
+import { AccessToken, RefreshToken } from 'devu-shared-modules'
 
-import { verifyAccessToken, validateRefreshToken } from '../services/auth.service'
+import { validateJwt } from '../services/auth.service'
 
 import { GenericResponse, Unauthorized } from '../utils/apiResponse.utils'
 
-function checkAuth(req: Request): [AccessToken | null, GenericResponse | null] {
+function checkAuth<TokenType>(req: Request): [TokenType | null, GenericResponse | null] {
   const authorization = req.headers.authorization
 
   if (!authorization) return [null, new GenericResponse('Missing authentication headers')]
@@ -17,7 +17,7 @@ function checkAuth(req: Request): [AccessToken | null, GenericResponse | null] {
   if (type !== 'Bearer') return [null, new GenericResponse('Missing Bearer in authentication header')]
   if (!token) return [null, Unauthorized]
 
-  const deserializedToken = verifyAccessToken(token)
+  const deserializedToken = validateJwt<TokenType>(token)
 
   if (!deserializedToken) return [null, Unauthorized]
 
@@ -25,7 +25,7 @@ function checkAuth(req: Request): [AccessToken | null, GenericResponse | null] {
 }
 
 export async function isAuthorized(req: Request, res: Response, next: NextFunction) {
-  const [currentUser, error] = checkAuth(req)
+  const [currentUser, error] = checkAuth<AccessToken>(req)
 
   if (!currentUser) return res.status(401).json(error)
 
@@ -35,11 +35,24 @@ export async function isAuthorized(req: Request, res: Response, next: NextFuncti
 }
 
 export async function isValidRefreshToken(req: Request, res: Response, next: NextFunction) {
+  // If authorization header exists DON'T CHECK COOKIE AT ALL
+  if (req.headers.authorization) {
+    const [refreshToken, error] = checkAuth<RefreshToken>(req)
+
+    if (!refreshToken) return res.status(401).json(error)
+    // Because the refresh token and access token are signed the same way the access token
+    // would be valid up to here. If the token isn't a refresh token kick back a 401
+    if (!refreshToken.isRefreshToken) return res.status(401).json(new GenericResponse('Not a refresh token'))
+
+    req.refreshUser = refreshToken
+
+    return next()
+  }
+
+  // Check cookie
   const { refreshToken = '' } = req.cookies
 
-  if (!refreshToken) return res.status(401).json(Unauthorized)
-
-  const deserializedToken = validateRefreshToken(refreshToken)
+  const deserializedToken = validateJwt<RefreshToken>(refreshToken)
 
   if (!deserializedToken) return res.status(401).json(Unauthorized)
 
