@@ -15,12 +15,12 @@ function generateSamlStrategy() {
       entryPoint: environment.providers.saml.entryPoint,
       // Usually specified as `/shibboleth` from site root
       issuer: `${environment.apiUrl}/login/saml`,
-      // Service Provider private key
+      // Service Provider Decryption key
       decryptionPvk: environment.providers.saml.encryption.privateKey,
-      // Service Provider Certificate
-      privateKey: environment.providers.saml.encryption.certificate,
+      // Service Provider Signing Key
+      privateKey: environment.providers.saml.signing.privateKey,
       // Identity Provider's public key
-      cert: environment.providers.saml.signing.certificate,
+      cert: environment.providers.saml.idpCerts,
       identifierFormat: null,
       validateInResponseTo: true,
       disableRequestedAuthnContext: true,
