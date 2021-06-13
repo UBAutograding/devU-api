@@ -1,6 +1,8 @@
 import { AccessToken, RefreshToken } from 'devu-shared-modules'
 
-import { isAuthorized, isValidRefreshToken } from '../auth.middleware'
+import environment from '../../environment'
+
+import { isAuthorized, isValidRefreshToken, isRefreshNearingExpiration } from '../auth.middleware'
 
 import AuthService from '../../services/auth.service'
 
@@ -119,6 +121,29 @@ describe('AuthMiddleware', () => {
         test('Unauthorized returned as response', () => expect(res.json).toHaveBeenCalledWith(Unauthorized))
         test('Next is not called', () => expect(next).toHaveBeenCalledTimes(0))
       })
+    })
+  })
+
+  describe('isRefreshNearingExpiration', () => {
+    beforeEach(() => {
+      environment.refreshTokenExpirationBufferSeconds = 20 // seconds
+    })
+    test('Expiration within buffer acts as expired', async () => {
+      const nowInEpoch = Math.round(Date.now() / 1000)
+      req.refreshUser = { exp: nowInEpoch + 10 } // expires 10 seconds from now
+
+      await isRefreshNearingExpiration(req, res, next)
+
+      expect(res.status).toBeCalledWith(401)
+    })
+
+    test('Token does not act as if expired when expiration is outside of buffer window', async () => {
+      const nowInEpoch = Math.round(Date.now() / 1000)
+      req.refreshUser = { exp: nowInEpoch + 30 } // expires 30 seconds from now
+
+      await isRefreshNearingExpiration(req, res, next)
+
+      expect(next).toBeCalledWith()
     })
   })
 })
