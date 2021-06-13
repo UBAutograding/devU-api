@@ -82,7 +82,7 @@ For those unfamiliar with Express, I'll attempt to give a brief rundown before t
 Express is a REST framework for node. Devs new to express will likely find one of the most perplexing parts of Express to be how it handles middleware. For those unfamiliar with what middleware is, it's largely a catch all term for code that connects together pieces of code in the api. In Express's context, middleware is basically everything that runs within each router; here's an example:
 
 ```typescript
-Router.get('/:id', idAsInt, UserController.detail, serializer)
+Router.get('/:id', idAsInt, UserController.detail)
 ```
 
 In express, all of the functions added after the route's path are considered middleware and each route can have as many middleware as is needed. In this project we separate out `controllers` into their own directory though they are still considered middleware.
@@ -113,11 +113,11 @@ Let's take this from the top
 - `index.ts`: where the application is bootstrapped from, controls all global server controls and middlewares
 - `routers/index.ts`: largely a rollup for all the other routers. Can be used to add router specific middleware to routes/ subroutes
 - `routers/route.ts`: Individual routes for each resource, where the list of middleware can be found. _All routers call unique middleware_
-- Middleware: The above diagram is a bit of a misnomer. Not every endpoint will have validators, controllers, and serializers. Some will have all of those, some may have none. Each route will have at least one middleware, and the last middleware will deal with returning the requested data
+- Middleware: The above diagram is a bit of a misnomer. Not every endpoint will have auth, validators, and controllers. Some will have all of those, some may have none. Each route will have at least one middleware, and the last middleware will deal with returning the requested data
+- Auth: checks the access/ refresh tokens
 - Validators: validates the bodies of requests
-- Controllers: deals with setting status codes, and directing to services
+- Controllers: deals with setting status codes, and directing to services. For the most part, controllers should be the last piece of middleware in the chain.
 - Services: Workhorse of the application. Deals with all major application logic and database calls
-- Serializers: Formats the data to be a sane, reusable response.
 
 The database models live outside of this control flow as they don't deal with any buisness logic. However services will use them to access the database. You can largely think of the the models as a 1:1 map to database tables.
 
