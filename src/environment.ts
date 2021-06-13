@@ -57,7 +57,7 @@ const environment = {
   database: (process.env.DATABASE || load('database.database') || 'typescript_api') as string,
 
   // Logging
-  logDB: process.env.LOG_DB !== undefined, // logs all sql commands for gut/fact checking endpoints
+  logDB: (process.env.LOG_DB !== undefined || load('logging.db')) as boolean, // logs all sql commands for gut/fact checking endpoints
 
   // Auth Settings
   activeKeyId: process.env.ACTIVE_KEY_ID || (config.get('auth.jwt.activeKeyId') as string),
