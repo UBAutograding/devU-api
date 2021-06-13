@@ -3,3 +3,4 @@ build/
 env/
 
 config/*.yml
+!config/test.yml
