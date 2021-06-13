@@ -10,7 +10,7 @@ const Router = express.Router()
  * @swagger
  * /login/developer:
  *   post:
- *     summary: NOT IN PRODUCTION. Gives a way for developers to log in while developing locally
+ *     summary: NOT IN PRODUCTION. Gives a way for developers to log in while developing locally via an externalId & email
  */
 Router.post('/', validateDeveloper, controller.callback)
 

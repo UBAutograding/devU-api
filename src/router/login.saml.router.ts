@@ -11,7 +11,7 @@ const Router = express.Router()
  * @swagger
  * /login/saml:
  *   get:
- *     summary: Redirection endpoint for saml provider
+ *     summary: Redirects to external SAML auth server
  */
 Router.get('/', saml)
 
@@ -19,7 +19,7 @@ Router.get('/', saml)
  * @swagger
  * /login/saml/callback:
  *   post:
- *     summary: Handles successful SAML authentication
+ *     summary: Handles successful SAML authentication and is called from SAML auth server
  */
 Router.post('/callback', saml, controller.callback)
 
@@ -27,7 +27,7 @@ Router.post('/callback', saml, controller.callback)
  * @swagger
  * /login/saml/callback:
  *   post:
- *     summary: Handles successful SAML authentication
+ *     summary: Gets meta SAML infomation (usually accessed by SAML server)
  */
 Router.get('/metadata', controller.generateMetadata)
 

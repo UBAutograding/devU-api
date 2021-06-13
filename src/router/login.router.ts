@@ -17,7 +17,7 @@ const Router = express.Router()
  * @swagger
  * /login:
  *   get:
- *     summary: Gets API auth via passing refresh token as a cookie
+ *     summary: Gets access token by via refresh token (called on client bootstrap)
  */
 Router.get('/', isValidRefreshToken, isRefreshNearingExpiration, controller.login)
 
@@ -25,7 +25,7 @@ Router.get('/', isValidRefreshToken, isRefreshNearingExpiration, controller.logi
  * @swagger
  * /login/refresh:
  *   get:
- *     summary: Gets the user a new access token if theirs have expired
+ *     summary: Gets the user a new access token (usually done so when their access token has expire or will expire soon)
  */
 Router.get('/refresh', isValidRefreshToken, controller.login)
 
