@@ -3,8 +3,8 @@ declare global {
   namespace Express {
     interface Request {
       // Auth Data
-      currentUser?: AccessToken
-      refreshUser?: RefreshToken
+      currentUser?: AccessToken // Deserialized access token
+      refreshUser?: RefreshToken // Deserialized refresh token
     }
   }
 }

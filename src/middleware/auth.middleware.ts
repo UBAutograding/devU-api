@@ -1,6 +1,8 @@
 import passport from 'passport'
 import { Request, Response, NextFunction } from 'express'
 
+import environment from '../environment'
+
 import { AccessToken, RefreshToken } from 'devu-shared-modules'
 
 import AuthService from '../services/auth.service'
@@ -61,9 +63,22 @@ export async function isValidRefreshToken(req: Request, res: Response, next: Nex
   next()
 }
 
+export async function isRefreshNearingExpiration(req: Request, res: Response, next: NextFunction) {
+  if (!req.refreshUser?.exp) return res.status(401).json(Unauthorized)
+
+  const nowEpochTime = Math.round(Date.now() / 1000)
+
+  // If the differenrce in time between expiration and now is larger than the buffer time, continue
+  // aka if our refresh token is outside of our buffer window, continue. Otherwise force them to relogin
+  if (environment.refreshTokenExpirationBufferSeconds < req.refreshUser.exp - nowEpochTime) return next()
+
+  return res.status(401).json(Unauthorized)
+}
+
 export const saml = passport.authenticate('saml', { session: false })
 
 export default {
   isAuthorized,
   isValidRefreshToken,
+  isRefreshNearingExpiration,
 }

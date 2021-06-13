@@ -44,6 +44,8 @@ const apiUrl = `${scheme}://${host}:${port}`
 // prettier-ignore
 const refreshTokenExp = process.env.REFRESH_TOKEN_VALIDITY_SECONDS || load('auth.jwt.refreshTokenValiditySeconds') || 864000
 const accessTokenExp = process.env.ACCESS_TOKEN_VALIDITY_SECONDS || load('auth.jwt.accessTokenValiditySeconds') || 600
+const refreshTokenBuffer =
+  process.env.REFRESH_TOKEN_EXPIRATION_BUFFER_SECONDS || load('auth.jwt.refreshTokenExpirationBufferSeconds') || 864000
 
 const environment = {
   port,
@@ -64,6 +66,7 @@ const environment = {
   keys: config.get('auth.jwt.keys') as Record<string, Keys>,
   accessTokenValiditySeconds: parseInt(accessTokenExp),
   refreshTokenValiditySeconds: parseInt(refreshTokenExp),
+  refreshTokenExpirationBufferSeconds: parseInt(refreshTokenBuffer),
 
   // BE CAREFUL WITH PROVIDERS - THEY'RE NOT TOTALLY TYPE SAFE UNLESS PROPERLY CONFIGURED
   providers: config.get('auth.providers') as Providers,
