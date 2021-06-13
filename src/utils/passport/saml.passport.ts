@@ -4,7 +4,7 @@ import { renameKeys } from 'devu-shared-modules'
 
 import environment from '../../environment'
 
-export var samlStrategy: SamlStrategy
+export let samlStrategy: SamlStrategy
 
 function generateSamlStrategy() {
   samlStrategy = new SamlStrategy(
