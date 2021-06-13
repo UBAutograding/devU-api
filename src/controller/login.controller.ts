@@ -4,11 +4,11 @@ import UserService from '../services/user.service'
 import AuthService from '../services/auth.service'
 import ProviderService from '../services/provider.service'
 
-import { Unauthorized, Unknown } from '../utils/apiResponse.utils'
+import { Unauthorized } from '../utils/apiResponse.utils'
 
 export async function login(req: Request, res: Response, next: NextFunction) {
   try {
-    if (req.refreshUser === undefined) return res.status(401).json(Unknown)
+    if (req.refreshUser === undefined) return res.status(401).json(Unauthorized)
 
     const { userId } = req.refreshUser
 
