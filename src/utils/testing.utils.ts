@@ -7,6 +7,8 @@ export function fakeRequest(overrides?: Partial<Request>): Request {
 
   req.params = {}
   req.body = {}
+  req.headers = {}
+  req.cookies = {}
 
   return { ...req, ...overrides } as Request
 }

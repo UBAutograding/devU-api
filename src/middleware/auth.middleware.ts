@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 
 import { AccessToken, RefreshToken } from 'devu-shared-modules'
 
-import { validateJwt } from '../services/auth.service'
+import AuthService from '../services/auth.service'
 
 import { GenericResponse, Unauthorized } from '../utils/apiResponse.utils'
 
@@ -17,7 +17,7 @@ function checkAuth<TokenType>(req: Request): [TokenType | null, GenericResponse 
   if (type !== 'Bearer') return [null, new GenericResponse('Missing Bearer in authentication header')]
   if (!token) return [null, Unauthorized]
 
-  const deserializedToken = validateJwt<TokenType>(token)
+  const deserializedToken = AuthService.validateJwt<TokenType>(token)
 
   if (!deserializedToken) return [null, Unauthorized]
 
@@ -52,7 +52,7 @@ export async function isValidRefreshToken(req: Request, res: Response, next: Nex
   // Check cookie
   const { refreshToken = '' } = req.cookies
 
-  const deserializedToken = validateJwt<RefreshToken>(refreshToken)
+  const deserializedToken = AuthService.validateJwt<RefreshToken>(refreshToken)
 
   if (!deserializedToken) return res.status(401).json(Unauthorized)
 
@@ -62,3 +62,8 @@ export async function isValidRefreshToken(req: Request, res: Response, next: Nex
 }
 
 export const saml = passport.authenticate('saml', { session: false })
+
+export default {
+  isAuthorized,
+  isValidRefreshToken,
+}
