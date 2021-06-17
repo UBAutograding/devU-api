@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction, CookieOptions } from 'express'
 
 import Models from '../model'
 
@@ -7,6 +7,8 @@ export function fakeRequest(overrides?: Partial<Request>): Request {
 
   req.params = {}
   req.body = {}
+  req.headers = {}
+  req.cookies = {}
 
   return { ...req, ...overrides } as Request
 }
@@ -18,6 +20,9 @@ export function fakeResponse(overrides?: Partial<Response>): Response {
   res.json = jest.fn().mockImplementation((r: any) => res)
   res.send = jest.fn().mockImplementation(() => res)
   res.end = jest.fn().mockImplementation(() => res)
+  res.cookie = jest.fn().mockImplementation((n: string, v: string, o: CookieOptions) => res)
+  res.redirect = jest.fn().mockImplementation(() => res)
+  res.type = jest.fn().mockImplementation(() => res)
 
   return { ...res, ...overrides } as Response
 }

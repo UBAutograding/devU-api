@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["es5", "es6"],
+    "lib": ["es5", "es6", "dom"],
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -23,5 +23,8 @@
     "newLine": "lf",
     "typeRoots": ["@types", "./node_modules/@types"],
     "resolveJsonModule": true
-  }
+  },
+  "exclude": [
+    "src/**/*.test.ts"
+  ]
 }

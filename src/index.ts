@@ -9,8 +9,6 @@ import morgan from 'morgan'
 import { createConnection } from 'typeorm'
 import cookieParser from 'cookie-parser'
 
-// @ts-expect-error - passport is extending the express.request type in the global namespace that conflicts with our
-// express.request overrides. We're explicitly not installing their types to prevent the conflict
 import passport from 'passport'
 
 import environment from './environment'
@@ -20,7 +18,7 @@ import connectionInfo from './database'
 import router from './router'
 import errorHandler from './middleware/errorHandler.middleware'
 
-// Authentication Handlers
+// Authentication Handlersn
 import './utils/passport.utils'
 
 const app = express()
@@ -39,6 +37,6 @@ createConnection(connectionInfo)
     app.use('/', router)
     app.use(errorHandler)
 
-    app.listen(environment.port, () => console.log(`API listening at port - ${environment.port}`))
+    app.listen(environment.port, () => console.log(`API listenting at port - ${environment.port}`))
   })
   .catch(err => console.log('TypeORM connection error:', err))

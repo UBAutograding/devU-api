@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Tyepscript Express/ TypeORM Example",
   "scripts": {
-    "start": "BYPASS_AUTH=1 ts-node-dev src/index.ts",
+    "start": "ts-node-dev src/index.ts",
     "update-shared": "npm update devu-shared-modules",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js  --config src/database.ts",
     "test": "jest --passWithNoTests",
@@ -12,7 +12,7 @@
     "build": "npm-run-all clean lint",
     "format": "prettier --write \"./**/*.{js,ts,json,md}\"",
     "pre-commit": "lint-staged",
-    "generate-config": "docker run --pull always -v $(pwd)/config:/config --rm ubautograding/devtools /generateConfig.sh config/default.yml"
+    "generate-config": "docker run --pull always -v $(pwd)/config:/config --user $(id -u):$(id -g) --rm ubautograding/devtools /generateConfig.sh config/default.yml"
   },
   "lint-staged": {
     "./**/*.{js,ts,json,md}": [
@@ -32,7 +32,9 @@
     "@types/jsonwebtoken": "^8.5.1",
     "@types/jws": "^3.2.3",
     "@types/morgan": "^1.9.2",
-    "@types/node": "^8.0.29",
+    "@types/node": "^15.12.2",
+    "@types/passport": "^1.0.6",
+    "@types/passport-strategy": "^0.2.35",
     "@types/swagger-jsdoc": "^6.0.0",
     "@types/swagger-ui-express": "^4.1.2",
     "husky": "^6.0.0",

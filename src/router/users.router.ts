@@ -14,7 +14,7 @@ const Router = express.Router()
  *   get:
  *     summary: Retrieve a list of users
  */
-Router.get('/', UserController.get, serializer)
+Router.get('/', UserController.get)
 
 /**
  * @swagger
@@ -22,7 +22,7 @@ Router.get('/', UserController.get, serializer)
  *   get:
  *     summary: Retrieve a single user
  */
-Router.get('/:id', idAsInt, UserController.detail, serializer)
+Router.get('/:id', idAsInt, UserController.detail)
 
 /**
  * @swagger
@@ -30,7 +30,7 @@ Router.get('/:id', idAsInt, UserController.detail, serializer)
  *   post:
  *     summary: Create a user
  */
-Router.post('/', validator, UserController.post, serializer)
+Router.post('/', validator, UserController.post)
 
 /**
  * @swagger

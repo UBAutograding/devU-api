@@ -12,9 +12,7 @@
       "runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only"],
 
       "args": ["src/index.ts"],
-      "env": {
-        "BYPASS_AUTH": "1",
-      },
+      "env": {},
 
       "resolveSourceMapLocations": [
         "${workspaceFolder}/**",
