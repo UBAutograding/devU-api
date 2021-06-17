@@ -20,7 +20,7 @@ import connectionInfo from './database'
 import router from './router'
 import errorHandler from './middleware/errorHandler.middleware'
 
-// Authentication Handlersn
+// Authentication Handlers
 import './utils/passport.utils'
 
 const app = express()
@@ -39,6 +39,6 @@ createConnection(connectionInfo)
     app.use('/', router)
     app.use(errorHandler)
 
-    app.listen(environment.port, () => console.log(`API listenting at port - ${environment.port}`))
+    app.listen(environment.port, () => console.log(`API listening at port - ${environment.port}`))
   })
   .catch(err => console.log('TypeORM connection error:', err))

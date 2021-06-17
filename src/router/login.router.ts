@@ -25,7 +25,7 @@ Router.get('/', isValidRefreshToken, controller.login)
  * @swagger
  * /login/providers:
  *   get:
- *     summary: Gets a list of availible authentication providers
+ *     summary: Gets a list of available authentication providers
  */
 Router.get('/providers', controller.getProviders)
 
