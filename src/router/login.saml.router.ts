@@ -27,7 +27,7 @@ Router.post('/callback', saml, controller.callback)
  * @swagger
  * /login/saml/callback:
  *   post:
- *     summary: Gets meta SAML infomation (usually accessed by SAML server)
+ *     summary: Gets meta SAML information (usually accessed by SAML server)
  */
 Router.get('/metadata', controller.generateMetadata)
 

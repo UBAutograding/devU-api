@@ -1,7 +1,7 @@
 {
   "name": "typescript-api-example",
   "version": "1.0.0",
-  "description": "Tyepscript Express/ TypeORM Example",
+  "description": "Typescript Express/ TypeORM Example",
   "scripts": {
     "start": "ts-node-dev src/index.ts",
     "update-shared": "npm update devu-shared-modules",

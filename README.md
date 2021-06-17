@@ -49,7 +49,7 @@ Once you've got all the dependencies installed you can run the project via
 npm start
 ```
 
-By defualt the project runs at `localhost:3001`, but you can change the port by setting an alternate port by setting the `PORT` environment variable.
+By default the project runs at `localhost:3001`, but you can change the port by setting an alternate port by setting the `PORT` environment variable.
 
 If you're working in vscode, a configuration has been included to allow for debugging. Open up the VS Code Run and Debug section and click `Debug API`.
 
@@ -125,7 +125,7 @@ Let's take this from the top
 - Controllers: deals with setting status codes, and directing to services. For the most part, controllers should be the last piece of middleware in the chain.
 - Services: Workhorse of the application. Deals with all major application logic and database calls
 
-The database models live outside of this control flow as they don't deal with any buisness logic. However services will use them to access the database. You can largely think of the the models as a 1:1 map to database tables.
+The database models live outside of this control flow as they don't deal with any buisness logic. However services will use them to access the database. You can largely think of the models as a 1:1 map to database tables.
 
 ### Shared Modules
 
@@ -133,7 +133,7 @@ This project uses shared modules between it and it's client. What this means is 
 
 The project can be found [here](https://github.com/UBAutograding/devu-shared).
 
-When developing if you need to update the modules, you can do so by updating the branch or SHA on the package url in the `package.json`. As an example, if you wanted to use shared modules from the `auth` branch, you could change the dependancy line in the `package.json` to:
+When developing if you need to update the modules, you can do so by updating the branch or SHA on the package url in the `package.json`. As an example, if you wanted to use shared modules from the `auth` branch, you could change the dependency line in the `package.json` to:
 
 ```
 "devu-shared-modules": "github:UBAutograding/devu-shared#auth",
@@ -147,7 +147,7 @@ npm install
 
 to install the updated package
 
-If you were to make changes to the your shared branch and push it to the remote, you can update what version you local files are looking at via
+If you were to make changes to your shared branch and push it to the remote, you can update what version your local files are looking at via
 
 ```
 npm update devu-shared-modules
@@ -181,7 +181,7 @@ And lastly, if you want to narrow it down to running less than a single test fil
 npm test -- -t "some test description or name"
 ```
 
-I wouldn't reccomend digging that far down as the of tests should be more human readable, and therefor not super great to grab via a regex; but if you really wish to do so, you can.
+I wouldn't recommend digging that far down as the of tests should be more human-readable, and therefore not super great to grab via a regex; but if you really wish to do so, you can.
 
 ### Common TypeORM Commands (Database/ Schema Stuff)
 
