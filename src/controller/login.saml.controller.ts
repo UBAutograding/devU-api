@@ -24,8 +24,8 @@ export async function callback(req: Request, res: Response, next: NextFunction) 
 
 export async function generateMetadata(req: Request, res: Response, next: NextFunction) {
   try {
-    res.type('application/xml')
     res
+      .type('application/xml')
       .status(200)
       .json(
         samlStrategy.generateServiceProviderMetadata(

@@ -1,5 +1,6 @@
 // Libraries
 import express from 'express'
+import colors from 'colors'
 
 import environment from '../environment'
 
@@ -39,6 +40,9 @@ Router.get('/providers', controller.getProviders)
 
 // Provider Routers
 if (environment.providers.saml.enabled) Router.use('/saml', SamlRouter)
-if (environment.providers.devAuth.enabled) Router.use('/developer', DeveloperRouter)
+if (environment.providers.devAuth.enabled) {
+  console.log(colors.red.bold(`DEVELOPER AUTH ENABLED. IF YOU'RE SEEING THIS MESSAGE IN PRODUCTION, YOU SHOULD PANIC.`))
+  Router.use('/developer', DeveloperRouter)
+}
 
 export default Router

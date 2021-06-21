@@ -2,7 +2,6 @@ import express from 'express'
 
 import validator from '../middleware/validator/users.validator'
 import { idAsInt } from '../middleware/validator/generic.validator'
-import serializer from '../middleware/serializer/users.serializer'
 
 import UserController from '../controller/users.controller'
 

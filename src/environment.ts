@@ -56,7 +56,7 @@ const environment = {
   dbHost: (process.env.DB_HOST || load('database.host') || 'localhost') as string,
   dbUsername: (process.env.DB_USERNAME || load('database.username') || 'typescript_user') as string,
   dbPassword: (process.env.DB_PASSWORD || load('database.password') || 'password') as string,
-  database: (process.env.DATABASE || load('database.database') || 'typescript_api') as string,
+  database: (process.env.DB_NAME || load('database.database') || 'typescript_api') as string,
 
   // Logging
   logDB: (process.env.LOG_DB !== undefined || load('logging.db')) as boolean, // logs all sql commands for gut/fact checking endpoints
