@@ -75,7 +75,7 @@ describe('AuthMiddleware', () => {
     })
   })
 
-  describe('isValidRefresToken', () => {
+  describe('isValidRefreshToken', () => {
     describe('Validate via cookies', () => {
       beforeEach(() => (req.headers.authorization = undefined)) // no header on cookies requests
       describe('Authorization Successful', () => {
