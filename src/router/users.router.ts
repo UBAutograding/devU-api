@@ -33,7 +33,7 @@ Router.post('/', validator, UserController.post)
 
 /**
  * @swagger
- * /users:
+ * /users/{id}:
  *   put:
  *     summary: Update a user
  */

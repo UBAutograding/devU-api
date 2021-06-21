@@ -12,7 +12,7 @@ export function validate(req: Request, res: Response, next: NextFunction) {
 }
 
 export function idAsInt(req: Request, res: Response, next: NextFunction) {
-  if (!req.params.id) return next()
+  if (!req.params.id) return next() // TODO: Shouldn't this return a 400?
 
   const id = parseInt(req.params.id)
 
