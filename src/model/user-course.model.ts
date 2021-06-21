@@ -14,22 +14,32 @@ export default class UserCourse {
   @DeleteDateColumn()
   deletedAt?: Date
 
-  // Foreign key
-  @Column()
-  userId: number
+  @Column({})
+  user_id: number
 
-  // Foreign key
-  @Column()
-  courseId: number
+  @Column({})
+  course_id: number
 
   // "student"/"ta"/"instructor"
   @Column({ length: 128 })
   level: string
 
   @Column({ length: 128 })
-  lectureSection: string
+  lecture_section
 
   @Column()
   dropped?: boolean
 
 }
+
+
+//   course_user_id
+// user_id (Foreign key for a user)
+// course_id (Foreign key for a course)
+// level (String)
+// student/ta/instructor
+// lecture_section
+// dropped (optional boolean)
+// createdAt
+// updatedAt
+// deletedAt (optional)

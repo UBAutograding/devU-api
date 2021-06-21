@@ -7,6 +7,7 @@ import assignments from './assignments.router'
 import courses from './courses.router'
 import login from './login.router'
 import users from './users.router'
+import userCourse from './user-course.router'
 import status from './status.router'
 
 import { isAuthorized } from '../middleware/auth.middleware'

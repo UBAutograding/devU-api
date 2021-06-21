@@ -2,12 +2,16 @@ import { check } from 'express-validator'
 
 import validate from './generic.validator'
 
-const userId = check('userId').isNumeric()
-const courseId = check('courseId').isNumeric()
-const level = check('level').isString().trim().isIn(['student', 'ta', 'instructor'])
-const lectureSection = check('lectureSection').isString().trim().isLength({max: 128}).optional({nullable: true})
-const dropped = check('dropped').isBoolean().optional()
+const
 
-const validator = [userId, courseId, level, lectureSection, dropped, validate]
 
-export default validator
+//   course_user_id
+// user_id (Foreign key for a user)
+// course_id (Foreign key for a course)
+// level (String)
+// student/ta/instructor
+// lecture_section
+// dropped (optional boolean)
+// createdAt
+// updatedAt
+// deletedAt (optional)
