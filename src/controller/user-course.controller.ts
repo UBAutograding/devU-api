@@ -9,7 +9,6 @@ export async function get(req: Request, res: Response, next: NextFunction) {
     req.userCourses = await UserCourseService.list()
     req.statusCode = 200
 
-    next()
   } catch (err) {
     next(err)
   }
@@ -25,7 +24,6 @@ export async function detail(req: Request, res: Response, next: NextFunction) {
     req.userCourse = userCourse
     req.statusCode = 200
 
-    next()
   } catch (err) {
     next(err)
   }

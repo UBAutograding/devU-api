@@ -11,8 +11,8 @@ export async function create(userCourse: UserCourseType){
 }
 
 export async function update(userCourse: UserCourseType){
-  const {id, userId, courseId, level, lectureSection, dropped} = userCourse
-  return await connect().update(id, {userId, courseId, level, lectureSection, dropped})
+  const {id, user_id, course_id, level, lecture_section, dropped} = userCourse
+  return await connect().update(id, {user_id, course_id, level, lecture_section, dropped})
 }
 
 export async function _delete(id: number){
