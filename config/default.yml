@@ -237,9 +237,9 @@ auth:
 
   jwt:
     activeKeyId: key-1
-    accessTokenValiditySeconds: 20 # 10 minutes (seconds)
-    refreshTokenValiditySeconds: 75 # 10 days (seconds)
-    refreshTokenExpirationBufferSeconds: 60
+    accessTokenValiditySeconds: 600 # 10 minutes (seconds)
+    refreshTokenValiditySeconds: 864000 # 10 days (seconds)
+    refreshTokenExpirationBufferSeconds: 86400 # 1 days (seconds))
     keys:
       key-1:
         privateKey: |
