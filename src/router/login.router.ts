@@ -24,14 +24,6 @@ Router.get('/', isValidRefreshToken, isRefreshNearingExpiration, controller.logi
 
 /**
  * @swagger
- * /login/refresh:
- *   get:
- *     summary: Gets the user a new access token (usually done so when their access token has expire or will expire soon)
- */
-Router.get('/refresh', isValidRefreshToken, controller.login)
-
-/**
- * @swagger
  * /login/providers:
  *   get:
  *     summary: Gets a list of available authentication providers

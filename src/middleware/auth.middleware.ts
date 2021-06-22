@@ -69,10 +69,12 @@ export async function isRefreshNearingExpiration(req: Request, res: Response, ne
   const nowEpochTime = Math.round(Date.now() / 1000)
 
   // If the difference in time between expiration and now is larger than the buffer time, continue
-  // aka if our refresh token is outside of our buffer window, continue. Otherwise force them to re-login
-  if (environment.refreshTokenExpirationBufferSeconds < req.refreshUser.exp - nowEpochTime) return next()
+  // aka if our refresh token is outside of our buffer window, continue. Otherwise tell them
+  // their token is nearing expiration
+  if (environment.refreshTokenExpirationBufferSeconds > req.refreshUser.exp - nowEpochTime)
+    res.setHeader('x-nearing-expiration', 'true')
 
-  return res.status(401).json(Unauthorized)
+  next()
 }
 
 export const saml = passport.authenticate('saml', { session: false })

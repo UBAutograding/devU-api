@@ -134,7 +134,8 @@ describe('AuthMiddleware', () => {
 
       await isRefreshNearingExpiration(req, res, next)
 
-      expect(res.status).toBeCalledWith(401)
+      expect(res.setHeader).toBeCalledWith('x-nearing-expiration', 'true')
+      expect(next).toBeCalledWith()
     })
 
     test('Token does not act as if expired when expiration is outside of buffer window', async () => {
