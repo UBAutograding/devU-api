@@ -18,6 +18,7 @@ type Saml = {
   idpCerts: string[]
   encryption: Certificate
   signing: Certificate
+  acceptedClockSkewSeconds: number
 }
 
 type DevAuth = {

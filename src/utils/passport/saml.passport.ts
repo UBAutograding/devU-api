@@ -25,7 +25,7 @@ function generateSamlStrategy() {
       validateInResponseTo: true,
       disableRequestedAuthnContext: true,
       wantAssertionsSigned: true,
-      acceptedClockSkewMs: 20 * 1000,
+      acceptedClockSkewMs: environment.providers.saml.acceptedClockSkewSeconds * 1000,
       signatureAlgorithm: 'sha256',
       digestAlgorithm: 'sha256',
     },
