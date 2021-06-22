@@ -1,4 +1,3 @@
-// Libraries
 import express from 'express'
 import colors from 'colors'
 
@@ -6,7 +5,6 @@ import environment from '../environment'
 
 import controller from '../controller/login.controller'
 
-// Middleware
 import { isValidRefreshToken, isRefreshNearingExpiration } from '../middleware/auth.middleware'
 
 import SamlRouter from './login.saml.router'

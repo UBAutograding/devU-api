@@ -203,6 +203,28 @@ And revert the latest migration with
 npm run typeorm --migration:revert
 ```
 
+### Style Guide
+
+While we use prettier to control most of the style choices for the application, it is not a silver bullet. Here we'll list a few conventions that will (hopefully) make working in the API a little bit more sane.
+
+When importing stuff we try to keep things in a certain order. Example
+
+```
+import Libraries
+
+import RootLevelStuff
+
+import Controllers
+
+import Middleware
+
+import Routers
+
+import Utils
+```
+
+The important thing here is once you get into the modules (models/ controllers/ routers/ etc), import them alphebetically with a single empty line inbetween them.
+
 ## Production Builds
 
 You can build the project as a production build
