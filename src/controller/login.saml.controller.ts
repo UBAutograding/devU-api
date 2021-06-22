@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
+import { User } from 'devu-shared-modules'
 
 import environment from '../environment'
 
@@ -10,8 +11,9 @@ import { refreshCookieOptions } from '../utils/cookie.utils'
 
 export async function callback(req: Request, res: Response, next: NextFunction) {
   try {
-    const samlUser = req.user as any
-    const { user } = await UserService.ensure({ email: samlUser.email, externalId: samlUser.externalId })
+    const samlUser = req.user as User
+
+    const { user } = await UserService.ensure(samlUser)
 
     const refreshToken = AuthService.createRefreshToken(user)
 

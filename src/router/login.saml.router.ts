@@ -5,6 +5,8 @@ import controller from '../controller/login.saml.controller'
 
 import { saml } from '../middleware/auth.middleware'
 
+import { authCallbackValidator } from '../middleware/validator/login.validator'
+
 const Router = express.Router()
 
 /**
@@ -21,7 +23,7 @@ Router.get('/', saml)
  *   post:
  *     summary: Handles successful SAML authentication and is called from SAML auth server
  */
-Router.post('/callback', saml, controller.callback)
+Router.post('/callback', saml, authCallbackValidator, controller.callback)
 
 /**
  * @swagger
