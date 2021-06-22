@@ -18,10 +18,11 @@ export default  function(req: Request, res: Response, next: NextFunction) {
 function serialize(userCourse: UserCourse): UserCourseType {
   return {
     id: userCourse.id,
-    user_id: userCourse.user_id,
-    course_id: userCourse.course_id,
+    userId: userCourse.userId,
+    courseId: userCourse.courseId,
     level: userCourse.level,
-    lecture_section: userCourse.lecture_section,
+    dropped: userCourse.dropped,
+    lectureSection: userCourse.lectureSection,
     createdAt: userCourse.createdAt.toISOString(),
     updatedAt: userCourse.updatedAt.toISOString()
   }
