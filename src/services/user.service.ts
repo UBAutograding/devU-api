@@ -2,7 +2,7 @@ import { getRepository, IsNull } from 'typeorm'
 
 import UserModel from '../model/users.model'
 
-import { User, DeveloperAuth } from 'devu-shared-modules'
+import { User } from 'devu-shared-modules'
 
 const connect = () => getRepository(UserModel)
 
@@ -30,7 +30,7 @@ export async function list() {
   return await connect().find({ deletedAt: IsNull() })
 }
 
-export async function ensure(userInfo: DeveloperAuth) {
+export async function ensure(userInfo: User) {
   const { externalId, email } = userInfo
 
   const user = await connect().findOne({ externalId })
