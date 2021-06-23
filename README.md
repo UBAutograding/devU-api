@@ -73,6 +73,10 @@ npm run format
 
 Use [Azure Data Studio](https://docs.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver15) (or some other sql client) for easier sql queries/ testing while developing. We're using [PostgresSQL](https://www.postgresql.org/) so keep that in mind while googling how to query things as the syntax and features can be slightly different across sql flavors. **[AZURE DATA STUDIO REQUIRES A POSTGRES PLUGIN TO WORK WITH POSTGRESQL](https://docs.microsoft.com/en-us/sql/azure-data-studio/extensions/postgres-extension?view=sql-server-ver15)**. So if you want to use Azure Data Studio, you'll have to install that extension.
 
+### Local Auth Providers
+
+If you're looking for more information on how to setup auth for your developement environment, check out more info [here](./docs/localAuth.md)
+
 ## Working in the Project
 
 This project is built using
@@ -202,6 +206,14 @@ And revert the latest migration with
 ```
 npm run typeorm --migration:revert
 ```
+
+### Configuration Options
+
+Most of the API's configuraiton options live in a file called `environment.ts`. That file is bootstrapped at startup using the [config library]https://www.npmjs.com/package/config), as well as some environment variables.
+
+What this means for you (the developer) is that you can control certain api options via environment variables at runtime, or by using your `config/default.yml`. To see which `environment.ts` options support using environment variables directly, open that file and see which are using `process.env.*`; everything else should be configurable via your `default.yml`
+
+If you update your `default.yml` be sure to hard restart your API, as changing the config options does not update until you rebootstrap the API.
 
 ### Style Guide
 

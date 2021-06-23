@@ -29,7 +29,7 @@ export async function generateMetadata(req: Request, res: Response, next: NextFu
     res
       .type('application/xml')
       .status(200)
-      .json(
+      .send(
         samlStrategy.generateServiceProviderMetadata(
           environment.providers.saml.encryption.certificate,
           environment.providers.saml.signing.certificate

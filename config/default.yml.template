@@ -8,7 +8,7 @@ database:
   host: 'localhost'
   username: 'typescript_user'
   password: 'password'
-  database: 'typescript_api'
+  name: 'typescript_api'
 
 logging:
   db: false

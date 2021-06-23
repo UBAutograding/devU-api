@@ -27,7 +27,7 @@ Router.post('/callback', saml, authCallbackValidator, controller.callback)
 
 /**
  * @swagger
- * /login/saml/callback:
+ * /login/saml/metadata:
  *   post:
  *     summary: Gets meta SAML information (usually accessed by SAML server)
  */

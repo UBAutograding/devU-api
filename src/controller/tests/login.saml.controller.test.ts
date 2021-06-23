@@ -81,7 +81,7 @@ describe('LoginSamlController', () => {
       })
 
       test('200 Status returned', () => expect(res.status).toHaveBeenCalledWith(200))
-      test('Response matches XML', () => expect(res.json).toHaveBeenCalledWith(expectedXml))
+      test('Response matches XML', () => expect(res.send).toHaveBeenCalledWith(expectedXml))
     })
 
     describe('400 - Bad Request', () => {
