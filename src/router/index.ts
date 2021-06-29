@@ -7,15 +7,12 @@ import assignments from './assignments.router'
 import courses from './courses.router'
 import login from './login.router'
 import users from './users.router'
-import userCourse from './user-course.router'
-import status from './status.router'
 
 import { isAuthorized } from '../middleware/auth.middleware'
 import userCourse from './user-course.router'
 import logout from './logout.router'
 import status from './status.router'
 
-import { isAuthorized } from '../middleware/auth.middleware'
 
 import { NotFound } from '../utils/apiResponse.utils'
 
@@ -24,6 +21,7 @@ const Router = express.Router()
 Router.use('/login', login)
 Router.use('/logout', logout)
 Router.use('/users', isAuthorized, users)
+// Router.use('/users', isAuthorized, users) // TODO: Not this
 Router.use('/status', status)
 Router.use('/assignments', isAuthorized, assignments)
 Router.use('/courses', isAuthorized, courses)

@@ -1,35 +1,49 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm'
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm'
+
+// import UserModel from './users.model'
 
 @Entity('user-course')
-export default class UserCourse {
+export default class UserCourseModel {
   @PrimaryGeneratedColumn()
   id: number
 
-  @CreateDateColumn()
+  @CreateDateColumn({name: "created_at"})
   createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({name: "updated_at"})
   updatedAt: Date
 
-  @DeleteDateColumn()
+  @DeleteDateColumn({name: "deleted_at"})
   deletedAt?: Date
 
+  // // Foreign key
+  // @ManyToOne(() => UserModel)
+  // @JoinColumn({name: "user_id"})
+  // _user: UserModel
+
   // Foreign key
-  @Column()
+  @Column({name: "user_id"})
   userId: number
 
   // Foreign key
-  @Column()
+  @Column({name: "course_id"})
   courseId: number
 
   // "student"/"ta"/"instructor"
   @Column({ length: 128 })
   level: string
 
-  @Column({ length: 128 })
+  @Column({ name: "lecture_section", length: 128 })
   lectureSection: string
 
-  @Column()
+  @Column({default: false})
   dropped?: boolean
 
 }

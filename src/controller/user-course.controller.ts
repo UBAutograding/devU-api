@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from 'express'
 
 import UserCourseService from '../services/user-course.service'
+import { serialize } from '../utils/serializer/user-course.serializer'
 
 import { GenericResponse, NotFound, Updated } from '../utils/apiResponse.utils'
 
 export async function get(req: Request, res: Response, next: NextFunction) {
   try {
-    req.userCourses = await UserCourseService.list()
-    req.statusCode = 200
+    const userCourses = await UserCourseService.list()
 
-    next()
+    res.status(200).json(userCourses.map(serialize))
   } catch (err) {
     next(err)
   }
@@ -22,10 +22,7 @@ export async function detail(req: Request, res: Response, next: NextFunction) {
 
     if(!userCourse) return res.status(404).json(NotFound)
 
-    req.userCourse = userCourse
-    req.statusCode = 200
-
-    next()
+    res.status(200).json(serialize(userCourse))
   } catch (err) {
     next(err)
   }
@@ -33,8 +30,9 @@ export async function detail(req: Request, res: Response, next: NextFunction) {
 
 export async function post(req: Request, res: Response, next: NextFunction){
   try{
-    req.userCourse = await UserCourseService.create(req.body)
-    req.statusCode = 201
+    const userCourse = await UserCourseService.create(req.body)
+
+    res.status(201).json(serialize(userCourse))
 
     next()
   }catch(err){

@@ -3,7 +3,6 @@ import express from 'express'
 
 // Middleware
 import validator from '../middleware/validator/user-course.validator'
-import serializer from '../middleware/serializer/user-course.serializer'
 import { idAsInt } from '../middleware/validator/generic.validator'
 
 // Controller
@@ -17,7 +16,7 @@ const Router = express.Router()
  *   get:
  *     summary: Retrieve a list of all user-course associations
  */
-Router.get('/', UserCourseController.get, serializer)
+Router.get('/', UserCourseController.get)
 
 /**
  * @swagger
@@ -25,7 +24,7 @@ Router.get('/', UserCourseController.get, serializer)
  *   get:
  *     summary: Retrieve a single user-course association
  */
-Router.get('/:id', idAsInt, UserCourseController.detail, serializer)
+Router.get('/:id', idAsInt, UserCourseController.detail)
 
 /**
  * @swagger
@@ -33,7 +32,7 @@ Router.get('/:id', idAsInt, UserCourseController.detail, serializer)
  *   post:
  *     summary: Create a new user-course association
  */
-Router.post('/', validator, UserCourseController.post, serializer)
+Router.post('/', validator, UserCourseController.post)
 
 /**
  * @swagger

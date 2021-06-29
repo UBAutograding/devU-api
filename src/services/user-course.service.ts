@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm'
+import { getRepository, IsNull } from 'typeorm'
 
 import { UserCourse as UserCourseType } from 'devu-shared-modules'
 
@@ -11,20 +11,24 @@ export async function create(userCourse: UserCourseType){
 }
 
 export async function update(userCourse: UserCourseType){
-  const {id, userId, courseId, level, lectureSection, dropped} = userCourse
-  return await connect().update(id, {userId, courseId, level, lectureSection, dropped})
+  const {id, courseId, level, lectureSection, dropped} = userCourse
+
+  // TODO: Add user back in
+  if (!id) throw new Error('Missing Id')
+
+  return await connect().update(id, {courseId, level, lectureSection, dropped})
 }
 
 export async function _delete(id: number){
-  return await connect().softDelete({id, deletedAt: null})
+  return await connect().softDelete({id, deletedAt: IsNull()})
 }
 
 export async function retrieve(id: number){
-  return await connect().findOne({id, deletedAt: null})
+  return await connect().findOne({id, deletedAt: IsNull()})
 }
 
 export async function list() {
-  return await connect().find({deletedAt: null})
+  return await connect().find({deletedAt: IsNull()})
 }
 
 export default {

@@ -2,6 +2,7 @@ import { check } from 'express-validator'
 
 import validate from './generic.validator'
 
+// TODO: check if user/course id exist
 const userId = check('userId').isNumeric()
 const courseId = check('courseId').isNumeric()
 const level = check('level').isString().trim().isIn(['student', 'ta', 'instructor'])

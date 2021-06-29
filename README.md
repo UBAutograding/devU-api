@@ -198,13 +198,13 @@ npm run typeorm -- migration:generate -n generatedMigrationName
 Doing so will attempt to create an auto migration from any changes within the `src/models` directory and add it to `src/migrations`. If an auto migration is generated for you (always check your auto migrations), you can run it with the above migration command
 
 ```
-npm run typeorm --migration:run
+npm run typeorm -- migration:run
 ```
 
 And revert the latest migration with
 
 ```
-npm run typeorm --migration:revert
+npm run typeorm -- migration:revert
 ```
 
 ### Configuration Options
