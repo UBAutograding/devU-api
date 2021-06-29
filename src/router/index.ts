@@ -22,6 +22,7 @@ Router.use('/login', login)
 Router.use('/logout', logout)
 Router.use('/users', isAuthorized, users)
 // Router.use('/users', isAuthorized, users) // TODO: Not this
+Router.use('/users', isAuthorized, users)
 Router.use('/status', status)
 Router.use('/assignments', isAuthorized, assignments)
 Router.use('/courses', isAuthorized, courses)
