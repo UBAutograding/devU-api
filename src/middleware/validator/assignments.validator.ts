@@ -3,10 +3,13 @@ import { check } from 'express-validator'
 import validate from './generic.validator'
 
 const name = check('name').isString().trim().isLength({ max: 128 })
-const grading_type = check('grading_type').isString().trim().isLength({ max: 128 })
-const category_name = check('category_name').isString().trim().isLength({ max: 128 })
-const description = check('description').isString().trim().isLength({ max: 128 })
+const gradingType = check('gradingType').isString().trim().isLength({ max: 128 })
+const categoryName = check('categoryName').isString().trim().isLength({ max: 128 })
+const description = check('description').isString().trim()
+const startDate = check('startDate').isString().trim().isISO8601()
+const dueDate = check('dueDate').isString().trim().isISO8601()
+const endDate = check('endDate').isString().trim().isISO8601()
 
-const validator = [name, grading_type, category_name, description, validate]
+const validator = [name, gradingType, categoryName, description, startDate, dueDate, endDate, validate]
 
 export default validator

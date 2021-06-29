@@ -14,11 +14,11 @@ export default class Course {
   @Column({ length: 128 })
   number: string
 
-  @Column()
-  start_date: Date
+  @Column({ name: 'start_date' })
+  startDate: Date
 
-  @Column()
-  end_date: Date
+  @Column({ name: 'end_date' })
+  endDate: Date
 
   @CreateDateColumn()
   createdAt: Date
