@@ -27,7 +27,7 @@ export default class UserCourse {
   level: string
 
   @Column({ length: 128 })
-  lectureSection
+  lectureSection: string
 
   @Column()
   dropped?: boolean
