@@ -11,12 +11,11 @@ export async function create(userCourse: UserCourseType){
 }
 
 export async function update(userCourse: UserCourseType){
-  const {id, courseId, level, lectureSection, dropped} = userCourse
+  const {id, level, lectureSection, dropped} = userCourse
 
-  // TODO: Add user back in
   if (!id) throw new Error('Missing Id')
 
-  return await connect().update(id, {courseId, level, lectureSection, dropped})
+  return await connect().update(id, {level, lectureSection, dropped})
 }
 
 export async function _delete(id: number){
