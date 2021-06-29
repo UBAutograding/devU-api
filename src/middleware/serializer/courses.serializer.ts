@@ -20,8 +20,8 @@ function serialize(course: Course): CourseType {
     name: course.name,
     semester: course.semester,
     number: course.number,
-    start_date: course.start_date.toISOString(),
-    end_date: course.end_date.toISOString(),
+    startDate: course.startDate.toISOString(),
+    endDate: course.endDate.toISOString(),
     createdAt: course.createdAt.toISOString(),
     updatedAt: course.updatedAt.toISOString(),
   }

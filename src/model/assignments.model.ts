@@ -1,42 +1,56 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm'
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm'
+import Course from './courses.model'
 
 @Entity('assignments')
 export default class Assignment {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
-  course_id: number
+  @ManyToOne(() => Course, course => course.id)
+
+  @JoinColumn({ name: 'course_id' })
+  courseId: number
+
+  @Column({ name: 'course_id' })
 
   @Column({ length: 128 })
   name: string
 
-  @Column()
-  start_date: Date
+  @Column({ name: 'start_date' })
+  startDate: Date
 
-  @Column()
-  due_date: Date
+  @Column({ name: 'due_date' })
+  dueDate: Date
 
-  @Column()
-  end_date: Date
+  @Column({ name: 'end_date' })
+  endDate: Date
 
-  @Column({ length: 128 })
-  grading_type: string
+  @Column({ name: 'grading_type', length: 128 })
+  gradingType: string
 
-  @Column({ length: 128 })
-  category_name: string
+  @Column({ name: 'category_name', length: 128 })
+  categoryName: string
 
-  @Column({ length: 128, nullable: true })
+  @Column({ nullable: true })
   description: string
 
-  @Column()
-  max_file_size: number
+  @Column({ name: 'max_file_size' })
+  maxFileSize: number
 
-  @Column()
-  max_submissions: number
+  @Column({ name: 'max_submissions' })
+  maxSubmissions: number
 
-  @Column()
-  disable_handins: boolean
+  @Column({ name: 'disable_handins' })
+  disableHandins: boolean
 
   @CreateDateColumn()
   createdAt: Date

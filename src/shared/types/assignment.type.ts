@@ -1,16 +1,16 @@
 type Assignment = {
   id?: number
-  course_id?: number
+  courseId?: number
   name?: string
-  start_date?: string
-  due_date?: string
-  end_date?: string
-  grading_type?: string
-  category_name?: string
+  startDate?: string
+  dueDate?: string
+  endDate?: string
+  gradingType?: string
+  categoryName?: string
   description?: string
-  max_file_size?: number
-  max_submissions?: number
-  disable_handins?: boolean
+  maxFileSize?: number
+  maxSubmissions?: number
+  disableHandins?: boolean
   createdAt?: string
   updatedAt?: string
 }

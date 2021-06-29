@@ -3,8 +3,8 @@ type Course = {
   name?: string
   semester?: string
   number?: string
-  start_date?: string
-  end_date?: string
+  startDate?: string
+  endDate?: string
   createdAt?: string
   updatedAt?: string
 }
