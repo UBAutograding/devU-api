@@ -3,14 +3,15 @@ import { Request, Response, NextFunction } from 'express'
 import AssignmentService from '../services/assignment.service'
 
 import { GenericResponse, NotFound, Updated } from '../utils/apiResponse.utils'
-import Assignment from '../model/assignments.model'
+
+import { serialize } from '../utils/serializer/assignments.serializer'
 
 export async function get(req: Request, res: Response, next: NextFunction) {
   try {
-    req.assignments = await AssignmentService.list()
-    req.statusCode = 200
+    const assignments = await AssignmentService.list()
+    const response = assignments.map(serialize)
 
-    next()
+    res.status(200).json(response)
   } catch (err) {
     next(err)
   }
@@ -23,10 +24,9 @@ export async function detail(req: Request, res: Response, next: NextFunction) {
 
     if (!assignment) return res.status(404).json(NotFound)
 
-    req.assignment = assignment
-    req.statusCode = 200
+    const response = serialize(assignment)
 
-    next()
+    res.status(200).json(response)
   } catch (err) {
     next(err)
   }
@@ -34,10 +34,10 @@ export async function detail(req: Request, res: Response, next: NextFunction) {
 
 export async function post(req: Request, res: Response, next: NextFunction) {
   try {
-    req.assignment = await AssignmentService.create(req.body)
-    req.statusCode = 201
+    const assignment = await AssignmentService.create(req.body)
+    const response = serialize(assignment)
 
-    next()
+    res.status(201).json(response)
   } catch (err) {
     res.status(400).json(new GenericResponse(err.message))
   }

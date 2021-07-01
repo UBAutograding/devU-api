@@ -3,7 +3,7 @@ import express from 'express'
 
 // Middleware
 import validator from '../middleware/validator/courses.validator'
-import serializer from '../middleware/serializer/courses.serializer'
+import serializer from '../utils/serializer/courses.serializer'
 import { idAsInt } from '../middleware/validator/generic.validator'
 
 // Controller

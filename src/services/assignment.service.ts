@@ -1,15 +1,16 @@
-import { getRepository } from 'typeorm'
+import { getRepository, IsNull } from 'typeorm'
 
-import Assignment from '../model/assignments.model'
-import AssignmentType from '../shared/types/assignment.type'
+import AssignmentModel from '../model/assignments.model'
 
-const connect = () => getRepository(Assignment)
+import { Assignment } from 'devu-shared-modules'
 
-export async function create(assignment: AssignmentType) {
+const connect = () => getRepository(AssignmentModel)
+
+export async function create(assignment: Assignment) {
   return await connect().save(assignment)
 }
 
-export async function update(assignment: AssignmentType) {
+export async function update(assignment: Assignment) {
   const {
     id, name, startDate, dueDate, endDate, gradingType, categoryName, description, maxFileSize,
     maxSubmissions, disableHandins,
@@ -21,15 +22,15 @@ export async function update(assignment: AssignmentType) {
 }
 
 export async function _delete(id: number) {
-  return await connect().softDelete({ id, deletedAt: null })
+  return await connect().softDelete({ id, deletedAt: IsNull() })
 }
 
 export async function retrieve(id: number) {
-  return await connect().findOne({ id, deletedAt: null })
+  return await connect().findOne({ id, deletedAt: IsNull() })
 }
 
 export async function list() {
-  return await connect().find({ deletedAt: null })
+  return await connect().find({ deletedAt: IsNull() })
 }
 
 export default {

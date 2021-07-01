@@ -3,7 +3,6 @@ import express from 'express'
 
 // Middleware
 import validator from '../middleware/validator/assignments.validator'
-import serializer from '../middleware/serializer/assignments.serializer'
 import { idAsInt } from '../middleware/validator/generic.validator'
 
 // Controller
@@ -17,7 +16,7 @@ const Router = express.Router()
  *   get:
  *     summary: Retrieve a list of assignments
  */
-Router.get('/', AssignmentsController.get, serializer)
+Router.get('/', AssignmentsController.get)
 
 /**
  * @swagger
@@ -25,7 +24,7 @@ Router.get('/', AssignmentsController.get, serializer)
  *   get:
  *     summary: Retrieve a single assignment
  */
-Router.get('/:id', idAsInt, AssignmentsController.detail, serializer)
+Router.get('/:id', idAsInt, AssignmentsController.detail)
 
 /**
  * @swagger
@@ -33,7 +32,7 @@ Router.get('/:id', idAsInt, AssignmentsController.detail, serializer)
  *   post:
  *     summary: Create an assignment
  */
-Router.post('/', validator, AssignmentsController.post, serializer)
+Router.post('/', validator, AssignmentsController.post)
 
 /**
  * @swagger

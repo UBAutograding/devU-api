@@ -4,12 +4,14 @@ import CourseService from '../services/course.service'
 
 import { GenericResponse, NotFound, Updated } from '../utils/apiResponse.utils'
 
+import { serialize } from '../utils/serializer/courses.serializer'
+
 export async function get(req: Request, res: Response, next: NextFunction) {
   try {
-    req.courses = await CourseService.list()
-    req.statusCode = 200
+    const courses = await CourseService.list()
+    const response = courses.map(serialize)
 
-    next()
+    res.status(200).json(response)
   } catch (err) {
     next(err)
   }
@@ -22,10 +24,9 @@ export async function detail(req: Request, res: Response, next: NextFunction) {
 
     if (!course) return res.status(404).json(NotFound)
 
-    req.course = course
-    req.statusCode = 200
+    const response = serialize(course)
 
-    next()
+    res.status(200).json(response)
   } catch (err) {
     next(err)
   }
@@ -33,10 +34,10 @@ export async function detail(req: Request, res: Response, next: NextFunction) {
 
 export async function post(req: Request, res: Response, next: NextFunction) {
   try {
-    req.course = await CourseService.create(req.body)
-    req.statusCode = 201
+    const course = await CourseService.create(req.body)
+    const response = serialize(course)
 
-    next()
+    res.status(201).json(response)
   } catch (err) {
     res.status(400).json(new GenericResponse(err.message))
   }
