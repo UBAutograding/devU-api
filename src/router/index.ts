@@ -5,7 +5,7 @@ import swaggerUi from 'swagger-ui-express'
 import swagger from '../utils/swagger.utils'
 
 import login from './login.router'
-import logout from './login.router'
+import logout from './logout.router'
 import users from './users.router'
 import status from './status.router'
 
