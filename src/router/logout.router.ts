@@ -6,6 +6,6 @@ import Logout from '../controller/logout.controller'
 
 const Router = express.Router()
 
-Router.get('/logout',Logout)
+Router.get('/',Logout)
 
 export default Router

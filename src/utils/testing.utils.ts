@@ -16,12 +16,12 @@ export function fakeRequest(overrides?: Partial<Request>): Request {
 export function fakeResponse(overrides?: Partial<Response>): Response {
   const res = {} as Response
 
-  res.clearCookie = jest.fn().mockImplementation((name: string, options: CookieOptions) => res)
   res.status = jest.fn().mockImplementation((s: number) => res)
   res.json = jest.fn().mockImplementation((r: any) => res)
   res.send = jest.fn().mockImplementation(() => res)
   res.end = jest.fn().mockImplementation(() => res)
   res.cookie = jest.fn().mockImplementation((n: string, v: string, o: CookieOptions) => res)
+  res.clearCookie = jest.fn().mockImplementation((name: string, options: CookieOptions) => res)
   res.redirect = jest.fn().mockImplementation(() => res)
   res.type = jest.fn().mockImplementation(() => res)
   res.setHeader = jest.fn().mockImplementation(() => res)

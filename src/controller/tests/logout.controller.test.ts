@@ -20,7 +20,6 @@ describe('Logout', () => {
                 await Logout(req,res,next) // testing logout
             })
             test('Status code is 200', () => expect(res.status).toHaveBeenCalledWith(200))
-
         })
     })
 })
