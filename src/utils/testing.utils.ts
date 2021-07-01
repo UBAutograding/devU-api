@@ -16,6 +16,7 @@ export function fakeRequest(overrides?: Partial<Request>): Request {
 export function fakeResponse(overrides?: Partial<Response>): Response {
   const res = {} as Response
 
+  res.clearCookie = jest.fn().mockImplementation((name: string, options: CookieOptions) => res)
   res.status = jest.fn().mockImplementation((s: number) => res)
   res.json = jest.fn().mockImplementation((r: any) => res)
   res.send = jest.fn().mockImplementation(() => res)
