@@ -20,9 +20,7 @@ describe('UserCourse Serializer', () => {
     mockUserCourse.updatedAt = new Date()
   })
 
-
   describe('Serializing UserCourse', () => {
-
     test('CourseUser values exist in the response', () => {
       const expectedResult = serialize(mockUserCourse)
 

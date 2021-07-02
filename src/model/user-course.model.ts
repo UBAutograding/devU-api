@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm'
 
 // import UserModel from './users.model'
 
@@ -14,13 +7,13 @@ export default class UserCourseModel {
   @PrimaryGeneratedColumn()
   id: number
 
-  @CreateDateColumn({name: "created_at"})
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date
 
-  @UpdateDateColumn({name: "updated_at"})
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date
 
-  @DeleteDateColumn({name: "deleted_at"})
+  @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt?: Date
 
   // // Foreign key
@@ -29,21 +22,20 @@ export default class UserCourseModel {
   // _user: UserModel
 
   // Foreign key
-  @Column({name: "user_id"})
+  @Column({ name: 'user_id' })
   userId: number
 
   // Foreign key
-  @Column({name: "course_id"})
+  @Column({ name: 'course_id' })
   courseId: number
 
   // "student"/"ta"/"instructor"
   @Column({ length: 128 })
   level: string
 
-  @Column({ name: "lecture_section", length: 128 })
+  @Column({ name: 'lecture_section', length: 128 })
   lectureSection: string
 
-  @Column({default: false})
+  @Column({ default: false })
   dropped?: boolean
-
 }

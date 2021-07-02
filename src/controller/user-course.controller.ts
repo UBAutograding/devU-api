@@ -20,7 +20,7 @@ export async function detail(req: Request, res: Response, next: NextFunction) {
     const id = parseInt(req.params.id)
     const userCourse = await UserCourseService.retrieve(id)
 
-    if(!userCourse) return res.status(404).json(NotFound)
+    if (!userCourse) return res.status(404).json(NotFound)
 
     res.status(200).json(serialize(userCourse))
   } catch (err) {
@@ -28,40 +28,40 @@ export async function detail(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export async function post(req: Request, res: Response, next: NextFunction){
-  try{
+export async function post(req: Request, res: Response, next: NextFunction) {
+  try {
     const userCourse = await UserCourseService.create(req.body)
 
     res.status(201).json(serialize(userCourse))
-  }catch(err){
+  } catch (err) {
     res.status(400).json(new GenericResponse(err.message))
   }
 }
 
 export async function put(req: Request, res: Response, next: NextFunction) {
-  try{
+  try {
     req.body.id = parseInt(req.params.id)
-    const results = await  UserCourseService.update(req.body)
+    const results = await UserCourseService.update(req.body)
 
-    if(!results.affected) return res.status(404).json(NotFound)
+    if (!results.affected) return res.status(404).json(NotFound)
 
     res.status(200).json(Updated)
-  }catch(err){
+  } catch (err) {
     next(err)
   }
 }
 
 export async function _delete(req: Request, res: Response, next: NextFunction) {
-  try{
+  try {
     const id = parseInt(req.params.id)
     const results = await UserCourseService._delete(id)
 
-    if(!results.affected) return res.status(404).json(NotFound)
+    if (!results.affected) return res.status(404).json(NotFound)
 
     res.status(204).send()
-  }catch(err){
+  } catch (err) {
     next(err)
   }
 }
 
-export default { get, detail, post, put, _delete}
+export default { get, detail, post, put, _delete }
