@@ -3,7 +3,6 @@ import express from 'express'
 
 // Middleware
 import validator from '../middleware/validator/courses.validator'
-import serializer from '../utils/serializer/courses.serializer'
 import { idAsInt } from '../middleware/validator/generic.validator'
 
 // Controller
@@ -17,7 +16,7 @@ const Router = express.Router()
  *   get:
  *     summary: Retrieve a list of courses
  */
-Router.get('/', CourseController.get, serializer)
+Router.get('/', CourseController.get)
 
 /**
  * @swagger
@@ -25,7 +24,7 @@ Router.get('/', CourseController.get, serializer)
  *   get:
  *     summary: Retrieve a single course
  */
-Router.get('/:id', idAsInt, CourseController.detail, serializer)
+Router.get('/:id', idAsInt, CourseController.detail)
 
 /**
  * @swagger
@@ -33,7 +32,7 @@ Router.get('/:id', idAsInt, CourseController.detail, serializer)
  *   post:
  *     summary: Create a course
  */
-Router.post('/', validator, CourseController.post, serializer)
+Router.post('/', validator, CourseController.post)
 
 /**
  * @swagger

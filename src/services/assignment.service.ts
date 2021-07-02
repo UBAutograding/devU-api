@@ -15,6 +15,7 @@ export async function update(assignment: Assignment) {
     id, name, startDate, dueDate, endDate, gradingType, categoryName, description, maxFileSize,
     maxSubmissions, disableHandins,
   } = assignment
+  if (!id) throw new Error('Missing Id')
   return await connect().update(id, {
     name, startDate, dueDate, endDate, gradingType,
     categoryName, description, maxFileSize, maxSubmissions, disableHandins,

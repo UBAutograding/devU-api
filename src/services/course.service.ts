@@ -12,6 +12,7 @@ export async function create(course: Course) {
 
 export async function update(course: Course) {
   const { id, name, semester, number, startDate, endDate } = course
+  if (!id) throw new Error('Missing Id')
   return await connect().update(id, { name, semester, number, startDate, endDate })
 }
 
