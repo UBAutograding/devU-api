@@ -1,9 +1,8 @@
 import Logout from '../logout.controller'
-import { refreshToken } from '../../utils/cookie.utils'
 
+import { refreshToken } from '../../utils/cookie.utils'
 import Testing from '../../utils/testing.utils'
 
-// Testing Globals
 let req: any
 let res: any
 let next: any
