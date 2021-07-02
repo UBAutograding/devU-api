@@ -12,13 +12,6 @@ declare global {
       // Auth Data
       currentUser?: AccessToken // Deserialized access token
       refreshUser?: RefreshToken // Deserialized refresh token
-      user?: User
-      users?: User[]
-      userCourse?: UserCourse
-      userCourses?: UserCourse[]
-      // Auth Data
-      currentUser?: AccessToken // Deserialized access token
-      refreshUser?: RefreshToken // Deserialized refresh token
     }
   }
 }
