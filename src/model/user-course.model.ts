@@ -31,7 +31,7 @@ export default class UserCourseModel {
 
   // "student"/"ta"/"instructor"
   @Column({ length: 128 })
-  level: string
+  level: "student" | "ta" | "instructor"
 
   @Column({ name: 'lecture_section', length: 128 })
   lectureSection: string
