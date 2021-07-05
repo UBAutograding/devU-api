@@ -12,11 +12,11 @@ export function validate(req: Request, res: Response, next: NextFunction) {
 }
 
 export function idAsInt(req: Request, res: Response, next: NextFunction) {
-  if (!req.params.id) return next() // TODO: Shouldn't this return a 400?
+  if (!req.params.id) throw new Error('Missing id param on id required request')
 
   const id = parseInt(req.params.id)
 
-  if (isNaN(id)) return res.status(400).json(new GenericResponse('Ids are expected to be numbers'))
+  if (isNaN(id)) return res.status(400).json(new GenericResponse('ids are expected to be numbers'))
 
   next()
 }

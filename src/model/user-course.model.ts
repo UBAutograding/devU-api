@@ -16,11 +16,6 @@ export default class UserCourseModel {
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt?: Date
 
-  // // Foreign key
-  // @ManyToOne(() => UserModel)
-  // @JoinColumn({name: "user_id"})
-  // _user: UserModel
-
   // Foreign key
   @Column({ name: 'user_id' })
   userId: number
@@ -31,7 +26,7 @@ export default class UserCourseModel {
 
   // "student"/"ta"/"instructor"
   @Column({ length: 128 })
-  level: "student" | "ta" | "instructor"
+  level: 'student' | 'ta' | 'instructor'
 
   @Column({ name: 'lecture_section', length: 128 })
   lectureSection: string
