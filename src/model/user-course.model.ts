@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm'
 
-// import UserModel from './users.model'
+import { UserCourseLevel } from 'devu-shared-modules'
 
 @Entity('user-course')
 export default class UserCourseModel {
@@ -26,7 +26,7 @@ export default class UserCourseModel {
 
   // "student"/"ta"/"instructor"
   @Column({ length: 128 })
-  level: 'student' | 'ta' | 'instructor'
+  level: UserCourseLevel
 
   @Column({ name: 'lecture_section', length: 128 })
   lectureSection: string
