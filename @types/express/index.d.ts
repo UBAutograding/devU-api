@@ -1,7 +1,5 @@
-import User from '../../src/model/users.model'
-import UserCourse from '../../src/model/user-course.model'
-
 import { AccessToken, RefreshToken } from 'devu-shared-modules'
+
 declare global {
   namespace Express {
     interface Request {

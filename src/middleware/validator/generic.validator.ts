@@ -12,7 +12,7 @@ export function validate(req: Request, res: Response, next: NextFunction) {
 }
 
 export function idAsInt(req: Request, res: Response, next: NextFunction) {
-  if (!req.params.id) return res.status(400).json(new Generic response('Missing id param on id required request'))
+  if (!req.params.id) return res.status(400).json(new GenericResponse('Missing id param on id required request'))
 
   const id = parseInt(req.params.id)
 
