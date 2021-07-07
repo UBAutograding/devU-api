@@ -18,6 +18,9 @@ export default class UserCourseModel {
 
   // Foreign key
   @Column({ name: 'user_id' })
+  @JoinColumn({ name: 'user_id' })
+  @ManyToOne(() => UserModel)
+  userId: number
   userId: number
 
   // Foreign key
