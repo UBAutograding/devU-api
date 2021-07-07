@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 
 import { UserCourseLevel } from 'devu-shared-modules'
 
-@Entity('user-course')
+@Entity('user_courses')
 export default class UserCourseModel {
   @PrimaryGeneratedColumn()
   id: number
