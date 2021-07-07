@@ -3,7 +3,7 @@ import express from 'express'
 
 // Middleware
 import validator from '../middleware/validator/user-course.validator'
-import { idAsInt } from '../middleware/validator/generic.validator'
+import { asInt } from '../middleware/validator/generic.validator'
 
 // Controller
 import UserCourseController from '../controller/user-course.controller'
@@ -24,7 +24,7 @@ Router.get('/', UserCourseController.get)
  *   get:
  *     summary: Retrieve a single user-course association
  */
-Router.get('/:id', idAsInt, UserCourseController.detail)
+Router.get('/:id', asInt('id'), UserCourseController.detail)
 
 /**
  * @swagger
@@ -40,7 +40,7 @@ Router.post('/', validator, UserCourseController.post)
  *   put:
  *     summary: Update a user-course association
  */
-Router.put('/:id', idAsInt, validator, UserCourseController.put)
+Router.put('/:id', asInt('id'), validator, UserCourseController.put)
 
 /**
  * @swagger
@@ -48,6 +48,6 @@ Router.put('/:id', idAsInt, validator, UserCourseController.put)
  *   delete:
  *     summary: Delete a user-course association
  */
-Router.delete('/:id', idAsInt, UserCourseController._delete)
+Router.delete('/:id', asInt('id'), UserCourseController._delete)
 
 export default Router

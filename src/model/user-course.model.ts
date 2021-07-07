@@ -1,6 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm'
+import {
+  JoinColumn,
+  ManyToOne,
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm'
 
 import { UserCourseLevel } from 'devu-shared-modules'
+import UserModel from './users.model'
 
 @Entity('user_courses')
 export default class UserCourseModel {
@@ -17,13 +27,12 @@ export default class UserCourseModel {
   deletedAt?: Date
 
   // Foreign key
-  @Column({ name: 'user_id' })
   @JoinColumn({ name: 'user_id' })
   @ManyToOne(() => UserModel)
   userId: number
-  userId: number
 
   // Foreign key
+  // TODO: Update this with FK constraint once the course entity is merged
   @Column({ name: 'course_id' })
   courseId: number
 
@@ -31,7 +40,7 @@ export default class UserCourseModel {
   @Column({ length: 128 })
   level: UserCourseLevel
 
-  @Column({ name: 'lecture_section', length: 128 })
+  @Column({ name: 'lecture_section', length: 128, nullable: true })
   lectureSection: string
 
   @Column({ default: false })
