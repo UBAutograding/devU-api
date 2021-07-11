@@ -8,19 +8,17 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm'
-import Course from './courses.model'
+import CourseModel from './courses.model'
 
 @Entity('assignments')
 export default class Assignment {
   @PrimaryGeneratedColumn()
   id: number
 
-  @ManyToOne(() => Course, course => course.id)
-
-  @JoinColumn({ name: 'course_id' })
-  courseId: number
-
   @Column({ name: 'course_id' })
+  @JoinColumn({ name: 'course_id' })
+  @ManyToOne(() => CourseModel)
+  courseId: number
 
   @Column({ length: 128 })
   name: string
