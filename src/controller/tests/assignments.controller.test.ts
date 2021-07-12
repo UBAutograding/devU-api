@@ -1,8 +1,12 @@
 import { UpdateResult } from 'typeorm'
 
-import controller from '../assignments.controller'
+import { Assignment } from 'devu-shared-modules'
 
-import Assignment from '../../model/assignments.model'
+import controller from '../courses.controller'
+
+import AssignmentModel from '../../model/assignments.model'
+
+import { serialize } from '../../utils/serializer/assignments.serializer'
 
 import AssignmentService from '../../services/assignment.service'
 
@@ -10,39 +14,43 @@ import Testing from '../../utils/testing.utils'
 import { GenericResponse, NotFound, Updated } from '../../utils/apiResponse.utils'
 
 // Testing Globals
-let req
-let res
-let next
+let req: any
+let res: any
+let next: any
 
+let mockedCourses: AssignmentModel[]
+let mockedCourse: AssignmentModel
 let expectedResults: Assignment[]
 let expectedResult: Assignment
 let expectedError: Error
 
 let expectedDbResult: UpdateResult
 
-describe('AssignmentController', () => {
+describe('CourseController', () => {
   beforeEach(() => {
     req = Testing.fakeRequest()
     res = Testing.fakeResponse()
     next = Testing.fakeNext()
 
-    expectedResults = Testing.generateTypeOrmArray(Assignment, 3)
-    expectedResult = Testing.generateTypeOrm(Assignment)
+    mockedCourses = Testing.generateTypeOrmArray(AssignmentModel, 3)
+    mockedCourse = Testing.generateTypeOrm(AssignmentModel)
+
+    expectedResults = mockedCourses.map(serialize)
+    expectedResult = serialize(mockedCourse)
     expectedError = new Error('Expected Error')
 
     expectedDbResult = {} as UpdateResult
   })
 
-  describe('GET - /assignments', () => {
+  describe('GET - /courses', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
         AssignmentService.list = jest.fn().mockImplementation(() => Promise.resolve(expectedResults))
         await controller.get(req, res, next) // what we're testing
       })
 
-      test('Returns list of assignments', () => expect(req.assignments).toEqual(expectedResults))
-      test('Status code is 200', () => expect(req.statusCode).toEqual(200))
-      test('Next called empty', () => expect(next).toBeCalledWith())
+      test('Returns list of courses', () => expect(res.json).toBeCalledWith(expectedResults))
+      test('Status code is 200', () => expect(req.statusCode).toBeCalledWith(200))
     })
 
     describe('400 - Bad request', () => {
@@ -60,16 +68,15 @@ describe('AssignmentController', () => {
     })
   })
 
-  describe('GET - /assignments/:id', () => {
+  describe('GET - /courses/:id', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
         AssignmentService.retrieve = jest.fn().mockImplementation(() => Promise.resolve(expectedResult))
         await controller.detail(req, res, next)
       })
 
-      test('Returns expected assignment', () => expect(req.assignment).toEqual(expectedResult))
-      test('Status code is 200', () => expect(req.statusCode).toEqual(200))
-      test('Next called empty', () => expect(next).toBeCalledWith())
+      test('Returns expected course', () => expect(res.json).toBeCalledWith(expectedResult))
+      test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
     })
 
     describe('404 - Not Found', () => {
@@ -78,9 +85,9 @@ describe('AssignmentController', () => {
         await controller.detail(req, res, next)
       })
 
-      test('Status code is 404 on missing assignment', () => expect(res.status).toBeCalledWith(404))
-      test('Responds with NotFound on missing assignment', () => expect(res.json).toBeCalledWith(NotFound))
-      test('Next not called on missing assignment', () => expect(next).toBeCalledTimes(0))
+      test('Status code is 404 on missing course', () => expect(res.status).toBeCalledWith(404))
+      test('Responds with NotFound on missing course', () => expect(res.json).toBeCalledWith(NotFound))
+      test('Next not called on missing course', () => expect(next).toBeCalledTimes(0))
     })
 
     describe('400 - Bad Request', () => {
@@ -98,16 +105,15 @@ describe('AssignmentController', () => {
     })
   })
 
-  describe('POST - /assignments/', () => {
+  describe('POST - /courses/', () => {
     describe('201 - Created', () => {
       beforeEach(async () => {
         AssignmentService.create = jest.fn().mockImplementation(() => Promise.resolve(expectedResult))
         await controller.post(req, res, next)
       })
 
-      test('Returns expected assignment', () => expect(req.assignment).toEqual(expectedResult))
-      test('Status code is 201', () => expect(req.statusCode).toEqual(201))
-      test('Next called empty', () => expect(next).toBeCalledWith())
+      test('Returns expected course', () => expect(res.json).toBeCalledWith(expectedResult))
+      test('Status code is 201', () => expect(req.status).toBeCalledWith(201))
     })
 
     describe('400 - Bad Request', () => {
@@ -130,7 +136,7 @@ describe('AssignmentController', () => {
     })
   })
 
-  describe('PUT - /assignments/:id', () => {
+  describe('PUT - /courses/:id', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
         expectedDbResult.affected = 1 // mocking service return shape
@@ -165,7 +171,7 @@ describe('AssignmentController', () => {
     })
   })
 
-  describe('DELETE - /assignments/:id', () => {
+  describe('DELETE - /courses/:id', () => {
     describe('204 - No Content', () => {
       beforeEach(async () => {
         expectedDbResult.affected = 1

@@ -6,9 +6,9 @@ import controller from '../courses.controller'
 
 import CourseModel from '../../model/courses.model'
 
-import { serialize } from '../../utils/serializer/courses.serializer'
-
 import CourseService from '../../services/course.service'
+
+import { serialize } from '../../utils/serializer/courses.serializer'
 
 import Testing from '../../utils/testing.utils'
 import { GenericResponse, NotFound, Updated } from '../../utils/apiResponse.utils'
@@ -18,39 +18,39 @@ let req: any
 let res: any
 let next: any
 
-let mockedCourses: CourseModel[]
-let mockedCourse: CourseModel
+let mockedUsers: CourseModel[]
+let mockedUser: CourseModel
 let expectedResults: Course[]
 let expectedResult: Course
 let expectedError: Error
 
 let expectedDbResult: UpdateResult
 
-describe('CourseController', () => {
+describe('UserController', () => {
   beforeEach(() => {
     req = Testing.fakeRequest()
     res = Testing.fakeResponse()
     next = Testing.fakeNext()
 
-    mockedCourses = Testing.generateTypeOrmArray(CourseModel, 3)
-    mockedCourse = Testing.generateTypeOrm(CourseModel)
+    mockedUsers = Testing.generateTypeOrmArray(CourseModel, 3)
+    mockedUser = Testing.generateTypeOrm(CourseModel)
 
-    expectedResults = mockedCourses.map(serialize)
-    expectedResult = serialize(mockedCourse)
+    expectedResults = mockedUsers.map(serialize)
+    expectedResult = serialize(mockedUser)
     expectedError = new Error('Expected Error')
 
     expectedDbResult = {} as UpdateResult
   })
 
-  describe('GET - /courses', () => {
+  describe('GET - /users', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
-        CourseService.list = jest.fn().mockImplementation(() => Promise.resolve(expectedResults))
+        CourseService.list = jest.fn().mockImplementation(() => Promise.resolve(mockedUsers))
         await controller.get(req, res, next) // what we're testing
       })
 
-      test('Returns list of courses', () => expect(res.json).toBeCalledWith(expectedResults))
-      test('Status code is 200', () => expect(req.statusCode).toBeCalledWith(200))
+      test('Returns list of users', () => expect(res.json).toBeCalledWith(expectedResults))
+      test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
     })
 
     describe('400 - Bad request', () => {
@@ -68,14 +68,14 @@ describe('CourseController', () => {
     })
   })
 
-  describe('GET - /courses/:id', () => {
+  describe('GET - /users/:id', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
-        CourseService.retrieve = jest.fn().mockImplementation(() => Promise.resolve(expectedResult))
+        CourseService.retrieve = jest.fn().mockImplementation(() => Promise.resolve(mockedUser))
         await controller.detail(req, res, next)
       })
 
-      test('Returns expected course', () => expect(res.json).toBeCalledWith(expectedResult))
+      test('Returns expected user', () => expect(res.json).toBeCalledWith(expectedResult))
       test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
     })
 
@@ -85,9 +85,9 @@ describe('CourseController', () => {
         await controller.detail(req, res, next)
       })
 
-      test('Status code is 404 on missing course', () => expect(res.status).toBeCalledWith(404))
-      test('Responds with NotFound on missing course', () => expect(res.json).toBeCalledWith(NotFound))
-      test('Next not called on missing course', () => expect(next).toBeCalledTimes(0))
+      test('Status code is 404 on missing user', () => expect(res.status).toBeCalledWith(404))
+      test('Responds with NotFound on missing user', () => expect(res.json).toBeCalledWith(NotFound))
+      test('Next not called on missing user', () => expect(next).toBeCalledTimes(0))
     })
 
     describe('400 - Bad Request', () => {
@@ -105,15 +105,15 @@ describe('CourseController', () => {
     })
   })
 
-  describe('POST - /courses/', () => {
+  describe('POST - /users/', () => {
     describe('201 - Created', () => {
       beforeEach(async () => {
-        CourseService.create = jest.fn().mockImplementation(() => Promise.resolve(expectedResult))
+        CourseService.create = jest.fn().mockImplementation(() => Promise.resolve(mockedUser))
         await controller.post(req, res, next)
       })
 
-      test('Returns expected course', () => expect(res.json).toBeCalledWith(expectedResult))
-      test('Status code is 201', () => expect(req.status).toBeCalledWith(201))
+      test('Returns expected user', () => expect(res.json).toBeCalledWith(expectedResult))
+      test('Status code is 201', () => expect(res.status).toBeCalledWith(201))
     })
 
     describe('400 - Bad Request', () => {
@@ -136,7 +136,7 @@ describe('CourseController', () => {
     })
   })
 
-  describe('PUT - /courses/:id', () => {
+  describe('PUT - /users/:id', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
         expectedDbResult.affected = 1 // mocking service return shape
@@ -171,7 +171,7 @@ describe('CourseController', () => {
     })
   })
 
-  describe('DELETE - /courses/:id', () => {
+  describe('DELETE - /users/:id', () => {
     describe('204 - No Content', () => {
       beforeEach(async () => {
         expectedDbResult.affected = 1
