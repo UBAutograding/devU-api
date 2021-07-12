@@ -16,7 +16,7 @@ export function asInt(idName: string) {
     if (!req.params[idName])
       return res
         .status(400)
-        .json(new GenericResponse('Missing ' + idName + ' param on ' + idName + ' required request'))
+        .json(new GenericResponse(`Missing  ${idName} param on ${idName} required request`))
 
     const id = parseInt(req.params[idName])
 
