@@ -49,7 +49,6 @@ describe('AssignmentController', () => {
         await controller.get(req, res, next) // what we're testing
       })
 
-
       test('Returns list of assignments', () => expect(res.json).toBeCalledWith(expectedResults))
       test('Status code is 200', () => expect(req.statusCode).toBeCalledWith(200))
     })
