@@ -18,38 +18,38 @@ let req: any
 let res: any
 let next: any
 
-let mockedUsers: CourseModel[]
-let mockedUser: CourseModel
+let mockedCourses: CourseModel[]
+let mockedCourse: CourseModel
 let expectedResults: Course[]
 let expectedResult: Course
 let expectedError: Error
 
 let expectedDbResult: UpdateResult
 
-describe('UserController', () => {
+describe('CourseController', () => {
   beforeEach(() => {
     req = Testing.fakeRequest()
     res = Testing.fakeResponse()
     next = Testing.fakeNext()
 
-    mockedUsers = Testing.generateTypeOrmArray(CourseModel, 3)
-    mockedUser = Testing.generateTypeOrm(CourseModel)
+    mockedCourses = Testing.generateTypeOrmArray(CourseModel, 3)
+    mockedCourse = Testing.generateTypeOrm(CourseModel)
 
-    expectedResults = mockedUsers.map(serialize)
-    expectedResult = serialize(mockedUser)
+    expectedResults = mockedCourses.map(serialize)
+    expectedResult = serialize(mockedCourse)
     expectedError = new Error('Expected Error')
 
     expectedDbResult = {} as UpdateResult
   })
 
-  describe('GET - /users', () => {
+  describe('GET - /courses', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
-        CourseService.list = jest.fn().mockImplementation(() => Promise.resolve(mockedUsers))
+        CourseService.list = jest.fn().mockImplementation(() => Promise.resolve(mockedCourses))
         await controller.get(req, res, next) // what we're testing
       })
 
-      test('Returns list of users', () => expect(res.json).toBeCalledWith(expectedResults))
+      test('Returns list of courses', () => expect(res.json).toBeCalledWith(expectedResults))
       test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
     })
 
@@ -68,14 +68,14 @@ describe('UserController', () => {
     })
   })
 
-  describe('GET - /users/:id', () => {
+  describe('GET - /courses/:id', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
-        CourseService.retrieve = jest.fn().mockImplementation(() => Promise.resolve(mockedUser))
+        CourseService.retrieve = jest.fn().mockImplementation(() => Promise.resolve(mockedCourse))
         await controller.detail(req, res, next)
       })
 
-      test('Returns expected user', () => expect(res.json).toBeCalledWith(expectedResult))
+      test('Returns expected course', () => expect(res.json).toBeCalledWith(expectedResult))
       test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
     })
 
@@ -85,9 +85,9 @@ describe('UserController', () => {
         await controller.detail(req, res, next)
       })
 
-      test('Status code is 404 on missing user', () => expect(res.status).toBeCalledWith(404))
-      test('Responds with NotFound on missing user', () => expect(res.json).toBeCalledWith(NotFound))
-      test('Next not called on missing user', () => expect(next).toBeCalledTimes(0))
+      test('Status code is 404 on missing course', () => expect(res.status).toBeCalledWith(404))
+      test('Responds with NotFound on missing course', () => expect(res.json).toBeCalledWith(NotFound))
+      test('Next not called on missing course', () => expect(next).toBeCalledTimes(0))
     })
 
     describe('400 - Bad Request', () => {
@@ -105,14 +105,14 @@ describe('UserController', () => {
     })
   })
 
-  describe('POST - /users/', () => {
+  describe('POST - /courses/', () => {
     describe('201 - Created', () => {
       beforeEach(async () => {
-        CourseService.create = jest.fn().mockImplementation(() => Promise.resolve(mockedUser))
+        CourseService.create = jest.fn().mockImplementation(() => Promise.resolve(mockedCourse))
         await controller.post(req, res, next)
       })
 
-      test('Returns expected user', () => expect(res.json).toBeCalledWith(expectedResult))
+      test('Returns expected course', () => expect(res.json).toBeCalledWith(expectedResult))
       test('Status code is 201', () => expect(res.status).toBeCalledWith(201))
     })
 
@@ -136,7 +136,7 @@ describe('UserController', () => {
     })
   })
 
-  describe('PUT - /users/:id', () => {
+  describe('PUT - /courses/:id', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
         expectedDbResult.affected = 1 // mocking service return shape
@@ -171,7 +171,7 @@ describe('UserController', () => {
     })
   })
 
-  describe('DELETE - /users/:id', () => {
+  describe('DELETE - /courses/:id', () => {
     describe('204 - No Content', () => {
       beforeEach(async () => {
         expectedDbResult.affected = 1
