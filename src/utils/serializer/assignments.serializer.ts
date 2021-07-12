@@ -7,9 +7,9 @@ export function serialize(assignment: AssignmentModel): Assignment {
     id: assignment.id,
     courseId: assignment.courseId,
     name: assignment.name,
-    startDate: assignment.startDate.toISOString(),
-    dueDate: assignment.dueDate.toISOString(),
-    endDate: assignment.endDate.toISOString(),
+    startDate: assignment.startDate,
+    dueDate: assignment.dueDate,
+    endDate: assignment.endDate,
     gradingType: assignment.gradingType,
     categoryName: assignment.categoryName,
     description: assignment.description,
@@ -18,6 +18,5 @@ export function serialize(assignment: AssignmentModel): Assignment {
     disableHandins: assignment.disableHandins,
     createdAt: assignment.createdAt.toISOString(),
     updatedAt: assignment.updatedAt.toISOString(),
-
   }
 }
