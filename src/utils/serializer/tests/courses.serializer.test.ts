@@ -30,8 +30,6 @@ describe('Course Serializer', () => {
       expect(expectedResult.name).toEqual(mockCourse.name)
       expect(expectedResult.semester).toEqual(mockCourse.semester)
       expect(expectedResult.number).toEqual(mockCourse.number)
-      expect(expectedResult.startDate).toEqual(mockCourse.startDate.toISOString())
-      expect(expectedResult.endDate).toEqual(mockCourse.endDate.toISOString())
     })
 
     test('CreatedAt and ModifiedAt are ISO strings for all submissions', () => {
