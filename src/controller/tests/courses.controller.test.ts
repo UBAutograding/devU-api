@@ -1,8 +1,12 @@
 import { UpdateResult } from 'typeorm'
 
+import { Course } from 'devu-shared-modules'
+
 import controller from '../courses.controller'
 
-import Course from '../../model/courses.model'
+import CourseModel from '../../model/courses.model'
+
+import { serialize } from '../../utils/serializer/courses.serializer'
 
 import CourseService from '../../services/course.service'
 
@@ -10,10 +14,12 @@ import Testing from '../../utils/testing.utils'
 import { GenericResponse, NotFound, Updated } from '../../utils/apiResponse.utils'
 
 // Testing Globals
-let req
-let res
-let next
+let req: any
+let res: any
+let next: any
 
+let mockedCourses: CourseModel[]
+let mockedCourse: CourseModel
 let expectedResults: Course[]
 let expectedResult: Course
 let expectedError: Error
@@ -26,8 +32,11 @@ describe('CourseController', () => {
     res = Testing.fakeResponse()
     next = Testing.fakeNext()
 
-    expectedResults = Testing.generateTypeOrmArray(Course, 3)
-    expectedResult = Testing.generateTypeOrm(Course)
+    mockedCourses = Testing.generateTypeOrmArray(CourseModel, 3)
+    mockedCourse = Testing.generateTypeOrm(CourseModel)
+
+    expectedResults = mockedCourses.map(serialize)
+    expectedResult = serialize(mockedCourse)
     expectedError = new Error('Expected Error')
 
     expectedDbResult = {} as UpdateResult
@@ -40,9 +49,8 @@ describe('CourseController', () => {
         await controller.get(req, res, next) // what we're testing
       })
 
-      test('Returns list of courses', () => expect(req.courses).toEqual(expectedResults))
-      test('Status code is 200', () => expect(req.statusCode).toEqual(200))
-      test('Next called empty', () => expect(next).toBeCalledWith())
+      test('Returns list of courses', () => expect(res.json).toBeCalledWith(expectedResults))
+      test('Status code is 200', () => expect(req.statusCode).toBeCalledWith(200))
     })
 
     describe('400 - Bad request', () => {
@@ -67,9 +75,8 @@ describe('CourseController', () => {
         await controller.detail(req, res, next)
       })
 
-      test('Returns expected course', () => expect(req.course).toEqual(expectedResult))
-      test('Status code is 200', () => expect(req.statusCode).toEqual(200))
-      test('Next called empty', () => expect(next).toBeCalledWith())
+      test('Returns expected course', () => expect(res.json).toBeCalledWith(expectedResult))
+      test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
     })
 
     describe('404 - Not Found', () => {
@@ -105,9 +112,8 @@ describe('CourseController', () => {
         await controller.post(req, res, next)
       })
 
-      test('Returns expected course', () => expect(req.course).toEqual(expectedResult))
-      test('Status code is 201', () => expect(req.statusCode).toEqual(201))
-      test('Next called empty', () => expect(next).toBeCalledWith())
+      test('Returns expected course', () => expect(res.json).toBeCalledWith(expectedResult))
+      test('Status code is 201', () => expect(req.status).toBeCalledWith(201))
     })
 
     describe('400 - Bad Request', () => {
