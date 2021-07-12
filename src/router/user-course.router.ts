@@ -24,7 +24,7 @@ Router.get('/', UserCourseController.get)
  *   get:
  *     summary: Retrieve a single user-course association
  */
-Router.get('/:id', asInt('id'), UserCourseController.detail)
+Router.get('/:id', asInt(), UserCourseController.detail)
 
 /**
  * @swagger
@@ -40,7 +40,7 @@ Router.post('/', validator, UserCourseController.post)
  *   put:
  *     summary: Update a user-course association
  */
-Router.put('/:id', asInt('id'), validator, UserCourseController.put)
+Router.put('/:id', asInt(), validator, UserCourseController.put)
 
 /**
  * @swagger
@@ -48,6 +48,6 @@ Router.put('/:id', asInt('id'), validator, UserCourseController.put)
  *   delete:
  *     summary: Delete a user-course association
  */
-Router.delete('/:id', asInt('id'), UserCourseController._delete)
+Router.delete('/:id', asInt(), UserCourseController._delete)
 
 export default Router
