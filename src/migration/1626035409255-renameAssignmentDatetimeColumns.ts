@@ -1,7 +1,7 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class generatedMigrationName1626035409255 implements MigrationInterface {
-    name = 'generatedMigrationName1626035409255'
+export class renameAssignmentDatetimeColumns implements MigrationInterface {
+    name = 'renameAssignmentDatetimeColumns'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`ALTER TABLE "courses" DROP COLUMN "createdAt"`);
