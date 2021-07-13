@@ -6,9 +6,9 @@ import controller from '../courses.controller'
 
 import CourseModel from '../../model/courses.model'
 
-import { serialize } from '../../utils/serializer/courses.serializer'
-
 import CourseService from '../../services/course.service'
+
+import { serialize } from '../../utils/serializer/courses.serializer'
 
 import Testing from '../../utils/testing.utils'
 import { GenericResponse, NotFound, Updated } from '../../utils/apiResponse.utils'
@@ -45,12 +45,12 @@ describe('CourseController', () => {
   describe('GET - /courses', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
-        CourseService.list = jest.fn().mockImplementation(() => Promise.resolve(expectedResults))
+        CourseService.list = jest.fn().mockImplementation(() => Promise.resolve(mockedCourses))
         await controller.get(req, res, next) // what we're testing
       })
 
       test('Returns list of courses', () => expect(res.json).toBeCalledWith(expectedResults))
-      test('Status code is 200', () => expect(req.statusCode).toBeCalledWith(200))
+      test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
     })
 
     describe('400 - Bad request', () => {
@@ -71,7 +71,7 @@ describe('CourseController', () => {
   describe('GET - /courses/:id', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
-        CourseService.retrieve = jest.fn().mockImplementation(() => Promise.resolve(expectedResult))
+        CourseService.retrieve = jest.fn().mockImplementation(() => Promise.resolve(mockedCourse))
         await controller.detail(req, res, next)
       })
 
@@ -108,12 +108,12 @@ describe('CourseController', () => {
   describe('POST - /courses/', () => {
     describe('201 - Created', () => {
       beforeEach(async () => {
-        CourseService.create = jest.fn().mockImplementation(() => Promise.resolve(expectedResult))
+        CourseService.create = jest.fn().mockImplementation(() => Promise.resolve(mockedCourse))
         await controller.post(req, res, next)
       })
 
       test('Returns expected course', () => expect(res.json).toBeCalledWith(expectedResult))
-      test('Status code is 201', () => expect(req.status).toBeCalledWith(201))
+      test('Status code is 201', () => expect(res.status).toBeCalledWith(201))
     })
 
     describe('400 - Bad Request', () => {

@@ -8,6 +8,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm'
+
 import CourseModel from './courses.model'
 
 @Entity('assignments')
