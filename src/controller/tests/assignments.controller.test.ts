@@ -45,12 +45,12 @@ describe('AssignmentController', () => {
   describe('GET - /assignments', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
-        AssignmentService.list = jest.fn().mockImplementation(() => Promise.resolve(expectedResults))
+        AssignmentService.list = jest.fn().mockImplementation(() => Promise.resolve(mockedAssignments))
         await controller.get(req, res, next) // what we're testing
       })
 
       test('Returns list of assignments', () => expect(res.json).toBeCalledWith(expectedResults))
-      test('Status code is 200', () => expect(req.statusCode).toBeCalledWith(200))
+      test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
     })
 
     describe('400 - Bad request', () => {
@@ -71,7 +71,7 @@ describe('AssignmentController', () => {
   describe('GET - /assignments/:id', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
-        AssignmentService.retrieve = jest.fn().mockImplementation(() => Promise.resolve(expectedResult))
+        AssignmentService.retrieve = jest.fn().mockImplementation(() => Promise.resolve(mockedAssignment))
         await controller.detail(req, res, next)
       })
 
@@ -108,12 +108,12 @@ describe('AssignmentController', () => {
   describe('POST - /assignments/', () => {
     describe('201 - Created', () => {
       beforeEach(async () => {
-        AssignmentService.create = jest.fn().mockImplementation(() => Promise.resolve(expectedResult))
+        AssignmentService.create = jest.fn().mockImplementation(() => Promise.resolve(mockedAssignment))
         await controller.post(req, res, next)
       })
 
       test('Returns expected assignment', () => expect(res.json).toBeCalledWith(expectedResult))
-      test('Status code is 201', () => expect(req.status).toBeCalledWith(201))
+      test('Status code is 201', () => expect(res.status).toBeCalledWith(201))
     })
 
     describe('400 - Bad Request', () => {
