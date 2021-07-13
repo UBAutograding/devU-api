@@ -18,6 +18,8 @@ const Router = express.Router()
 Router.use('/login', login)
 Router.use('/users', isAuthorized, users)
 Router.use('/status', status)
+// Router.use('/assignments',isAuthorized, assignments)// TO DO UNCOMMENT WHEN MERGED
+// Router.use('/courses',isAuthorized, courses)// TO DO UNCOMMENT WHEN MERGED
 Router.use('/assignments', assignments)
 Router.use('/courses', courses)
 Router.use('/docs', swaggerUi.serve, swaggerUi.setup(swagger))
