@@ -1,97 +1,68 @@
+import { SubmissionType, submissionTypes } from 'devu-shared-modules'
+
 import {
-    JoinColumn,
-    ManyToOne,
-    Entity,
-    Column,
-    PrimaryGeneratedColumn,
-    CreateDateColumn,
-    UpdateDateColumn,
-    DeleteDateColumn
-} from "typeorm";
+  JoinColumn,
+  ManyToOne,
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm'
 
-
+import AssignmentModel from './assignments.model'
+import CourseModel from './courses.model'
 import UserModel from './users.model'
 
 @Entity('submissions')
-export default class SubmissionModel {
-    @PrimaryGeneratedColumn()
-    id: number
+export default class Submission {
+  @PrimaryGeneratedColumn()
+  id: number
 
-    @CreateDateColumn({name: "created_at"})
-    createdAt: Date
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date
 
-    @UpdateDateColumn({name: "updated_at"})
-    updatedAt: Date
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date
 
-    @DeleteDateColumn({name: "deleted_at"})
-    deletedAt?: Date
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt?: Date
 
-    @Column({name: "submission_id"})
-    submissionId: number
+  @Column({ name: 'course_id' })
+  @JoinColumn({ name: 'course_id' })
+  @ManyToOne(() => CourseModel)
+  courseId: number
 
+  @Column({ name: 'assignment_id' })
+  @JoinColumn({ name: 'assignment_id' })
+  @ManyToOne(() => AssignmentModel)
+  assignmentId: number
 
+  @Column({ name: 'user_id' })
+  @JoinColumn({ name: 'user_id' })
+  @ManyToOne(() => UserModel)
+  userId: number
 
-    //Foreign key
-    // TODO: Uncomment this with FK constraint once the course entity is merged
-    // @JoinColumn({name: "course_id"})
-    // @ManyToOne(() => UserModel)
-    // courseId: number
+  @Column({ name: 'content' })
+  content: string
 
-    // TODO: Update this with FK constraint once the course entity is merged
-    @Column({name: "course_id"})
-    courseId: number
+  @Column({ name: 'type', type: 'enum', enum: submissionTypes })
+  type: SubmissionType
 
+  // Should never be set by anyone other than the API
+  @Column({ name: 'submitter_ip', length: 64 })
+  submitterIp: string
 
-    //Foreign key
-    // TODO: Uncomment this with FK constraint once the course entity is merged
-    // @JoinColumn({name: "assignment_id"})
-    // @ManyToOne(() => UserModel)
-    // assignmentId: number
+  // Hard overridden by the API - only differs from userId when someone submits on behalf of another user (regrade)
+  @Column({ name: 'submitted_by', type: 'int', nullable: true })
+  @JoinColumn({ name: 'submitted_by' })
+  @ManyToOne(() => UserModel)
+  submittedBy: number | null
 
-    // TODO: Update this with FK constraint once the course entity is merged
-    @Column({name: "assignment_id"})
-    assignmentId: number
-
-
-
-    // Foreign key
-    @JoinColumn({ name: 'user_id' })
-    @ManyToOne(() => UserModel)
-    userId: number
-
-    @Column({name: "submission_datetime"})
-    submissionDatetime: Date
-
-    @Column({name: "submission_type", length: 128})
-    submissionType: string
-
-    @Column({name: "the_actual_submission"})
-    theActualSubmission: string
-
-    @Column({name: "submitter_ip", length: 128})
-    submitterIp: string
-
-    //Foreign key
-    // TODO: Uncomment this with FK constraint once the course entity is merged
-    // @JoinColumn({name: "original_submission_id"})
-    // @ManyToOne(() => UserModel)
-    // originalSubmissionId: number
-
-    // TODO: Update this with FK constraint once the course entity is merged
-    @Column({name: "original_submission_id", nullable: true})
-    originalSubmissionId: number
-
-
-    //Foreign key
-    // TODO: Uncomment this with FK constraint once the course entity is merged
-    // @JoinColumn({name: "submitter_id"})
-    // @ManyToOne(() => UserModel)
-    // submitterId: number
-
-    // TODO: Update this with FK constraint once the course entity is merged
-    @Column({name: "submitter_id", nullable: true})
-    submitterId: number
-
-
-
+  // If this field is populated it means that this submission is a regraded assignment. If null it's a normal submission
+  @Column({ name: 'original_submission_id', type: 'int', nullable: true })
+  @JoinColumn({ name: 'original_submission' })
+  @ManyToOne(() => Submission)
+  originalSubmissionId: number | null
 }

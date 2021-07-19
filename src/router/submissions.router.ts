@@ -36,14 +36,6 @@ Router.post('/', validator, SubmissionController.post)
 
 /**
  * @swagger
- * /submissions:
- *   put:
- *     summary: Update a submission
- */
-Router.put('/:id', idAsInt, validator, SubmissionController.put)
-
-/**
- * @swagger
  * /submissions/{id}:
  *   delete:
  *     summary: Delete a submission
