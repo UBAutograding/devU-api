@@ -2,13 +2,13 @@ import { UpdateResult } from 'typeorm'
 
 import { UserCourse } from 'devu-shared-modules'
 
-import controller from '../user-course.controller'
+import controller from '../userCourses.controller'
 
-import UserCourseModel from '../../model/user-course.model'
+import UserCourseModel from '../../model/userCourses.model'
 
-import UserCourseService from '../../services/user-course.service'
+import UserCourseService from '../../services/userCourse.service'
 
-import { serialize } from '../../utils/serializer/user-course.serializer'
+import { serialize } from '../../utils/serializer/userCourses.serializer'
 
 import Testing from '../../utils/testing.utils'
 import { GenericResponse, NotFound, Updated } from '../../utils/apiResponse.utils'

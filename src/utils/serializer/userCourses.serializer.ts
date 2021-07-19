@@ -1,6 +1,6 @@
 import { UserCourse } from 'devu-shared-modules'
 
-import UserCourseModel from '../../model/user-course.model'
+import UserCourseModel from '../../model/userCourses.model'
 
 export function serialize(userCourse: UserCourseModel): UserCourse {
   return {
@@ -9,7 +9,6 @@ export function serialize(userCourse: UserCourseModel): UserCourse {
     courseId: userCourse.courseId,
     level: userCourse.level,
     dropped: userCourse.dropped,
-    lectureSection: userCourse.lectureSection,
     createdAt: userCourse.createdAt.toISOString(),
     updatedAt: userCourse.updatedAt.toISOString(),
   }

@@ -2,11 +2,11 @@
 import express from 'express'
 
 // Middleware
-import validator from '../middleware/validator/user-course.validator'
+import validator from '../middleware/validator/userCourse.validator'
 import { asInt } from '../middleware/validator/generic.validator'
 
 // Controller
-import UserCourseController from '../controller/user-course.controller'
+import UserCourseController from '../controller/userCourses.controller'
 
 const Router = express.Router()
 

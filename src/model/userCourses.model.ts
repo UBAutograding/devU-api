@@ -9,7 +9,8 @@ import {
   DeleteDateColumn,
 } from 'typeorm'
 
-import { UserCourseLevel } from 'devu-shared-modules'
+import { UserCourseLevel, userCourseLevels } from 'devu-shared-modules'
+
 import UserModel from './users.model'
 import CourseModel from './courses.model'
 
@@ -27,24 +28,19 @@ export default class UserCourseModel {
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt?: Date
 
-  // Foreign key
+  @Column({ name: 'user_id' })
   @JoinColumn({ name: 'user_id' })
   @ManyToOne(() => UserModel)
   userId: number
 
-  // Foreign key
+  @Column({ name: 'course_id' })
   @JoinColumn({ name: 'course_id' })
   @ManyToOne(() => CourseModel)
   courseId: number
 
-  // "student"/"ta"/"instructor"
   @Column({ name: 'type', type: 'enum', enum: userCourseLevels })
   level: UserCourseLevel
 
-  @Column({ name: 'lecture_section', length: 128, nullable: true, type: 'text' })
-  lectureSection: string | null
-  lectureSection: string
-
-  @Column({ default: false })
+  @Column()
   dropped: boolean
 }

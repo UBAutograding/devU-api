@@ -1,8 +1,8 @@
-import { serialize } from '../user-course.serializer'
+import { serialize } from '../userCourses.serializer'
 
-import UserCourseModel from '../../../model/user-course.model'
+import UserCourseModel from '../../../model/userCourses.model'
 
-import Testing from '../../../utils/testing.utils'
+import Testing from '../../testing.utils'
 
 let mockUserCourse: UserCourseModel
 
@@ -13,7 +13,6 @@ describe('UserCourse Serializer', () => {
     mockUserCourse.id = 10
     mockUserCourse.userId = 50
     mockUserCourse.courseId = 100
-    mockUserCourse.lectureSection = 'A'
     mockUserCourse.level = 'ta'
     mockUserCourse.dropped = false
     mockUserCourse.createdAt = new Date()
@@ -28,7 +27,6 @@ describe('UserCourse Serializer', () => {
       expect(expectedResult.id).toEqual(mockUserCourse.id)
       expect(expectedResult.userId).toEqual(mockUserCourse.userId)
       expect(expectedResult.courseId).toEqual(mockUserCourse.courseId)
-      expect(expectedResult.lectureSection).toEqual(mockUserCourse.lectureSection)
       expect(expectedResult.level).toEqual(mockUserCourse.level)
       expect(expectedResult.dropped).toEqual(mockUserCourse.dropped)
     })

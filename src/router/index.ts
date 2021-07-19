@@ -3,7 +3,7 @@ import swaggerUi from 'swagger-ui-express'
 
 import swagger from '../utils/swagger.utils'
 
-import userCourse from './user-course.router'
+import userCourse from './userCourses.router'
 import assignments from './assignments.router'
 import courses from './courses.router'
 import login from './login.router'

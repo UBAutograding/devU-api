@@ -2,7 +2,7 @@ import { getRepository, IsNull } from 'typeorm'
 
 import { UserCourse as UserCourseType } from 'devu-shared-modules'
 
-import UserCourse from '../model/user-course.model'
+import UserCourse from '../model/userCourses.model'
 
 const connect = () => getRepository(UserCourse)
 
@@ -11,11 +11,11 @@ export async function create(userCourse: UserCourseType) {
 }
 
 export async function update(userCourse: UserCourseType) {
-  const { id, level, lectureSection, dropped } = userCourse
+  const { id, level, dropped } = userCourse
 
   if (!id) throw new Error('Missing Id')
 
-  return await connect().update(id, { level, lectureSection, dropped })
+  return await connect().update(id, { level, dropped })
 }
 
 export async function _delete(id: number) {
