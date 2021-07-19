@@ -39,14 +39,14 @@ export default class Assignment {
   @Column({ name: 'category_name', length: 128 })
   categoryName: string
 
-  @Column({ nullable: true })
-  description: string
+  @Column({ nullable: true, type: 'text' })
+  description: string | null
 
   @Column({ name: 'max_file_size' })
   maxFileSize: number
 
-  @Column({ name: 'max_submissions', nullable: true })
-  maxSubmissions: number
+  @Column({ name: 'max_submissions', type: 'int', nullable: true })
+  maxSubmissions: number | null
 
   @Column({ name: 'disable_handins' })
   disableHandins: boolean
