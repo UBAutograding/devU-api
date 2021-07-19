@@ -1,3 +1,5 @@
+import { GradingType, gradingTypes } from 'devu-shared-modules'
+
 import {
   Entity,
   Column,
@@ -33,8 +35,8 @@ export default class Assignment {
   @Column({ name: 'end_date' })
   endDate: Date
 
-  @Column({ name: 'grading_type', length: 32 })
-  gradingType: string
+  @Column({ name: 'grading_type', type: 'enum', enum: gradingTypes, default: gradingTypes[0] })
+  gradingType: GradingType
 
   @Column({ name: 'category_name', length: 128 })
   categoryName: string
