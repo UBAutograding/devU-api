@@ -3,7 +3,7 @@ import express from 'express'
 
 // Middleware
 import validator from '../middleware/validator/submission.validator'
-import { idAsInt } from '../middleware/validator/generic.validator'
+import { asInt } from '../middleware/validator/generic.validator'
 
 // Controller
 import SubmissionController from '../controller/submissions.controller'
@@ -24,7 +24,7 @@ Router.get('/', SubmissionController.get)
  *   get:
  *     summary: Retrieve a single submission
  */
-Router.get('/:id', idAsInt, SubmissionController.detail)
+Router.get('/:id', asInt(), SubmissionController.detail)
 
 /**
  * @swagger
@@ -40,6 +40,6 @@ Router.post('/', validator, SubmissionController.post)
  *   delete:
  *     summary: Delete a submission
  */
-Router.delete('/:id', idAsInt, SubmissionController._delete)
+Router.delete('/:id', asInt(), SubmissionController._delete)
 
 export default Router
