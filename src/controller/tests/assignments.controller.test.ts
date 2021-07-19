@@ -204,7 +204,7 @@ describe('AssignmentController', () => {
       test('Next not called', () => expect(next).toBeCalledTimes(0))
     })
 
-    describe('400 - Not Found', () => {
+    describe('400 - Bad Request', () => {
       beforeEach(async () => {
         AssignmentService._delete = jest.fn().mockImplementation(() => Promise.reject(expectedError))
         await controller._delete(req, res, next)
