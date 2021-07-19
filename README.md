@@ -92,7 +92,7 @@ For those unfamiliar with Express, I'll attempt to give a brief rundown before t
 Express is a REST framework for node. Devs new to express will likely find one of the most perplexing parts of Express to be how it handles middleware. For those unfamiliar with what middleware is, it's largely a catch all term for code that connects together pieces of code in the api. In Express's context, middleware is basically everything that runs within each router; here's an example:
 
 ```typescript
-Router.get('/:id', idAsInt, UserController.detail)
+Router.get('/:id', asInt(), UserController.detail)
 ```
 
 In express, all of the functions added after the route's path are considered middleware and each route can have as many middleware as is needed. In this project we separate out `controllers` into their own directory though they are still considered middleware.
