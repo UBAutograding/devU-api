@@ -11,7 +11,7 @@ import SubmissionService from '../../services/submission.service'
 import { serialize } from '../../utils/serializer/submissions.serializer'
 
 import Testing from '../../utils/testing.utils'
-import { GenericResponse, NotFound, Updated } from '../../utils/apiResponse.utils'
+import { GenericResponse, NotFound } from '../../utils/apiResponse.utils'
 
 // Testing Globals
 let req: any
@@ -27,182 +27,147 @@ let expectedError: Error
 let expectedDbResult: UpdateResult
 
 describe('SubmissionController', () => {
-    beforeEach(() => {
-        req = Testing.fakeRequest()
-        res = Testing.fakeResponse()
-        next = Testing.fakeNext()
+  beforeEach(() => {
+    req = Testing.fakeRequest()
+    res = Testing.fakeResponse()
+    next = Testing.fakeNext()
 
-        mockedSubmissions = Testing.generateTypeOrmArray(SubmissionModel, 3)
-        mockedSubmission = Testing.generateTypeOrm(SubmissionModel)
+    mockedSubmissions = Testing.generateTypeOrmArray(SubmissionModel, 3)
+    mockedSubmission = Testing.generateTypeOrm(SubmissionModel)
 
-        expectedResults = mockedSubmissions.map(serialize)
-        expectedResult = serialize(mockedSubmission)
-        expectedError = new Error('Expected Error')
+    expectedResults = mockedSubmissions.map(serialize)
+    expectedResult = serialize(mockedSubmission)
+    expectedError = new Error('Expected Error')
 
-        expectedDbResult = {} as UpdateResult
+    expectedDbResult = {} as UpdateResult
+  })
+
+  describe('GET - /submissions', () => {
+    describe('200 - Ok', () => {
+      beforeEach(async () => {
+        SubmissionService.list = jest.fn().mockImplementation(() => Promise.resolve(mockedSubmissions))
+        await controller.get(req, res, next) // what we're testing
+      })
+
+      test('Returns list of submissions', () => expect(res.json).toBeCalledWith(expectedResults))
+      test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
     })
 
-    describe('GET - /submissions', () => {
-        describe('200 - Ok', () => {
-            beforeEach(async () => {
-                SubmissionService.list = jest.fn().mockImplementation(() => Promise.resolve(mockedSubmissions))
-                await controller.get(req, res, next) // what we're testing
-            })
+    describe('400 - Bad request', () => {
+      test('Next called with expected error', async () => {
+        SubmissionService.list = jest.fn().mockImplementation(() => Promise.reject(expectedError))
 
-            test('Returns list of submissions', () => expect(res.json).toBeCalledWith(expectedResults))
-            test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
-        })
+        try {
+          await controller.get(req, res, next)
 
-        describe('400 - Bad request', () => {
-            test('Next called with expected error', async () => {
-                SubmissionService.list = jest.fn().mockImplementation(() => Promise.reject(expectedError))
+          fail('Expected test to throw')
+        } catch {
+          expect(next).toBeCalledWith(expectedError)
+        }
+      })
+    })
+  })
 
-                try {
-                    await controller.get(req, res, next)
+  describe('GET - /submissions/:id', () => {
+    describe('200 - Ok', () => {
+      beforeEach(async () => {
+        SubmissionService.retrieve = jest.fn().mockImplementation(() => Promise.resolve(mockedSubmission))
+        await controller.detail(req, res, next)
+      })
 
-                    fail('Expected test to throw')
-                } catch {
-                    expect(next).toBeCalledWith(expectedError)
-                }
-            })
-        })
+      test('Returns expected submission', () => expect(res.json).toBeCalledWith(expectedResult))
+      test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
     })
 
-    describe('GET - /submissions/:id', () => {
-        describe('200 - Ok', () => {
-            beforeEach(async () => {
-                SubmissionService.retrieve = jest.fn().mockImplementation(() => Promise.resolve(mockedSubmission))
-                await controller.detail(req, res, next)
-            })
+    describe('404 - Not Found', () => {
+      beforeEach(async () => {
+        SubmissionService.retrieve = jest.fn().mockImplementation(() => Promise.resolve()) // No results
+        await controller.detail(req, res, next)
+      })
 
-            test('Returns expected submission', () => expect(res.json).toBeCalledWith(expectedResult))
-            test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
-        })
-
-        describe('404 - Not Found', () => {
-            beforeEach(async () => {
-                SubmissionService.retrieve = jest.fn().mockImplementation(() => Promise.resolve()) // No results
-                await controller.detail(req, res, next)
-            })
-
-            test('Status code is 404 on missing submission', () => expect(res.status).toBeCalledWith(404))
-            test('Responds with NotFound on missing submission', () => expect(res.json).toBeCalledWith(NotFound))
-            test('Next not called on missing submission', () => expect(next).toBeCalledTimes(0))
-        })
-
-        describe('400 - Bad Reqeust', () => {
-            test('Next called with expected error', async () => {
-                SubmissionService.retrieve = jest.fn().mockImplementation(() => Promise.reject(expectedError))
-
-                try {
-                    await controller.detail(req, res, next)
-
-                    fail('Expected test to throw')
-                } catch {
-                    expect(next).toBeCalledWith(expectedError)
-                }
-            })
-        })
+      test('Status code is 404 on missing submission', () => expect(res.status).toBeCalledWith(404))
+      test('Responds with NotFound on missing submission', () => expect(res.json).toBeCalledWith(NotFound))
+      test('Next not called on missing submission', () => expect(next).toBeCalledTimes(0))
     })
 
-    describe('POST - /submissions/', () => {
-        describe('201 - Created', () => {
-            beforeEach(async () => {
-                SubmissionService.create = jest.fn().mockImplementation(() => Promise.resolve(mockedSubmission))
-                await controller.post(req, res, next)
-            })
+    describe('400 - Bad Reqeust', () => {
+      test('Next called with expected error', async () => {
+        SubmissionService.retrieve = jest.fn().mockImplementation(() => Promise.reject(expectedError))
 
-            test('Returns expected submission', () => expect(res.json).toBeCalledWith(expectedResult))
-            test('Status code is 201', () => expect(res.status).toBeCalledWith(201))
-        })
+        try {
+          await controller.detail(req, res, next)
 
-        describe('400 - Bad Reqeust', () => {
-            beforeEach(async () => {
-                SubmissionService.create = jest.fn().mockImplementation(() => Promise.reject(expectedError))
+          fail('Expected test to throw')
+        } catch {
+          expect(next).toBeCalledWith(expectedError)
+        }
+      })
+    })
+  })
 
-                try {
-                    await controller.post(req, res, next)
+  describe('POST - /submissions/', () => {
+    describe('201 - Created', () => {
+      beforeEach(async () => {
+        SubmissionService.create = jest.fn().mockImplementation(() => Promise.resolve(mockedSubmission))
+        await controller.post(req, res, next)
+      })
 
-                    fail('Expected test to throw')
-                } catch {
-                    // continue to tests
-                }
-            })
-
-            test('Status code is 400', () => expect(res.status).toBeCalledWith(400))
-            test('Responds with generic error', () =>
-                expect(res.json).toBeCalledWith(new GenericResponse(expectedError.message)))
-            test('Next not called', () => expect(next).toBeCalledTimes(0))
-        })
+      test('Returns expected submission', () => expect(res.json).toBeCalledWith(expectedResult))
+      test('Status code is 201', () => expect(res.status).toBeCalledWith(201))
     })
 
-    describe('PUT - /submissions/:id', () => {
-        describe('200 - Ok', () => {
-            beforeEach(async () => {
-                expectedDbResult.affected = 1 // mocking service return shape
-                SubmissionService.update = jest.fn().mockImplementation(() => Promise.resolve(expectedDbResult))
-                await controller.put(req, res, next)
-            })
+    describe('400 - Bad Reqeust', () => {
+      beforeEach(async () => {
+        SubmissionService.create = jest.fn().mockImplementation(() => Promise.reject(expectedError))
 
-            test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
-            test('Returns Updated message', () => expect(res.json).toBeCalledWith(Updated))
-            test('Next is not called', () => expect(next).toHaveBeenCalledTimes(0))
-        })
+        try {
+          await controller.post(req, res, next)
 
-        describe('404 - Not Found', () => {
-            beforeEach(async () => {
-                expectedDbResult.affected = 0 // No records affected in db
-                SubmissionService.update = jest.fn().mockImplementation(() => Promise.resolve(expectedDbResult))
-                await controller.put(req, res, next)
-            })
+          fail('Expected test to throw')
+        } catch {
+          // continue to tests
+        }
+      })
 
-            test('Status code is 404', () => expect(res.status).toBeCalledWith(404))
-            test('Returns Not found message', () => expect(res.json).toBeCalledWith(NotFound))
-            test('Next is not called', () => expect(next).toHaveBeenCalledTimes(0))
-        })
+      test('Status code is 400', () => expect(res.status).toBeCalledWith(400))
+      test('Responds with generic error', () =>
+        expect(res.json).toBeCalledWith(new GenericResponse(expectedError.message)))
+      test('Next not called', () => expect(next).toBeCalledTimes(0))
+    })
+  })
 
-        describe('400 - Bad Request', () => {
-            beforeEach(async () => {
-                SubmissionService.update = jest.fn().mockImplementation(() => Promise.reject(expectedError))
-                await controller.put(req, res, next)
-            })
+  describe('DELETE - /submissions/:id', () => {
+    describe('204 - No Content', () => {
+      beforeEach(async () => {
+        expectedDbResult.affected = 1
+        SubmissionService._delete = jest.fn().mockImplementation(() => Promise.resolve(expectedDbResult))
+        await controller._delete(req, res, next)
+      })
 
-            test('Next is called with error', () => expect(next).toBeCalledWith(expectedError))
-        })
+      test('Status code is 204', () => expect(res.status).toBeCalledWith(204))
+      test('Response to have no content', () => expect(res.send).toBeCalledWith())
+      test('Next not called', () => expect(next).toBeCalledTimes(0))
     })
 
-    describe('DELETE - /submissions/:id', () => {
-        describe('204 - No Content', () => {
-            beforeEach(async () => {
-                expectedDbResult.affected = 1
-                SubmissionService._delete = jest.fn().mockImplementation(() => Promise.resolve(expectedDbResult))
-                await controller._delete(req, res, next)
-            })
+    describe('404 - Not Found', () => {
+      beforeEach(async () => {
+        expectedDbResult.affected = 0
+        SubmissionService._delete = jest.fn().mockImplementation(() => Promise.resolve(expectedDbResult))
+        await controller._delete(req, res, next)
+      })
 
-            test('Status code is 204', () => expect(res.status).toBeCalledWith(204))
-            test('Response to have no content', () => expect(res.send).toBeCalledWith())
-            test('Next not called', () => expect(next).toBeCalledTimes(0))
-        })
-
-        describe('404 - Not Found', () => {
-            beforeEach(async () => {
-                expectedDbResult.affected = 0
-                SubmissionService._delete = jest.fn().mockImplementation(() => Promise.resolve(expectedDbResult))
-                await controller._delete(req, res, next)
-            })
-
-            test('Status code is 404', () => expect(res.status).toBeCalledWith(404))
-            test('Response to have no content', () => expect(res.json).toBeCalledWith(NotFound))
-            test('Next not called', () => expect(next).toBeCalledTimes(0))
-        })
-
-        describe('400 - Not Found', () => {
-            beforeEach(async () => {
-                SubmissionService._delete = jest.fn().mockImplementation(() => Promise.reject(expectedError))
-                await controller._delete(req, res, next)
-            })
-
-            test('Next called with expected error', () => expect(next).toBeCalledWith(expectedError))
-        })
+      test('Status code is 404', () => expect(res.status).toBeCalledWith(404))
+      test('Response to have no content', () => expect(res.json).toBeCalledWith(NotFound))
+      test('Next not called', () => expect(next).toBeCalledTimes(0))
     })
+
+    describe('400 - Not Found', () => {
+      beforeEach(async () => {
+        SubmissionService._delete = jest.fn().mockImplementation(() => Promise.reject(expectedError))
+        await controller._delete(req, res, next)
+      })
+
+      test('Next called with expected error', () => expect(next).toBeCalledWith(expectedError))
+    })
+  })
 })

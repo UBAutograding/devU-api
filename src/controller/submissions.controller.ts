@@ -35,7 +35,7 @@ export async function detail(req: Request, res: Response, next: NextFunction) {
 
 export async function post(req: Request, res: Response, next: NextFunction) {
   try {
-    // If this is hit, developer messed up above in the chain
+    // If this is hit, developer messed up above in the chain by not checking the user for auth
     if (!req.currentUser?.userId) return res.status(400).json(new GenericResponse('Request requires auth'))
 
     const requestBody: Submission = req.body
