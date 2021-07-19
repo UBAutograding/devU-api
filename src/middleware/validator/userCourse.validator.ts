@@ -1,6 +1,6 @@
 import { check } from 'express-validator'
 
-import { userCourseRoles } from 'devu-shared-modules'
+import { userCourseLevels } from 'devu-shared-modules'
 
 import validate from './generic.validator'
 
@@ -10,7 +10,7 @@ const dropped = check('dropped').isBoolean()
 
 const level = check('level')
   .trim()
-  .isIn([...userCourseRoles])
+  .isIn([...userCourseLevels])
 
 const validator = [userId, courseId, level, dropped, validate]
 

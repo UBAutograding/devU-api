@@ -23,7 +23,7 @@ Router.use('/users', isAuthorized, users)
 Router.use('/status', status)
 Router.use('/assignments', isAuthorized, assignments)
 Router.use('/courses', isAuthorized, courses)
-Router.use('/user-course', isAuthorized, userCourse)
+Router.use('/user-courses', isAuthorized, userCourse)
 Router.use('/docs', swaggerUi.serve, swaggerUi.setup(swagger))
 
 Router.use('/', (req: Request, res: Response, next: NextFunction) => res.status(404).send(NotFound))
