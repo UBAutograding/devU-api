@@ -6,6 +6,7 @@ import swagger from '../utils/swagger.utils'
 import assignments from './assignments.router'
 import courses from './courses.router'
 import login from './login.router'
+import logout from './logout.router'
 import status from './status.router'
 import users from './users.router'
 
@@ -16,6 +17,7 @@ import { NotFound } from '../utils/apiResponse.utils'
 const Router = express.Router()
 
 Router.use('/login', login)
+Router.use('/logout', logout)
 Router.use('/users', isAuthorized, users)
 Router.use('/status', status)
 Router.use('/assignments', isAuthorized, assignments)
