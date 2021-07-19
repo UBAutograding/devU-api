@@ -11,6 +11,7 @@ import {
 
 import { UserCourseLevel } from 'devu-shared-modules'
 import UserModel from './users.model'
+import CourseModel from './courses.model'
 
 @Entity('user_courses')
 export default class UserCourseModel {
@@ -32,8 +33,8 @@ export default class UserCourseModel {
   userId: number
 
   // Foreign key
-  // TODO: Update this with FK constraint once the course entity is merged
-  @Column({ name: 'course_id' })
+  @JoinColumn({ name: 'course_id' })
+  @ManyToOne(() => CourseModel)
   courseId: number
 
   // "student"/"ta"/"instructor"
@@ -44,5 +45,5 @@ export default class UserCourseModel {
   lectureSection: string
 
   @Column({ default: false })
-  dropped?: boolean
+  dropped: boolean
 }
