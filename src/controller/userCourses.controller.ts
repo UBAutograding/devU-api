@@ -22,7 +22,9 @@ export async function detail(req: Request, res: Response, next: NextFunction) {
 
     if (!userCourse) return res.status(404).json(NotFound)
 
-    res.status(200).json(serialize(userCourse))
+    const response = serialize(userCourse)
+
+    res.status(200).json(response)
   } catch (err) {
     next(err)
   }
@@ -31,8 +33,9 @@ export async function detail(req: Request, res: Response, next: NextFunction) {
 export async function post(req: Request, res: Response, next: NextFunction) {
   try {
     const userCourse = await UserCourseService.create(req.body)
+    const response = serialize(userCourse)
 
-    res.status(201).json(serialize(userCourse))
+    res.status(201).json(response)
   } catch (err) {
     res.status(400).json(new GenericResponse(err.message))
   }
