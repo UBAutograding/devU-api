@@ -38,10 +38,11 @@ export default class UserCourseModel {
   courseId: number
 
   // "student"/"ta"/"instructor"
-  @Column({ length: 128 })
+  @Column({ name: 'type', type: 'enum', enum: userCourseLevels })
   level: UserCourseLevel
 
-  @Column({ name: 'lecture_section', length: 128, nullable: true })
+  @Column({ name: 'lecture_section', length: 128, nullable: true, type: 'text' })
+  lectureSection: string | null
   lectureSection: string
 
   @Column({ default: false })

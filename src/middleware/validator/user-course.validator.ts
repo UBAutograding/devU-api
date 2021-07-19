@@ -9,7 +9,7 @@ const courseId = check('courseId').isNumeric()
 const level = check('level')
   .isString()
   .trim()
-  .isIn(userCourseRoles.map(role => role.value))
+  .isIn([ ...userCourseLevels ])
 const lectureSection = check('lectureSection').isString().trim().isLength({ max: 128 }).optional({ nullable: true })
 const dropped = check('dropped').isBoolean().optional()
 
