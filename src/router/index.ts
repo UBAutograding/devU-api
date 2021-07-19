@@ -13,7 +13,6 @@ import { isAuthorized } from '../middleware/auth.middleware'
 import logout from './logout.router'
 import status from './status.router'
 
-
 import { NotFound } from '../utils/apiResponse.utils'
 
 const Router = express.Router()
