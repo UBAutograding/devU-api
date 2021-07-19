@@ -12,13 +12,32 @@ export async function create(assignment: Assignment) {
 
 export async function update(assignment: Assignment) {
   const {
-    id, name, startDate, dueDate, endDate, gradingType, categoryName, description, maxFileSize,
-    maxSubmissions, disableHandins,
+    id,
+    name,
+    startDate,
+    dueDate,
+    endDate,
+    gradingType,
+    categoryName,
+    description,
+    maxFileSize,
+    maxSubmissions,
+    disableHandins,
   } = assignment
+
   if (!id) throw new Error('Missing Id')
+
   return await connect().update(id, {
-    name, startDate, dueDate, endDate, gradingType,
-    categoryName, description, maxFileSize, maxSubmissions, disableHandins,
+    name,
+    startDate,
+    dueDate,
+    endDate,
+    gradingType,
+    categoryName,
+    description,
+    maxFileSize,
+    maxSubmissions,
+    disableHandins,
   })
 }
 

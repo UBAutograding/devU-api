@@ -33,7 +33,7 @@ export default class Assignment {
   @Column({ name: 'end_date' })
   endDate: Date
 
-  @Column({ name: 'grading_type', length: 128 })
+  @Column({ name: 'grading_type', length: 32 })
   gradingType: string
 
   @Column({ name: 'category_name', length: 128 })
@@ -45,7 +45,7 @@ export default class Assignment {
   @Column({ name: 'max_file_size' })
   maxFileSize: number
 
-  @Column({ name: 'max_submissions' })
+  @Column({ name: 'max_submissions', nullable: true })
   maxSubmissions: number
 
   @Column({ name: 'disable_handins' })

@@ -26,14 +26,22 @@ let expectedError: Error
 
 let expectedDbResult: UpdateResult
 
+function populateAssignment(assignment: AssignmentModel) {
+  assignment.startDate = new Date()
+  assignment.endDate = new Date()
+  assignment.dueDate = new Date()
+
+  return assignment
+}
+
 describe('AssignmentController', () => {
   beforeEach(() => {
     req = Testing.fakeRequest()
     res = Testing.fakeResponse()
     next = Testing.fakeNext()
 
-    mockedAssignments = Testing.generateTypeOrmArray(AssignmentModel, 3)
-    mockedAssignment = Testing.generateTypeOrm(AssignmentModel)
+    mockedAssignments = Testing.generateTypeOrmArray(AssignmentModel, 3).map(populateAssignment)
+    mockedAssignment = populateAssignment(Testing.generateTypeOrm(AssignmentModel))
 
     expectedResults = mockedAssignments.map(serialize)
     expectedResult = serialize(mockedAssignment)

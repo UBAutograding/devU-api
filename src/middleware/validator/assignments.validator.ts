@@ -1,19 +1,57 @@
 import { check } from 'express-validator'
 
+import { gradingTypes } from 'devu-shared-modules'
+
 import validate from './generic.validator'
+import { isBeforeParam, isAfterParam } from './date.validator'
 
 const courseId = check('courseId').isNumeric()
 const name = check('name').isString().trim().isLength({ max: 128 })
-const gradingType = check('gradingType').isString().trim().isLength({ max: 128 })
 const categoryName = check('categoryName').isString().trim().isLength({ max: 128 })
 const description = check('description').isString().trim()
-const startDate = check('startDate').isString().trim().isISO8601()
-const dueDate = check('dueDate').isString().trim().isISO8601()
-const endDate = check('endDate').isString().trim().isISO8601()
 const maxFileSize = check('maxFileSize').isNumeric()
-const maxSubmissions = check('maxSubmissions').isNumeric()
+const maxSubmissions = check('maxSubmissions').isNumeric().optional({ nullable: true })
 const disableHandins = check('disableHandins').isBoolean()
 
-const validator = [courseId, name, gradingType, categoryName, description, startDate, dueDate, endDate,  maxFileSize, maxSubmissions, disableHandins, validate]
+const gradingType = check('gradingType')
+  .trim()
+  .isIn([...gradingTypes])
+  .withMessage(`Expected gradingType of ${gradingTypes.join(', ')}`)
+
+const startDate = check('startDate')
+  .trim()
+  .isISO8601()
+  .custom(isBeforeParam('dueDate'))
+  .custom(isBeforeParam('endDate'))
+  .toDate()
+
+const dueDate = check('dueDate')
+  .trim()
+  .isISO8601()
+  .custom(isAfterParam('startDate'))
+  .custom(isBeforeParam('endDate'))
+  .toDate()
+
+const endDate = check('endDate')
+  .trim()
+  .isISO8601()
+  .custom(isAfterParam('startDate'))
+  .custom(isAfterParam('dueDate'))
+  .toDate()
+
+const validator = [
+  courseId,
+  name,
+  gradingType,
+  categoryName,
+  description,
+  startDate,
+  dueDate,
+  endDate,
+  maxFileSize,
+  maxSubmissions,
+  disableHandins,
+  validate,
+]
 
 export default validator

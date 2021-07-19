@@ -8,7 +8,7 @@ export default class Course {
   @Column({ length: 128 })
   name: string
 
-  @Column({ length: 128 })
+  @Column({ length: 16 })
   semester: string
 
   @Column({ length: 128 })

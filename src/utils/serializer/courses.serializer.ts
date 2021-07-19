@@ -8,8 +8,8 @@ export function serialize(course: CourseModel): Course {
     name: course.name,
     semester: course.semester,
     number: course.number,
-    startDate: course.startDate,
-    endDate: course.endDate,
+    startDate: course.startDate.toISOString(),
+    endDate: course.endDate.toISOString(),
     createdAt: course.createdAt.toISOString(),
     updatedAt: course.updatedAt.toISOString(),
   }

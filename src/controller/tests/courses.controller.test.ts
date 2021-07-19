@@ -26,14 +26,21 @@ let expectedError: Error
 
 let expectedDbResult: UpdateResult
 
+function populateCourse(course: CourseModel) {
+  course.startDate = new Date()
+  course.endDate = new Date()
+
+  return course
+}
+
 describe('CourseController', () => {
   beforeEach(() => {
     req = Testing.fakeRequest()
     res = Testing.fakeResponse()
     next = Testing.fakeNext()
 
-    mockedCourses = Testing.generateTypeOrmArray(CourseModel, 3)
-    mockedCourse = Testing.generateTypeOrm(CourseModel)
+    mockedCourses = Testing.generateTypeOrmArray(CourseModel, 3).map(populateCourse)
+    mockedCourse = populateCourse(Testing.generateTypeOrm(CourseModel))
 
     expectedResults = mockedCourses.map(serialize)
     expectedResult = serialize(mockedCourse)
