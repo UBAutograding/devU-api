@@ -29,7 +29,7 @@ export class addAssignmentsAndCourses1626719306608 implements MigrationInterface
           "start_date" TIMESTAMP NOT NULL,
           "due_date" TIMESTAMP NOT NULL,
           "end_date" TIMESTAMP NOT NULL,
-          "grading_type" "assignments_grading_type_enum" NOT NULL DEFAULT 'code',
+          "grading_type" "assignments_grading_type_enum" NOT NULL,
           "category_name" character varying(128) NOT NULL,
           "description" text,
           "max_file_size" integer NOT NULL,

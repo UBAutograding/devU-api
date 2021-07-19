@@ -35,7 +35,7 @@ export default class Assignment {
   @Column({ name: 'end_date' })
   endDate: Date
 
-  @Column({ name: 'grading_type', type: 'enum', enum: gradingTypes, default: gradingTypes[0] })
+  @Column({ name: 'grading_type', type: 'enum', enum: gradingTypes })
   gradingType: GradingType
 
   @Column({ name: 'category_name', length: 128 })
