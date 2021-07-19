@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class addSubmissions1626724414854 implements MigrationInterface {
-  name = 'addSubmissions1626724414854'
+export class addSubmissions1626738106321 implements MigrationInterface {
+  name = 'addSubmissions1626738106321'
 
   // prettier-ignore
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -27,7 +27,7 @@ export class addSubmissions1626724414854 implements MigrationInterface {
     await queryRunner.query(`ALTER TABLE "submissions" ADD CONSTRAINT "submissions_to_courses_foreign_key_constraint" FOREIGN KEY ("course_id") REFERENCES "courses"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
     await queryRunner.query(`ALTER TABLE "submissions" ADD CONSTRAINT "submissions_to_assignments_foreign_key_constraint" FOREIGN KEY ("assignment_id") REFERENCES "assignments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
     await queryRunner.query(`ALTER TABLE "submissions" ADD CONSTRAINT "submissions_to_users_user_id_foreign_key_constraint" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
-    await queryRunner.query(`ALTER TABLE "submissions" ADD CONSTRAINT "submissions_to_users_submitter_id_foreign_key_constraint" FOREIGN KEY ("submitter_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+    await queryRunner.query(`ALTER TABLE "submissions" ADD CONSTRAINT "submissions_to_users_submitter_id_foreign_key_constraint" FOREIGN KEY ("submitted_by") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
     await queryRunner.query(`ALTER TABLE "submissions" ADD CONSTRAINT "submissions_to_submissions_foreign_key_constraint" FOREIGN KEY ("original_submission") REFERENCES "submissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
   }
 
@@ -35,7 +35,7 @@ export class addSubmissions1626724414854 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`ALTER TABLE "submissions" DROP CONSTRAINT "submissions_to_submissions_foreign_key_constraint"`);
     await queryRunner.query(`ALTER TABLE "submissions" DROP CONSTRAINT "submissions_to_users_user_id_foreign_key_constraint"`);
-    await queryRunner.query(`ALTER TABLE "submissions" DROP CONSTRAINT "submissions_to_users_submitter_id_foreign_key_constraint"`);
+    await queryRunner.query(`ALTER TABLE "submissions" DROP CONSTRAINT "submissions_to_users_submitted_by_foreign_key_constraint"`);
     await queryRunner.query(`ALTER TABLE "submissions" DROP CONSTRAINT "submissions_to_assignments_foreign_key_constraint"`);
     await queryRunner.query(`ALTER TABLE "submissions" DROP CONSTRAINT "submissions_to_courses_foreign_key_constraint"`);
     await queryRunner.query(`DROP TABLE "submissions"`);
