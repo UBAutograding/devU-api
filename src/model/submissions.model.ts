@@ -55,14 +55,14 @@ export default class Submission {
   submitterIp: string
 
   // Hard overridden by the API - only differs from userId when someone submits on behalf of another user (regrade)
-  @Column({ name: 'submitted_by', type: 'int', nullable: true })
+  @Column({ name: 'submitted_by' })
   @JoinColumn({ name: 'submitted_by' })
   @ManyToOne(() => UserModel)
-  submittedBy: number | null
+  submittedBy: number
 
   // If this field is populated it means that this submission is a regraded assignment. If null it's a normal submission
   @Column({ name: 'original_submission_id', type: 'int', nullable: true })
-  @JoinColumn({ name: 'original_submission' })
+  @JoinColumn({ name: 'original_submission_id' })
   @ManyToOne(() => Submission)
   originalSubmissionId: number | null
 }

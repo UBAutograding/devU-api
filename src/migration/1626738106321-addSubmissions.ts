@@ -20,7 +20,7 @@ export class addSubmissions1626738106321 implements MigrationInterface {
         "type" "submissions_type_enum" NOT NULL,
         "content" character varying NOT NULL,
         "submitter_ip" character varying(64) NOT NULL,
-        "original_submission" integer,
+        "original_submission_id" integer,
         CONSTRAINT "submissions_primary_key_constraint" PRIMARY KEY ("id")
     )`);
 
@@ -28,7 +28,7 @@ export class addSubmissions1626738106321 implements MigrationInterface {
     await queryRunner.query(`ALTER TABLE "submissions" ADD CONSTRAINT "submissions_to_assignments_foreign_key_constraint" FOREIGN KEY ("assignment_id") REFERENCES "assignments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
     await queryRunner.query(`ALTER TABLE "submissions" ADD CONSTRAINT "submissions_to_users_user_id_foreign_key_constraint" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
     await queryRunner.query(`ALTER TABLE "submissions" ADD CONSTRAINT "submissions_to_users_submitter_id_foreign_key_constraint" FOREIGN KEY ("submitted_by") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
-    await queryRunner.query(`ALTER TABLE "submissions" ADD CONSTRAINT "submissions_to_submissions_foreign_key_constraint" FOREIGN KEY ("original_submission") REFERENCES "submissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+    await queryRunner.query(`ALTER TABLE "submissions" ADD CONSTRAINT "submissions_to_submissions_foreign_key_constraint" FOREIGN KEY ("original_submission_id") REFERENCES "submissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
   }
 
   // prettier-ignore

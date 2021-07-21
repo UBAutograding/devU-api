@@ -20,7 +20,7 @@ describe('Submission Serializer', () => {
     mockSubmission.content = 'LARGE STRING'
     mockSubmission.submitterIp = '1A2B3C4D5yes'
     mockSubmission.originalSubmissionId = null
-    mockSubmission.submittedBy = null
+    mockSubmission.submittedBy = 1
   })
 
   describe('Serializing submissions', () => {
@@ -44,7 +44,7 @@ describe('Submission Serializer', () => {
 
       expect(expectedResult).toBeDefined()
       expect(expectedResult.updatedAt).toEqual(mockSubmission.updatedAt.toISOString())
-      expect(expectedResult.createdAt).toEqual(mockSubmission.updatedAt.toISOString())
+      expect(expectedResult.createdAt).toEqual(mockSubmission.createdAt.toISOString())
     })
   })
 })
