@@ -10,7 +10,7 @@ import {
 } from 'typeorm'
 
 import AssignmentModel from './assignments.model'
-import SectionModel from './courseSection.model'
+import SectionModel from './courseSections.model'
 
 @Entity('assignment_section')
 export default class AssignmentSectionModel {
