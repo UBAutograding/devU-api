@@ -1,21 +1,40 @@
 import { getRepository, IsNull } from 'typeorm'
+import { Readable } from 'stream'
 
 import { CodeAssignment } from 'devu-shared-modules'
 
 import CodeAssignmentsModel from '../model/codeAssignments.model'
+import { minioClient } from '../fileStorage'
 
 const connect = () => getRepository(CodeAssignmentsModel)
 
-export async function create(codeAssignment: CodeAssignment) {
-  // TODO store file on S3
-  return await connect().save(codeAssignment)
+function assignmentGraderFileRecordName(codeAssignment: CodeAssignment) {
+  if (!codeAssignment.id) throw new Error('Missing Id')
+  return codeAssignment.id.toString()
 }
 
-export async function update(codeAssignment: CodeAssignment) {
+export async function create(codeAssignment: CodeAssignment, graderFile: Readable) {
+  const newAssignment = await connect().save(codeAssignment)
+  const graderFileRecordName: string = assignmentGraderFileRecordName(newAssignment)
+
+  await minioClient.putObject('graders', graderFileRecordName, graderFile)
+  newAssignment.grader = graderFileRecordName
+
+  const { id, assignmentId, grader, gradingImage } = newAssignment
+  await connect().update(id, { assignmentId, grader, gradingImage })
+
+  return newAssignment
+}
+
+export async function update(codeAssignment: CodeAssignment, graderFile: Readable) {
+  if (!codeAssignment.id) throw new Error('Missing Id')
+
+  const graderFileRecordName: string = assignmentGraderFileRecordName(codeAssignment)
+
+  await minioClient.putObject('graders', graderFileRecordName, graderFile)
+  codeAssignment.grader = graderFileRecordName
+
   const { id, assignmentId, grader, gradingImage } = codeAssignment
-
-  if (!id) throw new Error('Missing Id')
-
   return await connect().update(id, { assignmentId, grader, gradingImage })
 }
 

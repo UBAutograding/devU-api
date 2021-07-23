@@ -75,7 +75,7 @@ describe('CodeAssignmentController', () => {
         await controller.detail(req, res, next)
       })
 
-      test('Returns expected user', () => expect(res.json).toBeCalledWith(expectedResult))
+      test('Returns expected code assignment', () => expect(res.json).toBeCalledWith(expectedResult))
       test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
     })
 
@@ -85,9 +85,9 @@ describe('CodeAssignmentController', () => {
         await controller.detail(req, res, next)
       })
 
-      test('Status code is 404 on missing userCourse', () => expect(res.status).toBeCalledWith(404))
-      test('Responds with NotFound on missing userCourse', () => expect(res.json).toBeCalledWith(NotFound))
-      test('Next not called on missing userCourse', () => expect(next).toBeCalledTimes(0))
+      test('Status code is 404 on missing codeAssignment', () => expect(res.status).toBeCalledWith(404))
+      test('Responds with NotFound on missing codeAssignment', () => expect(res.json).toBeCalledWith(NotFound))
+      test('Next not called on missing codeAssignment', () => expect(next).toBeCalledTimes(0))
     })
 
     describe('400 - Bad Request', () => {
@@ -112,7 +112,7 @@ describe('CodeAssignmentController', () => {
         await controller.post(req, res, next)
       })
 
-      test('Returns expected user', () => expect(res.json).toBeCalledWith(expectedResult))
+      test('Returns expected code assignment', () => expect(res.json).toBeCalledWith(expectedResult))
       test('Status code is 201', () => expect(res.status).toBeCalledWith(201))
     })
 
