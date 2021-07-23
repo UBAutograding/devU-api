@@ -12,7 +12,7 @@ import {
 import CourseModel from './courses.model'
 
 @Entity('course_section')
-export default class CourseSectionModel {
+export default class CourseSectionModels {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -25,7 +25,7 @@ export default class CourseSectionModel {
     @DeleteDateColumn({ name: 'deleted_at' })
     deletedAt?: Date
 
-    @Column({name: 'section_id'})
+    @Column({name: 'section_id', length: 128})
     sectionId: string
 
     @Column({name: 'course_id'})
