@@ -1,4 +1,5 @@
 import { UpdateResult } from 'typeorm'
+// import * as Multer from 'multer'
 
 import { CodeAssignment } from 'devu-shared-modules'
 
@@ -42,7 +43,7 @@ describe('CodeAssignmentController', () => {
     expectedDbResult = {} as UpdateResult
   })
 
-  describe('GET - /code-assignment', () => {
+  describe('GET - /code-assignments', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
         CodeAssignmentService.list = jest.fn().mockImplementation(() => Promise.resolve(mockedCodeAssignments))
@@ -68,7 +69,7 @@ describe('CodeAssignmentController', () => {
     })
   })
 
-  describe('GET - /code-assignment/:id', () => {
+  describe('GET - /code-assignments/:id', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
         CodeAssignmentService.retrieve = jest.fn().mockImplementation(() => Promise.resolve(mockedCodeAssignment))
@@ -105,10 +106,11 @@ describe('CodeAssignmentController', () => {
     })
   })
 
-  describe('POST - /code-assignment', () => {
+  describe('POST - /code-assignments', () => {
     describe('201 - Created', () => {
       beforeEach(async () => {
         CodeAssignmentService.create = jest.fn().mockImplementation(() => Promise.resolve(mockedCodeAssignment))
+        req.file = { stream: 'content' }
         await controller.post(req, res, next)
       })
 
@@ -119,6 +121,7 @@ describe('CodeAssignmentController', () => {
     describe('400 - Bad Request', () => {
       beforeEach(async () => {
         CodeAssignmentService.create = jest.fn().mockImplementation(() => Promise.reject(expectedError))
+        req.file = { stream: 'content' }
 
         try {
           await controller.post(req, res, next)
@@ -136,11 +139,12 @@ describe('CodeAssignmentController', () => {
     })
   })
 
-  describe('PUT - /code-assignment/:id', () => {
+  describe('PUT - /code-assignments/:id', () => {
     describe('200 - Ok', () => {
       beforeEach(async () => {
         expectedDbResult.affected = 1 // mocking service return shape
         CodeAssignmentService.update = jest.fn().mockImplementation(() => Promise.resolve(expectedDbResult))
+        req.file = { stream: 'content' }
         await controller.put(req, res, next)
       })
 
@@ -153,6 +157,7 @@ describe('CodeAssignmentController', () => {
       beforeEach(async () => {
         expectedDbResult.affected = 0 // No records affected in db
         CodeAssignmentService.update = jest.fn().mockImplementation(() => Promise.resolve(expectedDbResult))
+        req.file = { stream: 'content' }
         await controller.put(req, res, next)
       })
 
@@ -164,6 +169,7 @@ describe('CodeAssignmentController', () => {
     describe('400 - Bad Request', () => {
       beforeEach(async () => {
         CodeAssignmentService.update = jest.fn().mockImplementation(() => Promise.reject(expectedError))
+        req.file = { stream: 'content' }
         await controller.put(req, res, next)
       })
 
@@ -171,7 +177,7 @@ describe('CodeAssignmentController', () => {
     })
   })
 
-  describe('DELETE - /code-assignment/:id', () => {
+  describe('DELETE - /code-assignments/:id', () => {
     describe('204 - No Content', () => {
       beforeEach(async () => {
         expectedDbResult.affected = 1

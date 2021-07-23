@@ -16,8 +16,8 @@ export const minioClient = new Minio.Client(minioConfiguration)
 
 export async function initializeMinio() {
   for (const bucketName of requiredBuckets) {
-    if (!await minioClient.bucketExists(bucketName)) {
-      minioClient.makeBucket(bucketName, 'us-east-1', function(err) {
+    if (!(await minioClient.bucketExists(bucketName))) {
+      minioClient.makeBucket(bucketName, 'us-east-1', function (err) {
         if (err) {
           throw new Error(`Error creating MinIO bucket '${bucketName}'`)
         }

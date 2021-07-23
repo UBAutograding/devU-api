@@ -9,6 +9,6 @@ export function serialize(codeAssignment: CodeAssignmentModel): CodeAssignment {
     grader: codeAssignment.grader,
     gradingImage: codeAssignment.gradingImage,
     createdAt: codeAssignment.createdAt.toISOString(),
-    updatedAt: codeAssignment.updatedAt.toISOString()
+    updatedAt: codeAssignment.updatedAt.toISOString(),
   }
 }

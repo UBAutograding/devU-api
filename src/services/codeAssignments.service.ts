@@ -1,5 +1,4 @@
 import { getRepository, IsNull } from 'typeorm'
-import { Readable } from 'stream'
 
 import { CodeAssignment } from 'devu-shared-modules'
 
@@ -13,7 +12,12 @@ function assignmentGraderFileRecordName(codeAssignment: CodeAssignment) {
   return codeAssignment.id.toString()
 }
 
-export async function create(codeAssignment: CodeAssignment, graderFile: Readable) {
+export async function create(codeAssignment: CodeAssignment, graderFile: Buffer) {
+  // I hope someone has a better idea for this function. The issue is with the grader file record naming.
+  // The name should depend on the codeAssignmentId to ensure there are no name conflicts, but we don't
+  // get that id until a record is created. So I create a record, grab the id and use it for the file record
+  // name, save the file, then update the record with the filename.
+  codeAssignment.grader = "Temp value. You'll see this if the file upload to MinIO fails"
   const newAssignment = await connect().save(codeAssignment)
   const graderFileRecordName: string = assignmentGraderFileRecordName(newAssignment)
 
@@ -26,7 +30,7 @@ export async function create(codeAssignment: CodeAssignment, graderFile: Readabl
   return newAssignment
 }
 
-export async function update(codeAssignment: CodeAssignment, graderFile: Readable) {
+export async function update(codeAssignment: CodeAssignment, graderFile: Buffer) {
   if (!codeAssignment.id) throw new Error('Missing Id')
 
   const graderFileRecordName: string = assignmentGraderFileRecordName(codeAssignment)
