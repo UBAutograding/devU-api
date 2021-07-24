@@ -7,7 +7,7 @@ const gradingImage = check('gradingImage').isString().trim().isLength({ max: 128
 
 const graderFile = check('graderFile')
   .custom((_value, { req }) => req.file.fieldname === 'graderFile' && req.file.size > 0)
-  .withMessage('Please submit the grading file in an input named \'graderFile\'')
+  .withMessage("Please submit the grading file in an input named 'graderFile'")
 
 const validator = [assignmentId, gradingImage, graderFile, validate]
 

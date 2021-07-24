@@ -4,7 +4,7 @@ import environment from './environment'
 
 export enum BucketNames {
   GRADERS = 'graders',
-  SUBMISSIONS = 'submissions'
+  SUBMISSIONS = 'submissions',
 }
 
 const minioConfiguration: Minio.ClientOptions = {
@@ -23,11 +23,10 @@ export async function initializeMinio() {
 
     if (bucketExists) continue
 
-    minioClient.makeBucket(bucketName, 'us-east-1', function(err) {
+    minioClient.makeBucket(bucketName, 'us-east-1', function (err) {
       if (err) {
         throw new Error(`Error creating MinIO bucket '${bucketName}'`)
       }
     })
-
   }
 }

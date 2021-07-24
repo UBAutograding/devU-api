@@ -24,7 +24,6 @@ import './utils/passport.utils'
 
 const app = express()
 
-
 initializeMinio()
   .then(() => createConnection(connectionInfo))
   .then(_connection => {
