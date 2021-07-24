@@ -11,8 +11,8 @@ import {
 
 import CourseModel from './courses.model'
 
-@Entity('course_section')
-export default class CourseSectionModels {
+@Entity('course_sections')
+export default class CourseSection {
     @PrimaryGeneratedColumn()
     id: number
 

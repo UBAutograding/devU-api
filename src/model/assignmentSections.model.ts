@@ -29,15 +29,15 @@ export default class AssignmentSectionModel {
     @Column({name: 'assignment_section_id' })
     assignmentSectionId: number
 
-    @Column({name: 'assignement_id' })
-    @JoinColumn({name: 'assignement_id'})
+    @Column({name: 'assignment_id' })
+    @JoinColumn({name: 'assignment_id'})
     @ManyToOne(() => AssignmentModel)
     assignmentId: number
 
     @Column({name: 'section_id' })
     @JoinColumn({name: 'section_id '})
     @ManyToOne(() => SectionModel)
-    sectionId: number
+    sectionId: string
 
     @Column({name: 'start_offset' })
     startOffset: number
