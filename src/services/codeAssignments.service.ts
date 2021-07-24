@@ -3,7 +3,7 @@ import { getRepository, IsNull } from 'typeorm'
 import { CodeAssignment } from 'devu-shared-modules'
 
 import CodeAssignmentsModel from '../model/codeAssignments.model'
-import { minioClient } from '../fileStorage'
+import { minioClient, BucketNames } from '../fileStorage'
 
 const connect = () => getRepository(CodeAssignmentsModel)
 
@@ -21,7 +21,7 @@ export async function create(codeAssignment: CodeAssignment, graderFile: Buffer)
   const newAssignment = await connect().save(codeAssignment)
   const graderFileRecordName: string = assignmentGraderFileRecordName(newAssignment)
 
-  await minioClient.putObject('graders', graderFileRecordName, graderFile)
+  await minioClient.putObject(BucketNames.GRADERS, graderFileRecordName, graderFile)
   newAssignment.grader = graderFileRecordName
 
   const { id, assignmentId, grader, gradingImage } = newAssignment

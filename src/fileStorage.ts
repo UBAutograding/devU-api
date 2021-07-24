@@ -2,7 +2,10 @@ import * as Minio from 'minio'
 
 import environment from './environment'
 
-const requiredBuckets = ['graders', 'submissions']
+export enum BucketNames {
+  GRADERS = 'graders',
+  SUBMISSIONS = 'submissions'
+}
 
 const minioConfiguration: Minio.ClientOptions = {
   endPoint: environment.minioHost,
@@ -15,13 +18,16 @@ const minioConfiguration: Minio.ClientOptions = {
 export const minioClient = new Minio.Client(minioConfiguration)
 
 export async function initializeMinio() {
-  for (const bucketName of requiredBuckets) {
-    if (!(await minioClient.bucketExists(bucketName))) {
-      minioClient.makeBucket(bucketName, 'us-east-1', function (err) {
-        if (err) {
-          throw new Error(`Error creating MinIO bucket '${bucketName}'`)
-        }
-      })
-    }
+  for (const bucketName of Object.values(BucketNames)) {
+    const bucketExists = await minioClient.bucketExists(bucketName)
+
+    if (bucketExists) continue
+
+    minioClient.makeBucket(bucketName, 'us-east-1', function(err) {
+      if (err) {
+        throw new Error(`Error creating MinIO bucket '${bucketName}'`)
+      }
+    })
+
   }
 }
