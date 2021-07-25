@@ -1,4 +1,4 @@
-import { serialize } from '../courseSection.serializer'
+import { serialize } from '../courseSections.serializer'
 
 import CourseSectionModel from '../../../model/courseSections.model'
 
