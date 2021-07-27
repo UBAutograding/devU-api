@@ -1,10 +1,10 @@
 import {getRepository, IsNull} from 'typeorm'
 
-import AssignmentProblem from '../model/assignmentProblems.model'
+import AssignmentProblemModel from '../model/assignmentProblems.model'
 
 import {AssignmentProblem} from 'devu-shared-modules'
 
-const connect = () => getRepository(AssignmentProblem)
+const connect = () => getRepository(AssignmentProblemModel)
 
 export async function create(assignmentProblem: AssignmentProblem) {
     return await connect().save(assignmentProblem)
