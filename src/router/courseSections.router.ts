@@ -2,17 +2,17 @@
 import express from 'express'
 
 // Middleware
-import validator from '../middleware/validator/asignmentSection.validator'
+import validator from '../middleware/validator/courseSection.validator'
 import { asInt } from '../middleware/validator/generic.validator'
 
 // Controller
 import CourseSectionController from '../controller/courseSections.controller'
 
-const Router = express()._router
+const Router = express.Router()
 
 /**
  * @swagger
- * /submissions:
+ * /courseSections:
  *   get:
  *     summary: Retrieve a list of course sections
  */
@@ -20,7 +20,7 @@ Router.get('/', CourseSectionController.get)
 
 /**
  * @swagger
- * /submissions/{id}:
+ * /courseSections/{id}:
  *   get:
  *     summary: Retrieve a single course section
  */
@@ -28,7 +28,7 @@ Router.get('/:id', asInt(), CourseSectionController.detail)
 
 /**
  * @swagger
- * /submissions:
+ * /courseSections:
  *   post:
  *     summary: Create an course section
  */
@@ -36,7 +36,15 @@ Router.post('/', validator, CourseSectionController.post)
 
 /**
  * @swagger
- * /submissions/{id}:
+ * /courses:
+ *   put:
+ *     summary: Update a course
+ */
+Router.put('/:id', asInt(), validator, CourseSectionController.put)
+
+/**
+ * @swagger
+ * /courseSections/{id}:
  *   delete:
  *     summary: Delete an course section
  */

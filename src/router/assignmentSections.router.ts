@@ -8,11 +8,11 @@ import { asInt } from '../middleware/validator/generic.validator'
 // Controller
 import AssignmentSectionController from '../controller/assignmentSections.controller'
 
-const Router = express()._router
+const Router = express.Router()
 
 /**
  * @swagger
- * /submissions:
+ * /assignmentSections:
  *   get:
  *     summary: Retrieve a list of assignment sections
  */
@@ -20,7 +20,7 @@ Router.get('/', AssignmentSectionController.get)
 
 /**
  * @swagger
- * /submissions/{id}:
+ * /assignmentSections/{id}:
  *   get:
  *     summary: Retrieve a single assignment section
  */
@@ -28,7 +28,7 @@ Router.get('/:id', asInt(), AssignmentSectionController.detail)
 
 /**
  * @swagger
- * /submissions:
+ * /assignmentSections:
  *   post:
  *     summary: Create an assignment section
  */
@@ -36,7 +36,7 @@ Router.post('/', validator, AssignmentSectionController.post)
 
 /**
  * @swagger
- * /submissions/{id}:
+ * /assignmentSections/{id}:
  *   delete:
  *     summary: Delete an assignment section
  */

@@ -11,6 +11,8 @@ import logout from './logout.router'
 import status from './status.router'
 import submissions from './submissions.router'
 import users from './users.router'
+import courseSections from './courseSections.router'
+import assignmentSections from './assignmentSections.router'
 
 import { isAuthorized } from '../middleware/auth.middleware'
 
@@ -24,6 +26,9 @@ Router.use('/user-courses', isAuthorized, userCourse)
 Router.use('/docs', swaggerUi.serve, swaggerUi.setup(swagger))
 Router.use('/submissions', isAuthorized, submissions)
 Router.use('/users', isAuthorized, users)
+Router.use('/course-sections', courseSections)
+Router.use('/assignment-sections', assignmentSections)
+
 
 Router.use('/login', login)
 Router.use('/logout', logout)
