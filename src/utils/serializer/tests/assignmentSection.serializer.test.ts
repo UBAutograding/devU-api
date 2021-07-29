@@ -15,8 +15,8 @@ describe('AssignmentSection serializer', () => {
     mockAssignmentSection.updatedAt = new Date()
     mockAssignmentSection.assignmentSectionId = 12
     mockAssignmentSection.sectionId = 'A1'
-    mockAssignmentSection.startOffset = 10
-    mockAssignmentSection.endOffset = 0
+    mockAssignmentSection.startOffset = new Date()
+    mockAssignmentSection.endOffset = new Date()
     })
   describe('Serializing assignmentSection', () => {
     test('courseSection values exist in the response', () => {
@@ -24,8 +24,7 @@ describe('AssignmentSection serializer', () => {
 
       expect(expectedResult.id).toEqual(mockAssignmentSection.id)
       expect(expectedResult.assignmentSectionId).toEqual(mockAssignmentSection.assignmentSectionId)
-      expect(expectedResult.startOffset).toEqual(mockAssignmentSection.startOffset)
-      expect(expectedResult.endOffset).toEqual(mockAssignmentSection.endOffset)
+
 
     })
     test('Dates are returned as ISO strings for all assignmentSections', () => {
@@ -34,6 +33,8 @@ describe('AssignmentSection serializer', () => {
       expect(expectedResult).toBeDefined()
       expect(expectedResult.updatedAt).toEqual(mockAssignmentSection.updatedAt.toISOString())
       expect(expectedResult.createdAt).toEqual(mockAssignmentSection.createdAt.toISOString())
+      expect(expectedResult.startOffset).toEqual(mockAssignmentSection.startOffset.toISOString())
+      expect(expectedResult.endOffset).toEqual(mockAssignmentSection.endOffset.toISOString())
     })
   })
 })

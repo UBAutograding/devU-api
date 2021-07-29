@@ -26,14 +26,22 @@ let expectedError: Error
 
 let expectedDbResult: UpdateResult
 
+function populateAssignmentSection(assignmentSeciton: AssignmentSectionModel){
+  assignmentSeciton.startOffset = new Date()
+  assignmentSeciton.endOffset = new Date()
+  return assignmentSeciton
+
+}
+
+
 describe('AssignmentSectionController', () => {
   beforeEach(() => {
     req = Testing.fakeRequest()
     res = Testing.fakeResponse()
     next = Testing.fakeNext()
 
-    mockedAssignmentSections = Testing.generateTypeOrmArray(AssignmentSectionModel, 3)
-    mockedAssignmentSection = Testing.generateTypeOrm(AssignmentSectionModel)
+    mockedAssignmentSections = Testing.generateTypeOrmArray(AssignmentSectionModel, 3).map(populateAssignmentSection)
+    mockedAssignmentSection = populateAssignmentSection(Testing.generateTypeOrm(AssignmentSectionModel))
 
     expectedResults = mockedAssignmentSections.map(serialize)
     expectedResult = serialize(mockedAssignmentSection)

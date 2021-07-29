@@ -8,8 +8,8 @@ export function serialize(assignmentSection: AssignmentSectionModel): Assignment
     assignmentSectionId: assignmentSection.assignmentSectionId,
     assignmentId: assignmentSection.assignmentId,
     sectionId: assignmentSection.sectionId,
-    startOffset: assignmentSection.startOffset,
-    endOffset: assignmentSection.endOffset,
+    startOffset: assignmentSection.startOffset.toISOString(),
+    endOffset: assignmentSection.endOffset.toISOString(),
     createdAt: assignmentSection.createdAt.toISOString(),
     updatedAt: assignmentSection.updatedAt.toISOString(),
     }

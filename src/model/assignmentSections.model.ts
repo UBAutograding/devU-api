@@ -40,9 +40,9 @@ export default class AssignmentSectionModel {
     sectionId: string
 
     @Column({name: 'start_offset' })
-    startOffset: number
+    startOffset: Date
 
     @Column({name: 'end_offset' })
-    endOffset: number
+    endOffset: Date
 
 }

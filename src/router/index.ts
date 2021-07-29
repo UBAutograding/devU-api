@@ -26,8 +26,8 @@ Router.use('/user-courses', isAuthorized, userCourse)
 Router.use('/docs', swaggerUi.serve, swaggerUi.setup(swagger))
 Router.use('/submissions', isAuthorized, submissions)
 Router.use('/users', isAuthorized, users)
-Router.use('/course-sections', courseSections)
-Router.use('/assignment-sections', assignmentSections)
+Router.use('/course-sections',isAuthorized, courseSections)
+Router.use('/assignment-sections',isAuthorized, assignmentSections)
 
 
 Router.use('/login', login)
