@@ -26,10 +26,10 @@ let expectedError: Error
 
 let expectedDbResult: UpdateResult
 
-function populateAssignmentSection(assignmentSeciton: AssignmentSectionModel){
-  assignmentSeciton.startOffset = new Date()
-  assignmentSeciton.endOffset = new Date()
-  return assignmentSeciton
+function populateAssignmentSection(assignmentSection: AssignmentSectionModel){
+  assignmentSection.startOffset = new Date()
+  assignmentSection.endOffset = new Date()
+  return assignmentSection
 
 }
 
