@@ -36,6 +36,14 @@ Router.post('/', validator, AssignmentsController.post)
 
 /**
  * @swagger
+ * /assignments/{id}:
+ *   copy:
+ *     summary: copy an assignment to a new course
+ */
+Router.copy('/:id', asInt(), validator, AssignmentsController.copy)
+
+/**
+ * @swagger
  * /assignments:
  *   put:
  *     summary: Update an assignment

@@ -56,6 +56,17 @@ export async function put(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+export async function copy(req: Request, res: Response, next: NextFunction) {
+  try {
+    const assignmentId = parseInt(req.params.id)
+    const response = await AssignmentService.copy(assignmentId, req.body)
+
+    res.status(201).json(response.raw)
+  } catch (err) {
+    next(err)
+  }
+}
+
 export async function _delete(req: Request, res: Response, next: NextFunction) {
   try {
     const id = parseInt(req.params.id)
@@ -69,4 +80,4 @@ export async function _delete(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export default { get, detail, post, put, _delete }
+export default { get, detail, post, put, copy, _delete }

@@ -53,10 +53,32 @@ export async function list() {
   return await connect().find({ deletedAt: IsNull() })
 }
 
+export async function copy(assignmentId: number, newCourseId: number) {
+
+  const assignment = await connect().findOne({ id: assignmentId, deletedAt: IsNull() })
+
+  if (!assignment) throw new Error('Missing Id')
+
+  return await connect().insert({
+    courseId: newCourseId,
+    name: assignment.name,
+    startDate: assignment.startDate,
+    dueDate: assignment.dueDate,
+    endDate: assignment.endDate,
+    gradingType: assignment.gradingType,
+    categoryName: assignment.categoryName,
+    description: assignment.description,
+    maxFileSize: assignment.maxFileSize,
+    maxSubmissions: assignment.maxSubmissions,
+    disableHandins: assignment.disableHandins
+  })
+}
+
 export default {
   create,
   retrieve,
   update,
+  copy,
   _delete,
   list,
 }
