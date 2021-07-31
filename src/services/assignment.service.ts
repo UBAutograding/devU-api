@@ -53,14 +53,18 @@ export async function list() {
   return await connect().find({ deletedAt: IsNull() })
 }
 
-export async function copy(assignmentId: number, newCourseId: number) {
+type idObj = {
+  assignmentId: number,
+  courseId: number
+}
 
-  const assignment = await connect().findOne({ id: assignmentId, deletedAt: IsNull() })
+export async function copy(input: idObj) {
+  const assignment = await connect().findOne({ id: input.assignmentId, deletedAt: IsNull() })
 
   if (!assignment) throw new Error('Missing Id')
 
   return await connect().insert({
-    courseId: newCourseId,
+    courseId: input.courseId,
     name: assignment.name,
     startDate: assignment.startDate,
     dueDate: assignment.dueDate,

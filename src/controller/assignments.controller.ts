@@ -58,8 +58,8 @@ export async function put(req: Request, res: Response, next: NextFunction) {
 
 export async function copy(req: Request, res: Response, next: NextFunction) {
   try {
-    const assignmentId = parseInt(req.params.id)
-    const response = await AssignmentService.copy(assignmentId, req.body)
+    req.body.assignmentId = parseInt(req.params.id)
+    const response = await AssignmentService.copy(req.body)
 
     res.status(201).json(response.raw)
   } catch (err) {
