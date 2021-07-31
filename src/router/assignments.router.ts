@@ -2,7 +2,10 @@
 import express from 'express'
 
 // Middleware
-import validator from '../middleware/validator/assignments.validator'
+import validators from '../middleware/validator/assignments.validator'
+const validator = validators.validator
+const copyValidator = validators.copyValidator
+
 import { asInt } from '../middleware/validator/generic.validator'
 
 // Controller
@@ -40,7 +43,7 @@ Router.post('/', validator, AssignmentsController.post)
  *   copy:
  *     summary: copy an assignment to a new course
  */
-Router.copy('/:id', asInt(), AssignmentsController.copy)
+Router.copy('/:id', asInt(), copyValidator, AssignmentsController.copy)
 
 /**
  * @swagger
