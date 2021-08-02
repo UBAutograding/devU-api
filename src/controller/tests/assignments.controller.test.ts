@@ -1,4 +1,4 @@
-import { UpdateResult } from 'typeorm'
+import { InsertResult, UpdateResult } from 'typeorm'
 
 import { Assignment } from 'devu-shared-modules'
 
@@ -26,6 +26,8 @@ let expectedError: Error
 
 let expectedDbResult: UpdateResult
 
+let expectedCopyResult: InsertResult
+
 function populateAssignment(assignment: AssignmentModel) {
   assignment.startDate = new Date()
   assignment.endDate = new Date()
@@ -48,6 +50,8 @@ describe('AssignmentController', () => {
     expectedError = new Error('Expected Error')
 
     expectedDbResult = {} as UpdateResult
+
+    expectedCopyResult = {} as InsertResult
   })
 
   describe('GET - /assignments', () => {
@@ -173,6 +177,27 @@ describe('AssignmentController', () => {
       beforeEach(async () => {
         AssignmentService.update = jest.fn().mockImplementation(() => Promise.reject(expectedError))
         await controller.put(req, res, next)
+      })
+
+      test('Next is called with error', () => expect(next).toBeCalledWith(expectedError))
+    })
+  })
+
+  describe('COPY - /assignments/:id', () => {
+    describe('201 - Created', () => {
+      beforeEach(async () => {
+        AssignmentService.copy = jest.fn().mockImplementation(() => Promise.resolve(expectedCopyResult))
+        await controller.copy(req, res, next)
+      })
+
+      test('Returns copied assignment', () => expect(res.json).toBeCalledWith(expectedCopyResult))
+      test('Status code is 201', () => expect(res.status).toBeCalledWith(201))
+    })
+
+    describe('400 - Bad Request', () => {
+      beforeEach(async () => {
+        AssignmentService.copy = jest.fn().mockImplementation(() => Promise.reject(expectedError))
+        await controller.copy(req, res, next)
       })
 
       test('Next is called with error', () => expect(next).toBeCalledWith(expectedError))

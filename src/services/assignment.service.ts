@@ -54,17 +54,25 @@ export async function list() {
 }
 
 type idObj = {
-  assignmentId: number,
+  assignmentId: number
   courseId: number
 }
 
 export async function copy(input: idObj) {
-  const assignment = await connect().findOne({ id: input.assignmentId, deletedAt: IsNull() })
+  const {
+    assignmentId,
+    courseId
+  } = input
 
-  if (!assignment) throw new Error('Missing Id')
+  if (!assignmentId) throw new Error('Missing AssignmentId')
+  else if (!courseId) throw new Error('Missing CourseId')
+
+  const assignment = await connect().findOne({ id: assignmentId, deletedAt: IsNull() })
+
+  if (!assignment) throw new Error('Assignment Not Found')
 
   return await connect().insert({
-    courseId: input.courseId,
+    courseId: courseId,
     name: assignment.name,
     startDate: assignment.startDate,
     dueDate: assignment.dueDate,
@@ -74,7 +82,7 @@ export async function copy(input: idObj) {
     description: assignment.description,
     maxFileSize: assignment.maxFileSize,
     maxSubmissions: assignment.maxSubmissions,
-    disableHandins: assignment.disableHandins
+    disableHandins: assignment.disableHandins,
   })
 }
 

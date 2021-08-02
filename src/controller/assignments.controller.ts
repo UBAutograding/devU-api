@@ -61,7 +61,7 @@ export async function copy(req: Request, res: Response, next: NextFunction) {
     req.body.assignmentId = parseInt(req.params.id)
     const response = await AssignmentService.copy(req.body)
 
-    res.status(201).json(response.raw)
+    res.status(201).json(response)
   } catch (err) {
     next(err)
   }

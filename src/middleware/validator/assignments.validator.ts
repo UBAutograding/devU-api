@@ -54,14 +54,11 @@ const validator = [
   validate,
 ]
 
-const copyValidator = [
-  courseId,
-  validate
-]
+const copyValidator = [courseId, validate]
 
 const validators = {
   validator,
-  copyValidator
+  copyValidator,
 }
 
 export default validators
