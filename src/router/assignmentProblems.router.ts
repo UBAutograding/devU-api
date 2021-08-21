@@ -12,19 +12,19 @@ const Router = express.Router()
 
 /**
  * @swagger
- * /assignment-problems:
+ * /assignment-problems/{assignment-id}:
  *   get:
- *     summary: Retrieve a list of assignment problems
+ *     summary: Retrieve a list of assignment problems belonging to an assignment by assignment id
  */
-Router.get('/', AssignmentProblemController.get)
+Router.get('/:id', asInt(), AssignmentProblemController.get)
 
 /**
  * @swagger
- * /assignment-problems/{id}:
+ * /assignment-problems/detail/{id}:
  *   get:
- *     summary: Retrieve a single assignment problem
+ *     summary: Retrieve a single assignment problem's details
  */
-Router.get('/:id', asInt(), AssignmentProblemController.detail)
+Router.get('/detail/:id', asInt(), AssignmentProblemController.detail)
 
 /**
  * @swagger

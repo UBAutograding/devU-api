@@ -8,7 +8,8 @@ import { serialize } from '../utils/serializer/assignmentProblems.serializer'
 
 export async function get(req: Request, res: Response, next: NextFunction) {
   try {
-    const assignmentProblems = await AssignmentProblemService.list()
+    const assignmentId = parseInt(req.params.id)
+    const assignmentProblems = await AssignmentProblemService.list(assignmentId)
     const response = assignmentProblems.map(serialize)
 
     res.status(200).json(response)

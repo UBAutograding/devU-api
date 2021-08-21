@@ -24,8 +24,9 @@ export async function retrieve(id: number) {
   return await connect().findOne({ id, deletedAt: IsNull() })
 }
 
-export async function list() {
-  return await connect().find({ deletedAt: IsNull() })
+// Retrieve all the assignmentProblems linked to a particular assignment by assignmentId
+export async function list(assignmentId: number) {
+  return await connect().find({ assignmentId: assignmentId, deletedAt: IsNull() })
 }
 
 export default {
