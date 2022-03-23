@@ -1,17 +1,18 @@
 import { Request, Response, NextFunction } from 'express'
 
-import UserCourseService from '../services/userCourse.service'
-import { serialize } from '../utils/serializer/userCourses.serializer'
+import AssignmentProblemService from '../services/assignmentProblem.service'
 
 import { GenericResponse, NotFound, Updated } from '../utils/apiResponse.utils'
 
+import { serialize } from '../utils/serializer/assignmentProblems.serializer'
+
 export async function get(req: Request, res: Response, next: NextFunction) {
   try {
-    if (!req.currentUser?.userId) return res.status(400).json(new GenericResponse('Request requires auth'))
-    
-    const userCourses = await UserCourseService.list(req.currentUser.userId)
+    const assignmentId = parseInt(req.params.id)
+    const assignmentProblems = await AssignmentProblemService.list(assignmentId)
+    const response = assignmentProblems.map(serialize)
 
-    res.status(200).json(userCourses.map(serialize))
+    res.status(200).json(response)
   } catch (err) {
     next(err)
   }
@@ -20,11 +21,11 @@ export async function get(req: Request, res: Response, next: NextFunction) {
 export async function detail(req: Request, res: Response, next: NextFunction) {
   try {
     const id = parseInt(req.params.id)
-    const userCourse = await UserCourseService.retrieve(id)
+    const assignmentProblem = await AssignmentProblemService.retrieve(id)
 
-    if (!userCourse) return res.status(404).json(NotFound)
+    if (!assignmentProblem) return res.status(404).json(NotFound)
 
-    const response = serialize(userCourse)
+    const response = serialize(assignmentProblem)
 
     res.status(200).json(response)
   } catch (err) {
@@ -34,8 +35,8 @@ export async function detail(req: Request, res: Response, next: NextFunction) {
 
 export async function post(req: Request, res: Response, next: NextFunction) {
   try {
-    const userCourse = await UserCourseService.create(req.body)
-    const response = serialize(userCourse)
+    const assignmentProblem = await AssignmentProblemService.create(req.body)
+    const response = serialize(assignmentProblem)
 
     res.status(201).json(response)
   } catch (err) {
@@ -46,7 +47,7 @@ export async function post(req: Request, res: Response, next: NextFunction) {
 export async function put(req: Request, res: Response, next: NextFunction) {
   try {
     req.body.id = parseInt(req.params.id)
-    const results = await UserCourseService.update(req.body)
+    const results = await AssignmentProblemService.update(req.body)
 
     if (!results.affected) return res.status(404).json(NotFound)
 
@@ -59,7 +60,7 @@ export async function put(req: Request, res: Response, next: NextFunction) {
 export async function _delete(req: Request, res: Response, next: NextFunction) {
   try {
     const id = parseInt(req.params.id)
-    const results = await UserCourseService._delete(id)
+    const results = await AssignmentProblemService._delete(id)
 
     if (!results.affected) return res.status(404).json(NotFound)
 
