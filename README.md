@@ -25,6 +25,17 @@ docker run \
   -d postgres
 ```
 
+```
+docker run \
+  --name minio \
+  -p 9002:9000 \
+  -p 9001:9001 \
+  -v /tmp/data:/data \
+  -e "MINIO_ROOT_USER=typescript_user" \
+  -e "MINIO_ROOT_PASSWORD=changeMe" \
+  -d minio/minio server /data --console-address ":9001"
+```
+
 Install all node dependancies. All of the database environment variables can change, and can be set as environment variables on your machine if you want to overwrite the defaults
 
 ```

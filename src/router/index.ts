@@ -3,6 +3,7 @@ import swaggerUi from 'swagger-ui-express'
 
 import swagger from '../utils/swagger.utils'
 
+import codeAssignment from './codeAssignments.router'
 import userCourse from './userCourses.router'
 import assignments from './assignments.router'
 import assignmentProblems from './assignmentProblems.router'
@@ -23,6 +24,7 @@ Router.use('/assignments', isAuthorized, assignments)
 Router.use('/assignment-problems', isAuthorized, assignmentProblems)
 Router.use('/courses', isAuthorized, courses)
 Router.use('/user-courses', isAuthorized, userCourse)
+Router.use('/code-assignments', isAuthorized, codeAssignment)
 Router.use('/docs', swaggerUi.serve, swaggerUi.setup(swagger))
 Router.use('/submissions', isAuthorized, submissions)
 Router.use('/users', isAuthorized, users)
