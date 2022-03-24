@@ -35,7 +35,7 @@ export async function update(codeAssignment: CodeAssignment, graderFile: Buffer)
 
   const graderFileRecordName: string = assignmentGraderFileRecordName(codeAssignment)
 
-  await minioClient.putObject('graders', graderFileRecordName, graderFile)
+  await minioClient.putObject(BucketNames.GRADERS, graderFileRecordName, graderFile)
   codeAssignment.grader = graderFileRecordName
 
   const { id, assignmentId, grader, gradingImage } = codeAssignment

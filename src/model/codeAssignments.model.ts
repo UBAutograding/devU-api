@@ -17,7 +17,7 @@ import AssignmentModel from './assignments.model'
  * specifically, the grader file and the docker image to be used during grading.
  *
  * There should be a 1-to-1 relation between CodeAssignments and Assignments with grading type code. Furthermore,
- * such assignments should not have and other such assignments types (eg. NonCodeAssignment, ManualAssignment).
+ * such assignments should not have any other such assignments types (eg. NonCodeAssignment, ManualAssignment).
  */
 @Entity('code_assignments')
 export default class CodeAssignmentsModel {
