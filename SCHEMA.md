@@ -6,12 +6,12 @@
 - [x] [Assignment](#assignment)
 - [x] [Submission](#submission)
 - [x] [AssignmentProblem](#assignmentproblem)
-- [] [SubmissionProblemScore](#submissionproblemscore)
-- [] [SubmissionScore](#submissionscore)
-- [] [AssignmentScore](#assignmentscore)
-- [] [CategoryScore](#categoryscore)
-- [] [Category](#category)
-- [] [CourseScore](#coursescore)
+- [ ] [SubmissionProblemScore](#submissionproblemscore)
+- [ ] [SubmissionScore](#submissionscore)
+- [ ] [AssignmentScore](#assignmentscore)
+- [ ] [CategoryScore](#categoryscore)
+- [ ] [Category](#category)
+- [ ] [CourseScore](#coursescore)
 
 
 
