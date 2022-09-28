@@ -86,6 +86,7 @@
 * assignmentProblemId: foreign_key
 * score: ?
 * feedback: ?
+* released: ?
 
 
 ### SubmissionScore
