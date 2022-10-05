@@ -1,4 +1,4 @@
-# Typescript Example Project
+# devU API
 
 This is an API for the v4 autograder. The main purpose of this project is to act as an in-between for the containers doing the autograding, and the users submitting assignments.
 
