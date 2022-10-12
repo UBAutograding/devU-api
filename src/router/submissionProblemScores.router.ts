@@ -30,7 +30,7 @@ Router.get('/:id', asInt(), SubmissionProblemScoreController.detail)
  * @swagger
  * /submissions:
  *   post:
- *     summary: Create a submission
+ *     summary: Create a submission problem score
  */
 Router.post('/', validator, SubmissionProblemScoreController.post)
 
