@@ -22,7 +22,7 @@ Router.get('/', SubmissionProblemScoreController.get)
  * @swagger
  * /submissions/{id}:
  *   get:
- *     summary: Retrieve a single submission
+ *     summary: Retrieve a single submission problem score
  */
 Router.get('/:id', asInt(), SubmissionProblemScoreController.detail)
 
