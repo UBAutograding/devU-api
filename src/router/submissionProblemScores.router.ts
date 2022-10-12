@@ -14,7 +14,7 @@ const Router = express.Router()
  * @swagger
  * /submissions:
  *   get:
- *     summary: Retrieve a list of submissions
+ *     summary: Retrieve a list of submission problem scores
  */
 Router.get('/', SubmissionProblemScoreController.get)
 
