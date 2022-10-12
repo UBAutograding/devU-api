@@ -38,7 +38,7 @@ Router.post('/', validator, SubmissionProblemScoreController.post)
  * @swagger
  * /submissions/{id}:
  *   delete:
- *     summary: Delete a submission
+ *     summary: Delete a submission problem score
  */
 Router.delete('/:id', asInt(), SubmissionProblemScoreController._delete)
 
