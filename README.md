@@ -9,7 +9,7 @@ This is an API for the v4 autograder. The main purpose of this project is to act
 
 For now the only reason we're including docker is to more easily control the development database. In the future we may very well dockerize the api itself for ease of development and deployment, but for now this writeup is expecting it to be running directly on your machine via node.
 
-## Running the project locally
+## Running the Project Locally
 
 ### Getting Everything Started
 
