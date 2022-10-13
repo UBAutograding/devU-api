@@ -1,16 +1,16 @@
-import { SubmissionProblemScores } from 'devu-shared-modules'
+import { SubmissionProblemScore } from 'devu-shared-modules'
 
-import SubmissionProblemScoresModel from '../../model/submissionProblemScores.model'
+import SubmissionProblemScoreModel from '../../model/submissionProblemScores.model'
 
-export function serialize(submissionProblemScores: SubmissionProblemScoresModel): SubmissionProblemScores {
-    return{
-        id: submissionProblemScores.id,
-        submissionId: submissionProblemScores.submissionId,
-        assignmentProblemId: submissionProblemScores.assignmentProblemId,
-        score: submissionProblemScores.score,
-        feedback: submissionProblemScores.feedback,
-        release: submissionProblemScores.release,
-        createdAt: submissionProblemScores.createdAt.toDateString(),
-        updatedAt: submissionProblemScores.updatedAt.toDateString(),
-    }
+export function serialize(submissionProblemScore: SubmissionProblemScoreModel): SubmissionProblemScore {
+  return {
+    id: submissionProblemScore.id,
+    submissionId: submissionProblemScore.submissionId,
+    assignmentProblemId: submissionProblemScore.assignmentProblemId,
+    score: submissionProblemScore.score,
+    feedback: submissionProblemScore.feedback,
+    release: submissionProblemScore.release?.toISOString(),
+    createdAt: submissionProblemScore.createdAt.toISOString(),
+    updatedAt: submissionProblemScore.updatedAt.toISOString(),
+  }
 }
