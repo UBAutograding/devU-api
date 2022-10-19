@@ -42,6 +42,6 @@ export default class SubmissionProblemScore {
   @Column({ name: 'feedback', type: 'text' })
   feedback: string
 
-  @Column({ name: 'released', nullable: true })
-  release?: Date
+  @Column({ name: 'released_at', nullable: true })
+  releasedAt?: Date
 }
