@@ -1,7 +1,7 @@
 {
-  "name": "typescript-api-example",
+  "name": "devu-api",
   "version": "1.0.0",
-  "description": "Typescript Express/ TypeORM Example",
+  "description": "Auto-grading 4.0 API",
   "scripts": {
     "start": "ts-node-dev src/index.ts",
     "update-shared": "npm update devu-shared-modules",
@@ -60,8 +60,8 @@
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
-    "passport": "^0.4.1",
-    "passport-saml": "^3.0.0",
+    "passport": "^0.6.0",
+    "passport-saml": "^3.2.2",
     "pg": "^8.4.0",
     "reflect-metadata": "^0.1.10",
     "swagger-jsdoc": "^6.1.0",
