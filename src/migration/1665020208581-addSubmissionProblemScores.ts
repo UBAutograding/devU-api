@@ -24,7 +24,7 @@ export class addSubmissionProblemScores1665020208581 implements MigrationInterfa
             "assignment_problem_id" integer NOT NULL, 
             "score" double precision NOT NULL, 
             "feedback" text NOT NULL, 
-            "released" TIMESTAMP, 
+            "released_at" TIMESTAMP, 
             CONSTRAINT "submission_problem_scores_primary_key_constraint" PRIMARY KEY ("id")
             )`)
 
