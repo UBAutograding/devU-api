@@ -9,7 +9,7 @@ export function serialize(submissionProblemScore: SubmissionProblemScoreModel): 
     assignmentProblemId: submissionProblemScore.assignmentProblemId,
     score: submissionProblemScore.score,
     feedback: submissionProblemScore.feedback,
-    release: submissionProblemScore.release?.toISOString(),
+    releasedAt: submissionProblemScore.releasedAt?.toISOString(),
     createdAt: submissionProblemScore.createdAt.toISOString(),
     updatedAt: submissionProblemScore.updatedAt.toISOString(),
   }
