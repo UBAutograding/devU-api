@@ -1,7 +1,7 @@
 {
-  "name": "typescript-api-example",
+  "name": "devu-api",
   "version": "1.0.0",
-  "description": "Typescript Express/ TypeORM Example",
+  "description": "Auto-grading 4.0 API",
   "scripts": {
     "start": "ts-node-dev src/index.ts",
     "update-shared": "npm update devu-shared-modules",
