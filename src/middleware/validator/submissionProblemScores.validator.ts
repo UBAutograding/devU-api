@@ -5,11 +5,11 @@ import validate from './generic.validator'
 
 //submissionId: foreign_key
 //  numeric: nullable?
-const submissionId = check('submissionId').isNumeric().optional({ nullable: true })
+const submissionId = check('submissionId').isNumeric()
 
 //assignmentProblemId: foreign_key
 //  numeric: nullable?
-const assignmentProblemId = check('assignmentProblemId').isNumeric().optional({ nullable: true })
+const assignmentProblemId = check('assignmentProblemId').isNumeric()
 
 //score: number
 //  numeric: not nullable
