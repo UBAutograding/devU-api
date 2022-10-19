@@ -36,11 +36,11 @@ export default class SubmissionProblemScore {
   @ManyToOne(() => AssignmentProblemModel)
   assignmentProblemId: number
 
-  @Column({ name: 'score', type: 'float' })
-  score: number
+  @Column({ name: 'score', type: 'float', nullable: true })
+  score: number | null
 
-  @Column({ name: 'feedback', type: 'text' })
-  feedback: string
+  @Column({ name: 'feedback', type: 'text', nullable: true })
+  feedback: string | null
 
   @Column({ name: 'released_at', nullable: true })
   releasedAt?: Date
