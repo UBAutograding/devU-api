@@ -10,7 +10,6 @@ export async function create(user: User) {
   return await connect().save(user)
 }
 
-
 export async function update(user: User) {
   const { id, preferredName } = user
 
