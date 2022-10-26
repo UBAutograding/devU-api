@@ -10,10 +10,9 @@ import {
 } from 'typeorm'
 
 import SubmissionModel from './submissions.model'
-import AssignmentProblemModel from './assignmentProblems.model'
 
-@Entity('submission_problem_scores')
-export default class SubmissionProblemScore {
+@Entity('submission_scores')
+export default class SubmissionScore {
   @PrimaryGeneratedColumn()
   id: number
 
@@ -30,11 +29,6 @@ export default class SubmissionProblemScore {
   @JoinColumn({ name: 'submission_id' })
   @ManyToOne(() => SubmissionModel)
   submissionId: number
-
-  @Column({ name: 'assignment_problem_id' })
-  @JoinColumn({ name: 'assignment_problem_id' })
-  @ManyToOne(() => AssignmentProblemModel)
-  assignmentProblemId: number
 
   @Column({ name: 'score', type: 'float', nullable: true })
   score: number | null
