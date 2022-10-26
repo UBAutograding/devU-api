@@ -5,7 +5,7 @@ import SubmissionProblemScoreService from '../services/submissionProblemScore.se
 
 import { GenericResponse, NotFound } from '../utils/apiResponse.utils'
 
-import { serialize } from '../utils/serializer/submissionProblemScores.serializer'
+import { serialize } from '../utils/serializer/submissionProblemScore.serializer'
 
 export async function get(req: Request, res: Response, next: NextFunction) {
     try {
@@ -37,9 +37,6 @@ export async function post(req: Request, res: Response, next: NextFunction) {
         if (!req.currentUser?.userId) return res.status(400).json(new GenericResponse('Request requires auth'))
 
         const requestBody: SubmissionProblemScore = req.body
-
-        requestBody.submitterIp = req.header('x-forwarded-for') || req.socket.remoteAddress
-        requestBody.submittedBy = req.currentUser?.userId
 
         const submissionProblemScore = await SubmissionProblemScoreService.create(requestBody)
         const response = serialize(submissionProblemScore)

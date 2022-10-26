@@ -1,6 +1,6 @@
-import { serialize } from '../submissionProblemScores.serializer'
+import { serialize } from '../submissionProblemScore.serializer'
 
-import SubmissionProblemScoreModel from '../../../model/submissionProblemScores.model'
+import SubmissionProblemScoreModel from '../../../model/submissionProblemScore.model'
 
 import Testing from '../../testing.utils'
 

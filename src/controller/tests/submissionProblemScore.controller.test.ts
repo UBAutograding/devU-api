@@ -6,7 +6,7 @@ import controller from '../submissionProblemScore.controller'
 
 import SubmissionProblemScoreModel from '../../model/submissionProblemScore.model'
 
-import SubmissionProblemScoreService from '../../services/submissionPorblemScore.service'
+import SubmissionProblemScoreService from '../../services/submissionProblemScore.service'
 
 import { serialize } from '../../utils/serializer/submissionProblemScore.serializer'
 
@@ -74,7 +74,7 @@ describe('SubmissionProblemScoreController', () => {
                 await controller.detail(req,res,next)
             })
 
-            test('Returns expected submissionProblemScore', () => expect(res.json).toBeCallWith(expectedResult))
+            test('Returns expected submissionProblemScore', () => expect(res.json).toBeCalledWith(expectedResult))
             test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
         })
 
@@ -112,7 +112,7 @@ describe('SubmissionProblemScoreController', () => {
             })
 
             test('Returns expected submissionProblemScore', () => expect(res.json).toBeCalledWith(expectedResult))
-            test('Status code is 201', () => expect(res.status).toBeCalledwith(201))
+            test('Status code is 201', () => expect(res.status).toBeCalledWith(201))
         })
 
         describe('400 - Bad Request', () => {
