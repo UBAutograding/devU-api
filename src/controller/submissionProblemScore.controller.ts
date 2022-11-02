@@ -3,13 +3,14 @@ import { Request, Response, NextFunction } from 'express'
 
 import SubmissionProblemScoreService from '../services/submissionProblemScore.service'
 
-import { GenericResponse, NotFound } from '../utils/apiResponse.utils'
+import {GenericResponse, NotFound, Updated} from '../utils/apiResponse.utils'
 
 import { serialize } from '../utils/serializer/submissionProblemScore.serializer'
 
 export async function get(req: Request, res: Response, next: NextFunction) {
     try {
-        const submissionProblemScores = await SubmissionProblemScoreService.list()
+        const submissionId = parseInt(req.params.id)
+        const submissionProblemScores = await SubmissionProblemScoreService.list(submissionId)
         const response = submissionProblemScores.map(serialize)
 
         res.status(200).json(response)
@@ -47,6 +48,19 @@ export async function post(req: Request, res: Response, next: NextFunction) {
     }
 }
 
+export async function put(req: Request, res: Response, next: NextFunction) {
+    try {
+        req.body.id = parseInt(req.params.id)
+        const results = await SubmissionProblemScoreService.update(req.body)
+
+        if (!results.affected) return res.status(404).json(NotFound)
+
+        res.status(200).json(Updated)
+    } catch (err) {
+        next(err)
+    }
+}
+
 export async function _delete(req: Request, res: Response, next: NextFunction) {
     try {
         const id = parseInt(req.params.id)
@@ -60,4 +74,4 @@ export async function _delete(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-export default {get, detail, post, _delete}
+export default {get, detail, post, put, _delete}

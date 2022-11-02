@@ -21,8 +21,8 @@ const feedback = check('feedback').isString().trim().optional({nullable: true})
 
 //released: date
 //  date.validator.ts?
-const releaseDate = check('releaseDate').isString().trim().isISO8601().toDate()
+const releasedAt = check('releasedAt').isString().trim().isISO8601().toDate()
 
-const validator = [submissionId, assignmentProblemId, score, feedback, releaseDate, validate]
+const validator = [submissionId, assignmentProblemId, score, feedback, releasedAt, validate]
 
 export default validator

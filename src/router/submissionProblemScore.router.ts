@@ -14,17 +14,17 @@ const Router = express.Router()
  * @swagger
  * /submission-problem-scores:
  *   get:
- *     summary: Retrieve a list of submission problem scores
+ *    summary: Retrieve a list of assignment problem scores belonging to a submission by submission id
  */
-Router.get('/', SubmissionProblemScoreController.get)
+Router.get('/:id', asInt(), SubmissionProblemScoreController.get)
 
 /**
  * @swagger
- * /submission-problem-scores/{id}:
+ * /submission-problem-scores/detail/{id}:
  *   get:
  *     summary: Retrieve a single submission problem score
  */
-Router.get('/:id', asInt(), SubmissionProblemScoreController.detail)
+Router.get('/detail/:id', asInt(), SubmissionProblemScoreController.detail)
 
 /**
  * @swagger
@@ -33,6 +33,14 @@ Router.get('/:id', asInt(), SubmissionProblemScoreController.detail)
  *     summary: Create a submission problem score
  */
 Router.post('/', validator, SubmissionProblemScoreController.post)
+
+/**
+ * @swagger
+ * /submission-problem-scores:
+ *   put:
+ *     summary: Update a submission problem score
+ */
+Router.put('/:id', asInt(), validator, SubmissionProblemScoreController.put)
 
 /**
  * @swagger

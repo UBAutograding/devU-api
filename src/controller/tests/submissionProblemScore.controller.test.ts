@@ -41,7 +41,7 @@ describe('SubmissionProblemScoreController', () => {
         expectedDbResult = {} as UpdateResult
     })
 
-    describe('Get - /submissionProblemScores', () => {
+    describe('Get - /submission-problem-scores', () => {
         describe('200 - Ok', () => {
             beforeEach(async () => {
                 SubmissionProblemScoreService.list = jest.fn().mockImplementation(() => Promise.resolve(mockedSubmissionProblemScores))
@@ -67,7 +67,7 @@ describe('SubmissionProblemScoreController', () => {
         })
     })
 
-    describe('Get - /submissionProblemScores/:id', () => {
+    describe('Get - /submission-problem-scores/:id', () => {
         describe('200 - Ok', () => {
             beforeEach(async () =>{
                 SubmissionProblemScoreService.retrieve = jest.fn().mockImplementation(() => Promise.resolve(mockedSubmissionProblemScore))
@@ -104,7 +104,7 @@ describe('SubmissionProblemScoreController', () => {
         })
     })
 
-    describe('Post - /submissionProblemScores/', () => {
+    describe('Post - /submission-problem-scores/', () => {
         describe('201 - Created', () => {
             beforeEach(async () => {
                 SubmissionProblemScoreService.create = jest.fn().mockImplementation(() => Promise.resolve(mockedSubmissionProblemScore))
@@ -135,7 +135,7 @@ describe('SubmissionProblemScoreController', () => {
         })
     })
 
-    describe('DELETE - /submissionProblemScores/:id', () => {
+    describe('DELETE - /submission-problem-scores/:id', () => {
         describe('204 - No Content', () => {
             beforeEach(async () => {
                 expectedDbResult.affected = 1
