@@ -12,6 +12,7 @@ import logout from './logout.router'
 import status from './status.router'
 import submissions from './submission.router'
 import users from './user.router'
+import submissionScore from './submissionScore.router'
 
 import { isAuthorized } from '../middleware/auth.middleware'
 
@@ -26,6 +27,7 @@ Router.use('/code-assignments', isAuthorized, codeAssignment)
 Router.use('/docs', swaggerUi.serve, swaggerUi.setup(swagger))
 Router.use('/submissions', isAuthorized, submissions)
 Router.use('/users', isAuthorized, users)
+Router.use('/submission-scores', isAuthorized, submissionScore)
 
 Router.use('/login', login)
 Router.use('/logout', logout)
