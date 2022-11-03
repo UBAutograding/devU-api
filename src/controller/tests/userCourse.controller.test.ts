@@ -53,8 +53,8 @@ describe('UserCourseController', () => {
         UserCourseService.list = jest.fn().mockImplementation(() => Promise.resolve(mockedUserCourses))
         await controller.get(req, res, next) // what we're testing
       })
-      
-      test('UserId is passed to UserCourseService',() => expect(UserCourseService.list).toBeCalledWith(expectedUserId))
+
+      test('UserId is passed to UserCourseService', () => expect(UserCourseService.list).toBeCalledWith(expectedUserId))
       test('Returns list of userCourses', () => expect(res.json).toBeCalledWith(expectedResults))
       test('Status code is 200', () => expect(res.status).toBeCalledWith(200))
     })
