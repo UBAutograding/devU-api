@@ -37,7 +37,7 @@ docker run \
   -d minio/minio server /data --console-address ":9001"
 ```
 
-Install all node dependancies. All of the database environment variables can change, and can be set as environment variables on your machine if you want to overwrite the defaults
+Install all node dependencies. All of the database environment variables can change, and can be set as environment variables on your machine if you want to overwrite the defaults
 
 ```
 npm install
