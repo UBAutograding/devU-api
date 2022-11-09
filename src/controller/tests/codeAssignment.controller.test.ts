@@ -3,13 +3,13 @@ import { UpdateResult } from 'typeorm'
 
 import { CodeAssignment } from 'devu-shared-modules'
 
-import controller from '../codeAssignments.controller'
+import controller from '../codeAssignment.controller'
 
-import CodeAssignmentModel from '../../model/codeAssignments.model'
+import CodeAssignmentModel from '../../model/codeAssignment.model'
 
-import CodeAssignmentService from '../../services/codeAssignments.service'
+import CodeAssignmentService from '../../services/codeAssignment.service'
 
-import { serialize } from '../../utils/serializer/codeAssignments.serializer'
+import { serialize } from '../../utils/serializer/codeAssignment.serializer'
 
 import Testing from '../../utils/testing.utils'
 import { GenericResponse, NotFound, Updated } from '../../utils/apiResponse.utils'
